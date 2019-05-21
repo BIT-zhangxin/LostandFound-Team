@@ -6,13 +6,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyConnectionHelper;
 import com.example.lostandfound.component.MyDefine;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +55,7 @@ public class InformationActivity extends MyAppCompatActivity {
         initComponent();
         initData();
         initView();
+        //test
     }
 
     private void initComponent(){

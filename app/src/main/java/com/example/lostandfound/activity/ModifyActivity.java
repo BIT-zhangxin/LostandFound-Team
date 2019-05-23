@@ -20,6 +20,7 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
 
     private EditText et_modify_nickname;
     private EditText et_modify_contact_information;
+    private EditText et_modify_personal_profile;
     private Button btn_modify_commit;
 
     @SuppressLint("HandlerLeak")
@@ -65,6 +66,7 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
     private void initComponent(){
         et_modify_nickname = findViewById(R.id.et_modify_nickname);
         et_modify_contact_information = findViewById(R.id.et_modify_contact_information);
+        et_modify_personal_profile=findViewById(R.id.et_modify_personal_profile);
         btn_modify_commit = findViewById(R.id.btn_modify_commit);
     }
 
@@ -76,7 +78,8 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         int id=((MyApplication)getApplication()).getId();
         String nickname=et_modify_nickname.getText().toString();
         String contact_information=et_modify_contact_information.getText().toString();
-        Bundle bundle=MyBundle.UpdateUserInformationBundle(id,nickname,contact_information);
+        String personal_profile=et_modify_personal_profile.getText().toString();
+        Bundle bundle=MyBundle.UpdateUserInformationBundle(id,nickname,contact_information,personal_profile);
         MyDataProcesser.UpdateUseInformation(bundle,modifyHandler);
     }
 }

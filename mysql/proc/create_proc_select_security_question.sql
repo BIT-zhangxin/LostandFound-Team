@@ -10,7 +10,7 @@ SQL SECURITY DEFINER
 COMMENT ''
 BEGIN
 	select
-	`user_security_question`.security_question
-	from `user_security_question`
-	where `user_security_question`.id=id;
+	`user`.security_question
+	from `user`
+	where `user`.id=id;
 END //

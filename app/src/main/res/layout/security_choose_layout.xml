@@ -15,27 +15,15 @@
         android:textSize="@dimen/text_size_title" />
 
     <Button
-        android:id="@+id/btn_security_choose_set_question"
+        android:id="@+id/btn_security_choose_phone_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60pt"
         android:background="@drawable/button"
-        android:text="@string/information_security_choose_set_question"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_button" />
-
-    <Button
-        android:id="@+id/btn_security_choose_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/button"
-        android:text="@string/information_security_choose_password"
+        android:text="@string/information_security_choose_phone_mail"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_button" />
 
@@ -46,6 +34,7 @@
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
         android:layout_marginBottom="15dp"
+        android:layout_marginTop="10pt"
         android:background="@drawable/button"
         android:text="@string/information_security_choose_question"
         android:textColor="@color/white"

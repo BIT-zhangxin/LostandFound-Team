@@ -14,12 +14,21 @@
         android:textColor="@color/white"
         android:layout_marginBottom="50dp"/>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/head_portrait"
+        />
+
     <RelativeLayout
         android:id="@+id/rl_modify_nickname"
         android:layout_width="match_parent"
         android:layout_height="@dimen/input_height"
         android:layout_marginLeft="@dimen/margin"
         android:layout_marginRight="@dimen/margin"
+        android:layout_marginTop="120dp"
         android:layout_below="@id/tv_modify_title">
 
         <ImageView
@@ -30,7 +39,7 @@
             android:layout_marginLeft="@dimen/margin_tiny"
             android:src="@drawable/ic_modify"
             android:scaleType="fitXY"
-            android:contentDescription="@string/login_account"/>
+            android:contentDescription="@string/information_information_nickname_hint"/>
 
         <EditText
             android:id="@+id/et_modify_nickname"
@@ -60,6 +69,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_modify_contact"
         android:layout_width="match_parent"
         android:layout_height="@dimen/input_height"
         android:layout_marginTop="@dimen/input_margin"
@@ -75,7 +85,7 @@
             android:layout_marginLeft="@dimen/margin_tiny"
             android:src="@drawable/ic_modify"
             android:scaleType="fitXY"
-            android:contentDescription="@string/login_password"/>
+            android:contentDescription="@string/information_information_contact_information_hint"/>
 
         <EditText
             android:id="@+id/et_modify_contact_information"
@@ -87,6 +97,50 @@
             android:layout_marginLeft="@dimen/editText_start"
             android:background="@null"
             android:hint="@string/information_modify_contact_information_hint"
+            android:inputType="text"
+            android:maxLines="1"
+            android:maxLength="20"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray_deep"
+            android:textSize="@dimen/text_size_normal" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/editText_start"
+            android:layout_marginLeft="@dimen/editText_start"
+            android:background="@color/style" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/input_height"
+        android:layout_marginTop="@dimen/input_margin"
+        android:layout_marginLeft="@dimen/margin"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_below="@id/rl_modify_contact">
+
+        <ImageView
+            android:layout_width="@dimen/imageView"
+            android:layout_height="@dimen/imageView"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin_tiny"
+            android:layout_marginLeft="@dimen/margin_tiny"
+            android:src="@drawable/ic_modify"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/information_information_title"/>
+
+        <EditText
+            android:id="@+id/et_modify_personal_profile"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/editText"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/line"
+            android:layout_marginStart="@dimen/editText_start"
+            android:layout_marginLeft="@dimen/editText_start"
+            android:background="@null"
+            android:hint="@string/information_modify_personal_profile_hint"
             android:inputType="text"
             android:maxLines="1"
             android:maxLength="20"

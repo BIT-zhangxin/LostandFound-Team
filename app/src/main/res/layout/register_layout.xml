@@ -224,7 +224,93 @@
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/input_margin"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginRight="@dimen/margin">
 
+                <ImageView
+                    android:layout_width="@dimen/imageView"
+                    android:layout_height="@dimen/imageView"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/margin_tiny"
+                    android:layout_marginLeft="@dimen/margin_tiny"
+                    android:src="@drawable/ic_modify"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/login_account"/>
+
+                <EditText
+                    android:id="@+id/et_information_security_set_question_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editText"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/line"
+                    android:layout_marginStart="@dimen/editText_start"
+                    android:layout_marginLeft="@dimen/editText_start"
+                    android:background="@null"
+                    android:hint="@string/information_security_set_question_question_hint"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="20"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray_deep"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/editText_start"
+                    android:layout_marginLeft="@dimen/editText_start"
+                    android:background="@color/style" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:layout_marginTop="@dimen/input_margin"
+                android:layout_marginLeft="@dimen/margin"
+                android:layout_marginRight="@dimen/margin">
+
+                <ImageView
+                    android:layout_width="@dimen/imageView"
+                    android:layout_height="@dimen/imageView"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/margin_tiny"
+                    android:layout_marginLeft="@dimen/margin_tiny"
+                    android:src="@drawable/ic_modify"
+                    android:scaleType="fitXY"
+                    android:contentDescription="@string/login_account"/>
+
+                <EditText
+                    android:id="@+id/et_information_security_set_question_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/editText"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/line"
+                    android:layout_marginStart="@dimen/editText_start"
+                    android:layout_marginLeft="@dimen/editText_start"
+                    android:background="@null"
+                    android:hint="@string/information_security_set_question_answer_hint"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:maxLength="20"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/gray_deep"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="@dimen/editText_start"
+                    android:layout_marginLeft="@dimen/editText_start"
+                    android:background="@color/style" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_register_tips"

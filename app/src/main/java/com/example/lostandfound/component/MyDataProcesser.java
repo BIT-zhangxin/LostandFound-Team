@@ -262,11 +262,15 @@ public class MyDataProcesser {
                     } else {
                         String phone_number = bundle.getString("phone_number", "");
                         String password = bundle.getString("password", "");
-                        String mysql_sql = "call proc_register(?,?)";
-                        String sql_server_sql="exec proc_register ?,?";
+                        String question =bundle.getString("question","");
+                        String answer =bundle.getString("answer","");
+                        String mysql_sql = "call proc_register(?,?,?,?)";
+                        String sql_server_sql="exec proc_register ?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setString(1, phone_number);
                         preSt.setString(2, password);
+                        preSt.setString(3, question);
+                        preSt.setString(4, answer);
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
                     }
@@ -436,12 +440,14 @@ public class MyDataProcesser {
                         int id=bundle.getInt("id",0);
                         String nickname=bundle.getString("nickname", "");
                         String contact_information=bundle.getString("contact_information", "");
-                        String mysql_sql="call proc_update_user_information(?,?,?)";
-                        String sql_server_sql = "exec proc_update_user_information ?,?,?";
+                        String personal_profile=bundle.getString("personal_profile", "");
+                        String mysql_sql="call proc_update_user_information(?,?,?,?)";
+                        String sql_server_sql = "exec proc_update_user_information ?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, nickname);
                         preSt.setString(3, contact_information);
+                        preSt.setString(4, personal_profile);
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
                     }

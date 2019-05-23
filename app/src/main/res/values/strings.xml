@@ -64,12 +64,14 @@
     <string name="information_modify_title">修改个人信息</string>
     <string name="information_modify_nickname_hint">修改你的昵称(空则代表不修改)</string>
     <string name="information_modify_contact_information_hint">修改你的联系方式(空则代表不修改)</string>
+    <string name="information_modify_personal_profile_hint">修改你的个人简介(空则代表不修改)</string>
     <string name="information_modify_btn_commit">提交</string>
 
     <string name="information_security_choose_title">安全</string>
     <string name="information_security_choose_set_question">设置密保问题</string>
     <string name="information_security_choose_password">通过密码修改密码</string>
     <string name="information_security_choose_question">通过密保修改密码</string>
+    <string name="information_security_choose_phone_mail">通过密保修改手机或邮箱</string>
 
     <string name="information_security_set_question_title">设置密保问题</string>
     <string name="information_security_set_question_question_hint">请输入密保问题</string>

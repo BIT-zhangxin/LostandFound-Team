@@ -26,6 +26,8 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
     private EditText et_register_password;
     private EditText et_register_password_repetition;
     private EditText et_register_phone_number;
+    private EditText et_information_security_set_question_question;
+    private EditText et_information_security_set_question_answer;
     private ImageView iv_register_show_password;
     private TextView tv_register_tips;
     private Button btn_register_register;
@@ -67,6 +69,8 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
         et_register_password= findViewById(R.id.et_register_password);
         et_register_password_repetition= findViewById(R.id.et_register_password_repetition);
         et_register_phone_number= findViewById(R.id.et_register_phone_number);
+        et_information_security_set_question_question=findViewById(R.id.et_information_security_set_question_question);
+        et_information_security_set_question_answer=findViewById(R.id.et_information_security_set_question_answer);
         iv_register_show_password= findViewById(R.id.iv_register_show_password);
         tv_register_tips= findViewById(R.id.tv_register_tips);
         btn_register_register= findViewById(R.id.btn_register_register);
@@ -100,6 +104,14 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
         return et_register_phone_number.getText().toString();
     }
 
+    private String getEditsecurityquestionNumber(){
+        return et_information_security_set_question_question.getText().toString();
+    }
+
+    private String getEditsecurityanswerNumber(){
+        return et_information_security_set_question_answer.getText().toString();
+    }
+
     private String getEditPassword(){
         return MD5.md5(et_register_password.getText().toString());
     }
@@ -126,6 +138,12 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
         }
         else if(getEditPasswordRepetition().isEmpty()){
             return "重复密码不能为空！";
+        }
+        else if(getEditsecurityquestionNumber().isEmpty()){
+            return "密保问题不能为空！";
+        }
+        else if(getEditsecurityanswerNumber().isEmpty()){
+            return "密保密码不能为空！";
         }
         else if(!checkPasswordRepetition()){
             return "两次密码输入不一致！！";
@@ -185,7 +203,9 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
     }
 
     void Register(){
-        Bundle bundle= MyBundle.RegisterBundle(getEditPhoneNumber(),getEditPassword());
+        String security_question=et_information_security_set_question_question.getText().toString();
+        String security_answer=et_information_security_set_question_answer.getText().toString();
+        Bundle bundle= MyBundle.RegisterBundle(getEditPhoneNumber(),getEditPassword(),security_question,security_answer);
         MyDataProcesser.Register(bundle,registerHandler);
     }
 

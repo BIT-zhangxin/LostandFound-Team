@@ -12,8 +12,8 @@ SQL SECURITY DEFINER
 COMMENT ''
 BEGIN
 	declare tmp int;
-	set tmp=(select count(1) from `user_security_question` where `user_security_question`.id=id
-	and `user_security_question`.`security_answer`=`security_answer`);
+	set tmp=(select count(1) from `user` where `user`.id=id
+	and `user`.`security_answer`=`security_answer`);
 	if (tmp=0) then
 		SIGNAL SQLSTATE 'HY000' SET MESSAGE_TEXT = "密保答案错误";
 	end if;

@@ -35,17 +35,15 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     public static final String JPG_FORMAT=".jpg";//jpg图片格式
     public static final String JPEG_FORMAT=".jpeg";//jpeg图片格式
 
-    private Uri imgUri; // 拍照时返回的uri
-    private Uri mCutUri;// 图片裁剪时返回的uri
-    private File imgFile;// 拍照保存的图片文件
+    private Uri photoUri;//保存拍照时返回的uri
+    private Uri cropUri;//保存裁剪时返回的uri
+
+    private boolean hasPermission=false;//是否已经获取权限
 
     private Button button1;
     private Button button2;
 
     private ImageView smallImg;
-
-    private boolean hasPermission=false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -67,7 +65,7 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     public void onClick(View v){
         switch(v.getId()){
             case R.id.btn_test_photo_photo:
-                goCamera();
+                photoUri=goCamera();
                 break;
             case R.id.btn_test_photo_select:
                 goPictureAlbum();
@@ -98,24 +96,24 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         if(resultCode!=RESULT_OK) return;
         //拍照
         if(requestCode==PHOTO_REQUEST_CODE){
-            goCrop(imgUri);
+            cropUri=goCrop(photoUri);
         }
         //选择相册图片
         else if(requestCode==PICTURE_SELECT_REQUEST_CODE){
-            goCrop(data.getData());
+            cropUri=goCrop(data.getData());
         }
         //裁剪图片
         else if(requestCode==CROP_REQUEST_CODE){
-            Glide.with(this).load(mCutUri).into(smallImg);
+            Glide.with(this).load(cropUri).into(smallImg);
         }
     }
 
     //调用图片裁剪
-    private void goCrop(Uri uri){
+    private Uri goCrop(Uri inputUri){
         Intent intent=new Intent("com.android.camera.action.CROP");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        intent.setDataAndType(uri,"image/*");
+        intent.setDataAndType(inputUri,"image/*");
         intent.putExtra("scale",true);
         //aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX",1);
@@ -125,24 +123,27 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         intent.putExtra("outputY",250);
         //取消人脸识别
         intent.putExtra("noFaceDetection",true);
-        //创建裁剪图片文件
-        File photoFile=createFile(JPEG_FORMAT);
-        mCutUri=Uri.fromFile(photoFile);
+        //创建裁剪图片的文件
+        File file=createFile(JPEG_FORMAT);
+        Uri outputUri=Uri.fromFile(file);
         //设置不要返回图片数据，而是存储在uri位置
         intent.putExtra("return-data",false);
-        intent.putExtra("output",mCutUri);
+        intent.putExtra("output",outputUri);
         //设置图片格式，只支持png，jpeg和webp
         intent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent,CROP_REQUEST_CODE);
+        return outputUri;
     }
 
     //调用相机
-    private void goCamera(){
+    private Uri goCamera(){
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        imgFile=createFile(JPG_FORMAT);
-        imgUri=getUriForFile(this, imgFile);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,imgUri);
+        //创建拍照保存的图片文件
+        File file=createFile(JPG_FORMAT);
+        Uri uri=getUriForFile(this, file);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
         startActivityForResult(intent,PHOTO_REQUEST_CODE);
+        return uri;
     }
 
     //调用系统的相册
@@ -152,7 +153,7 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         startActivityForResult(intent,PICTURE_SELECT_REQUEST_CODE);
     }
 
-    //检查是否有权限
+    //动态检查权限
     private void checkPermissions(){
         if(hasPermission) return;
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
@@ -169,11 +170,12 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     }
 
     //获取文件uri(android7.0后必须使用FileProvider)
-    private Uri getUriForFile(Context context,File file) {
+    private Uri getUriForFile(Context context,File file){
         Uri uri;
-        if (Build.VERSION.SDK_INT>=24) {
+        if(Build.VERSION.SDK_INT>=24){
             uri=FileProvider.getUriForFile(context,"com.example.lostandfound.fileprovider",file);
-        } else {
+        }
+        else{
             uri=Uri.fromFile(file);
         }
         return uri;

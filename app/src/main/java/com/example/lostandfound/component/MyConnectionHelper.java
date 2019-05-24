@@ -10,7 +10,7 @@ public class MyConnectionHelper {
     private static final String DBDRIVER = "com.mysql.jdbc.Driver";
 
     //数据库地址
-    private static final String DBURL ="jdbc:mysql://47.95.203.128:3306/LostandFound"
+    private static final String DBURL ="jdbc:mysql://59.110.213.213:3306/lostandfound"
     +"?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000";
 
 //    //数据库地址
@@ -18,10 +18,10 @@ public class MyConnectionHelper {
 //    +"?useUnicode=true&characterEncoding=utf-8&connectTimeout==5000&socketTimeout=5000";
 
     //数据库登录用户名
-    private static final String DBUSER = "LostandFound";
+    private static final String DBUSER = "remoteuser";
 
     //数据库用户密码
-    private static final String DBPASSWORD = "LostandFound";
+    private static final String DBPASSWORD = "remoteuser";
 
 //    //SQL Server驱动方式
 //    //驱动路径

@@ -1,6 +1,6 @@
 USE `LostandFound`;
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_select_security_question`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_select_security_phone_mail`(
 	IN `id` INT
 )
 LANGUAGE SQL

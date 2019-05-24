@@ -2,6 +2,7 @@ package com.example.lostandfound.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,7 +14,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,10 +21,11 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
+import com.example.lostandfound.component.MyApplication;
+import com.example.lostandfound.component.MyBundle;
+import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.UriUtils;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -39,6 +40,13 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     public static final String JPG_FORMAT=".jpg";//jpg图片格式
     public static final String JPEG_FORMAT=".jpeg";//jpeg图片格式
 
+    public static final String PROFILE_PHOTO_TYPE="profile_photo";
+    public static final String OBJECT_PICTURE_TYPE="object_picture";
+
+    private boolean hasPermission=false;//是否已经获取权限
+
+    private MyApplication myApplication;
+
     private Uri photoUri;//保存拍照时返回的uri
     private Uri pictureUri;//保存选择图片时返回的uri
     private Uri cropUri;//保存裁剪时返回的uri
@@ -47,12 +55,14 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     private File pictureFile;//保存选择图片文件
     private File cropFile;//保存裁剪文件
 
-    private boolean hasPermission=false;//是否已经获取权限
+
 
     private Button button1;
     private Button button2;
 
     private ImageView smallImg;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -68,6 +78,7 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         button2=findViewById(R.id.btn_test_photo_select);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
+        myApplication=(MyApplication)getApplication();
     }
 
     @Override
@@ -203,34 +214,40 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
 
     //获取当前时间字符串
     @SuppressLint("SimpleDateFormat")
-    private String getStringToday(){
+    public static String getStringToday(){
         Date currentTime=new Date();
         SimpleDateFormat formatter=new SimpleDateFormat("yyyyMMddHHmmss");
         return formatter.format(currentTime);
     }
 
     //上传图片
-    public void uploadPicture(File file){
-        try{
-            byte[] pictureByte=readStream(file);
-            //TODO:进行数据库写入操作
-        }
-        catch(Exception e){
-            e.printStackTrace();
+    private void upload(File file,String type){
+        Bundle bundle=MyBundle.PictureBundle(myApplication.getId());
+        switch (type) {
+            case PROFILE_PHOTO_TYPE:
+                MyDataProcesser.UploadProfilePhoto(file,bundle,null);
+                break;
+            case OBJECT_PICTURE_TYPE:
+                MyDataProcesser.UploadObjectPicture(file,bundle,null);
+                break;
+            default:
+                break;
         }
     }
 
-    //读取图片文件流
-    public byte[] readStream(File file) throws Exception {
-        FileInputStream fs=new FileInputStream(file);
-        ByteArrayOutputStream outStream=new ByteArrayOutputStream();
-        byte[] buffer=new byte[1024];
-        int len;
-        while ((len=fs.read(buffer))!=-1){
-            outStream.write(buffer,0,len);
+    //下载图片
+    private void download(Activity activity,String type){
+        Bundle bundle=MyBundle.PictureBundle(myApplication.getId());
+        switch (type) {
+            case PROFILE_PHOTO_TYPE:
+                MyDataProcesser.DownloadProfilePhoto(activity,bundle,null);
+                break;
+            case OBJECT_PICTURE_TYPE:
+                MyDataProcesser.DownloadObjectPicture(activity,bundle,null);
+                break;
+            default:
+                break;
         }
-        outStream.close();
-        fs.close();
-        return outStream.toByteArray();
     }
+
 }

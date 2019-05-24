@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,15 +25,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class TestPhotoActivity extends MyAppCompatActivity implements OnClickListener {
+public class TestPhotoActivity extends MyAppCompatActivity implements View.OnClickListener {
 
     public static final int PHOTO_REQUEST_CODE=1;//拍照
     public static final int PICTURE_SELECT_REQUEST_CODE =2;//选择图片
+    public static final int CROP_REQUEST_CODE=3;//裁剪图片
+    private static final int PERMISSION_REQUEST_CODE=4;//获取权限
 
-    public static final int CROP_REQUEST_CODE=3;
-
-    public static final String FORMAT_JPG=".jpg";
-    public static final String FORMAT_JPEG=".jpeg";
+    public static final String JPG_FORMAT=".jpg";//jpg图片格式
+    public static final String JPEG_FORMAT=".jpeg";//jpeg图片格式
 
     private Uri imgUri; // 拍照时返回的uri
     private Uri mCutUri;// 图片裁剪时返回的uri
@@ -45,39 +44,24 @@ public class TestPhotoActivity extends MyAppCompatActivity implements OnClickLis
 
     private ImageView smallImg;
 
-    private boolean hasPermission = false;
-    private static final int REQUEST_PERMISSION = 100;
+    private boolean hasPermission=false;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_photo_layout);
         initView();
         checkPermissions();
     }
 
-    protected void initView(){
-        smallImg = findViewById(R.id.small_img);
-        button1= findViewById(R.id.btn_test_photo_photo);
-        button2= findViewById(R.id.btn_test_photo_select);
+    private void initView(){
+        smallImg=findViewById(R.id.small_img);
+        button1=findViewById(R.id.btn_test_photo_photo);
+        button2=findViewById(R.id.btn_test_photo_select);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
     }
-
-    private void checkPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // 检查是否有存储和拍照权限
-            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
-                ) {
-                hasPermission = true;
-            } else {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_PERMISSION);
-            }
-        }
-    }
-
-
 
     @Override
     public void onClick(View v){
@@ -94,14 +78,15 @@ public class TestPhotoActivity extends MyAppCompatActivity implements OnClickLis
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                hasPermission = true;
-            } else {
-                Toast.makeText(this, "权限授予失败！", Toast.LENGTH_SHORT).show();
-                hasPermission = false;
+    public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions,@NonNull int[] grantResults){
+        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
+        if(requestCode==PERMISSION_REQUEST_CODE){
+            if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                hasPermission=true;
+            }
+            else{
+                hasPermission=false;
+                Toast.makeText(this,"权限授予失败！",Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -109,76 +94,54 @@ public class TestPhotoActivity extends MyAppCompatActivity implements OnClickLis
     @Override
     protected void onActivityResult(int requestCode,int resultCode,Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-
         //如果图片为空
         if(resultCode!=RESULT_OK) return;
-
         //拍照
         if(requestCode==PHOTO_REQUEST_CODE){
-            startPhotoZoom(imgUri,true);
+            goCrop(imgUri);
         }
-
         //选择相册图片
         else if(requestCode==PICTURE_SELECT_REQUEST_CODE){
-            startPhotoZoom(data.getData(),false);
+            goCrop(data.getData());
         }
-
         //裁剪图片
         else if(requestCode==CROP_REQUEST_CODE){
             Glide.with(this).load(mCutUri).into(smallImg);
         }
     }
 
-    private void startPhotoZoom(Uri uri,boolean fromCamera){
-        Intent intent = new Intent("com.android.camera.action.CROP");
-
+    //调用图片裁剪
+    private void goCrop(Uri uri){
+        Intent intent=new Intent("com.android.camera.action.CROP");
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
-        // 设置裁剪
-        intent.setDataAndType(uri, "image/*");
-        intent.putExtra("scale", true);
-
-        //取消人脸识别
-        intent.putExtra("noFaceDetection", false);
-
+        intent.setDataAndType(uri,"image/*");
+        intent.putExtra("scale",true);
         //aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-
+        intent.putExtra("aspectX",1);
+        intent.putExtra("aspectY",2);
         //outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 250);
-        intent.putExtra("outputY", 250);
-
-        if(fromCamera){
-            //如果是使用拍照，那么原先的uri和最终目标的uri一致，注意这里的uri必须是Uri.fromFile生成的
-            File photoFile=createFile(FORMAT_JPEG);
-            mCutUri=Uri.fromFile(photoFile);
-        }
-        else{
-            //从相册中选择，那么裁剪的图片要新创建
-            File mCutFile=createFile(FORMAT_JPEG);
-            mCutUri=Uri.fromFile(mCutFile);
-        }
-
-        intent.putExtra("return-data", false);
-        intent.putExtra("output", mCutUri);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());// 图片格式
-
-        startActivityForResult(intent, CROP_REQUEST_CODE);//这里就将裁剪后的图片的Uri返回了
+        intent.putExtra("outputX",250);
+        intent.putExtra("outputY",250);
+        //取消人脸识别
+        intent.putExtra("noFaceDetection",true);
+        //创建裁剪图片文件
+        File photoFile=createFile(JPEG_FORMAT);
+        mCutUri=Uri.fromFile(photoFile);
+        //设置不要返回图片数据，而是存储在uri位置
+        intent.putExtra("return-data",false);
+        intent.putExtra("output",mCutUri);
+        //设置图片格式，只支持png，jpeg和webp
+        intent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
+        startActivityForResult(intent,CROP_REQUEST_CODE);
     }
 
     //调用相机
     private void goCamera(){
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        imgFile=createFile(FORMAT_JPG);
+        imgFile=createFile(JPG_FORMAT);
         imgUri=getUriForFile(this, imgFile);
-
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imgUri);
-
-
-
         startActivityForResult(intent,PHOTO_REQUEST_CODE);
     }
 
@@ -186,8 +149,23 @@ public class TestPhotoActivity extends MyAppCompatActivity implements OnClickLis
     private void goPictureAlbum(){
         Intent intent=new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-
         startActivityForResult(intent,PICTURE_SELECT_REQUEST_CODE);
+    }
+
+    //检查是否有权限
+    private void checkPermissions(){
+        if(hasPermission) return;
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            //检查是否有存储和拍照权限
+            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
+                &&checkSelfPermission(Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED){
+                hasPermission=true;
+            }
+            else{
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
+                    PERMISSION_REQUEST_CODE);
+            }
+        }
     }
 
     //获取文件uri(android7.0后必须使用FileProvider)

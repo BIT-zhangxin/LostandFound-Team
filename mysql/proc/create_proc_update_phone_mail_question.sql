@@ -1,9 +1,9 @@
 USE `LostandFound`;
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_update_password_question`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_update_phone_mail_question`(
 	IN `id` INT,
 	IN `security_answer` VARCHAR(50),
-	IN `new_password` CHAR(32)
+	IN `new_phone_number` CHAR(32)
 )
 LANGUAGE SQL
 NOT DETERMINISTIC
@@ -18,6 +18,6 @@ BEGIN
 		SIGNAL SQLSTATE 'HY000' SET MESSAGE_TEXT = "密保答案错误";
 	end if;
 	update `user`
-	set `user`.`password`=`new_password`
+	set `user`.`phone_number`=`new_phone_number`
 	where `user`.id=id;
 END //

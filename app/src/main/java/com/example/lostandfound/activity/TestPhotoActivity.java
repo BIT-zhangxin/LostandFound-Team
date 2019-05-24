@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,7 +21,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
+import com.example.lostandfound.component.UriUtils;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -36,7 +40,12 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     public static final String JPEG_FORMAT=".jpeg";//jpeg图片格式
 
     private Uri photoUri;//保存拍照时返回的uri
+    private Uri pictureUri;//保存选择图片时返回的uri
     private Uri cropUri;//保存裁剪时返回的uri
+
+    private File photoFile;//保存拍照文件
+    private File pictureFile;//保存选择图片文件
+    private File cropFile;//保存裁剪文件
 
     private boolean hasPermission=false;//是否已经获取权限
 
@@ -100,12 +109,32 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         }
         //选择相册图片
         else if(requestCode==PICTURE_SELECT_REQUEST_CODE){
-            cropUri=goCrop(data.getData());
+            pictureUri=data.getData();
+            pictureFile=new File(UriUtils.getRealPathFromUri(this,pictureUri));
+            cropUri=goCrop(pictureUri);
         }
         //裁剪图片
         else if(requestCode==CROP_REQUEST_CODE){
             Glide.with(this).load(cropUri).into(smallImg);
         }
+    }
+
+    //调用相机
+    private Uri goCamera(){
+        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        //创建拍照保存的图片文件
+        photoFile=createFile(JPG_FORMAT);
+        Uri uri=getUriForFile(this, photoFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        startActivityForResult(intent,PHOTO_REQUEST_CODE);
+        return uri;
+    }
+
+    //调用系统的相册
+    private void goPictureAlbum(){
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,PICTURE_SELECT_REQUEST_CODE);
     }
 
     //调用图片裁剪
@@ -117,15 +146,15 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         intent.putExtra("scale",true);
         //aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX",1);
-        intent.putExtra("aspectY",2);
+        intent.putExtra("aspectY",1);
         //outputX outputY 是裁剪图片宽高
         intent.putExtra("outputX",250);
         intent.putExtra("outputY",250);
         //取消人脸识别
         intent.putExtra("noFaceDetection",true);
         //创建裁剪图片的文件
-        File file=createFile(JPEG_FORMAT);
-        Uri outputUri=Uri.fromFile(file);
+        cropFile=createFile(JPEG_FORMAT);
+        Uri outputUri=Uri.fromFile(cropFile);
         //设置不要返回图片数据，而是存储在uri位置
         intent.putExtra("return-data",false);
         intent.putExtra("output",outputUri);
@@ -133,24 +162,6 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         intent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
         startActivityForResult(intent,CROP_REQUEST_CODE);
         return outputUri;
-    }
-
-    //调用相机
-    private Uri goCamera(){
-        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //创建拍照保存的图片文件
-        File file=createFile(JPG_FORMAT);
-        Uri uri=getUriForFile(this, file);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-        startActivityForResult(intent,PHOTO_REQUEST_CODE);
-        return uri;
-    }
-
-    //调用系统的相册
-    private void goPictureAlbum(){
-        Intent intent=new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent,PICTURE_SELECT_REQUEST_CODE);
     }
 
     //动态检查权限
@@ -196,5 +207,30 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         Date currentTime=new Date();
         SimpleDateFormat formatter=new SimpleDateFormat("yyyyMMddHHmmss");
         return formatter.format(currentTime);
+    }
+
+    //上传图片
+    public void uploadPicture(File file){
+        try{
+            byte[] pictureByte=readStream(file);
+            //TODO:进行数据库写入操作
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //读取图片文件流
+    public byte[] readStream(File file) throws Exception {
+        FileInputStream fs=new FileInputStream(file);
+        ByteArrayOutputStream outStream=new ByteArrayOutputStream();
+        byte[] buffer=new byte[1024];
+        int len;
+        while ((len=fs.read(buffer))!=-1){
+            outStream.write(buffer,0,len);
+        }
+        outStream.close();
+        fs.close();
+        return outStream.toByteArray();
     }
 }

@@ -93,4 +93,10 @@ public class MyBundle {
         bundle.putString("description",myMessage.getDescription());
         return bundle;
     }
+
+    public static Bundle PictureBundle(int id){
+        Bundle bundle=new Bundle();
+        bundle.putInt("id",id);
+        return bundle;
+    }
 }

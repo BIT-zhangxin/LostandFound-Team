@@ -10,7 +10,7 @@ public class MyConnectionHelper {
     private static final String DBDRIVER = "com.mysql.jdbc.Driver";
 
     //数据库地址
-    private static final String DBURL ="jdbc:mysql://59.110.213.213:3306/lostandfound"
+    private static final String DBURL ="jdbc:mysql://59.110.213.213:3306/LostandFound"
     +"?useUnicode=true&characterEncoding=utf-8&connectTimeout=5000&socketTimeout=5000";
 
 //    //数据库地址

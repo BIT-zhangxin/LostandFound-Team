@@ -45,6 +45,7 @@
         </activity>
         <activity android:name=".activity.ApplyInfoActivity">
         </activity>
+        <activity android:name=".activity.phone_mail_QuestionActivity" />
     </application>
 
 </manifest>

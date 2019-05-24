@@ -76,6 +76,31 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
         }
     };
 
+    @SuppressLint("HandlerLeak")
+    private Handler setByQuestionHandler_2 =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case MyDefine.REPLY_SUCCESS:
+                    Intent intent=new Intent(SecurityChooseActivity.this,phone_mail_QuestionActivity.class);
+                    intent.putExtras(msg.getData());
+                    startActivity(intent);
+                    break;
+//                case MyDefine.REPLY_FAILED:
+//                    warningTip("你还未设置密保");
+//                    break;
+                case MyDefine.REPLY_UNKNOWN_ERROR:
+                    Toast.makeText(SecurityChooseActivity.this,"未知错误",Toast.LENGTH_LONG).show();
+                    break;
+                case MyDefine.REPLY_NO_RESPONSE:
+                    Toast.makeText(SecurityChooseActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,16 +269,25 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        String mysql_sql = "call proc_select_security_phone_mail(?)";
-                        String sql_server_sql = "exec proc_select_security_phone_mail ?";
+                        String mysql_sql = "call proc_select_security_question(?)";
+                        String sql_server_sql = "exec proc_select_security_question ?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, id);
+                        ResultSet rs = preSt.executeQuery();
+                        if (rs.next()) {
+                            msg.what = MyDefine.REPLY_SUCCESS;
+                            Bundle bundle=new Bundle();
+                            bundle.putString("security_question",rs.getString("security_question"));
+                            msg.setData(bundle);
+                        } else{
+                            msg.what = MyDefine.REPLY_FAILED;
+                        }
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                     msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
                 }
-                setByQuestionHandler.sendMessage(msg);
+                setByQuestionHandler_2.sendMessage(msg);
             }
         }
 

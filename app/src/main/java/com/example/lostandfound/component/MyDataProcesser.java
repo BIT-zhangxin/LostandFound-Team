@@ -373,6 +373,48 @@ public class MyDataProcesser {
         new MyThread(bundle, handler).start();
     }
 
+    public static void UpdatephoneQuestion(Bundle bundle,Handler handler) {
+
+        class MyThread extends Thread {
+
+            private Bundle bundle;
+            private Handler handler;
+
+            private MyThread(Bundle bundle, Handler handler) {
+                this.bundle = bundle;
+                this.handler = handler;
+            }
+
+            @Override
+            public void run() {
+                Message msg = new Message();
+                try {
+                    Connection connection = MyConnectionHelper.getConnection();
+                    if (connection == null) {
+                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+                    } else {
+                        int id=bundle.getInt("id",0);
+                        String security_answer=bundle.getString("security_answer", "");
+                        String new_phone_mail=bundle.getString("new_phone_mail", "");
+                        String mysql_sql="call proc_update_phone_mail_question(?,?,?)";
+                        String sql_server_sql = "exec proc_update_phone_mail_question ?,?,?";
+                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+                        preSt.setInt(1,id);
+                        preSt.setString(2, security_answer);
+                        preSt.setString(3, new_phone_mail);
+                        preSt.executeUpdate();
+                        msg.what = MyDefine.REPLY_SUCCESS;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    msg.what = MyDefine.REPLY_FAILED;
+                }
+                handler.sendMessage(msg);
+            }
+        }
+        new MyThread(bundle, handler).start();
+    }
+
     //通过密保修改密码
     public static void UpdatePasswordQuestion(Bundle bundle,Handler handler) {
 

@@ -18,7 +18,7 @@
     <string name="register_account_hint">请输入账号(20位以内，不包含特殊字符)</string>
     <string name="register_password_hint">请输入密码(20位以内，不包含特殊字符)</string>
     <string name="register_password_repetition_hint">请重复密码</string>
-    <string name="register_phone_number_hint">请输入手机号</string>
+    <string name="register_phone_number_hint">请输入手机号或邮箱</string>
 
     <string name="home_title">欢迎</string>
 
@@ -86,6 +86,8 @@
     <string name="information_security_question_hint">密保问题：</string>
     <string name="information_security_question_input_hint">请输入密保答案</string>
     <string name="information_security_question_commit">提交</string>
+
+    <string name="information_phone_mail_security_password_title">修改账号</string>
 
     <string name="user_apply_info_title">申请记录</string>
 </resources>

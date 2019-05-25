@@ -21,3 +21,5 @@ CREATE PROCEDURE `proc_select_message` ( ) BEGIN
 		AND `main_event`.event_type < 10;
 
 END //
+
+#已添加数据库，待改动

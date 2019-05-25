@@ -21,3 +21,5 @@ BEGIN
 	where `main_event`.object_id=`object`.id
 	and `main_event`.user_id=user_id;
 END //
+
+#未添加数据库，待改动

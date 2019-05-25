@@ -19,3 +19,5 @@ BEGIN
 	set `main_event`.event_type=`main_event`.event_type+10
 	where `main_event`.id=main_event_id;
 END //
+
+#未添加数据库，待改动

@@ -14,3 +14,5 @@ CREATE PROCEDURE `proc_login_phone_number` ( IN `phone_number` CHAR ( 11 ), IN `
 		AND `user`.`password` = `password`;
 
 END //
+
+#已添加数据库，改动完成

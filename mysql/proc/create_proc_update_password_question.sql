@@ -21,3 +21,5 @@ BEGIN
 	set `user`.`password`=`new_password`
 	where `user`.id=id;
 END //
+
+#未添加数据库，待改动

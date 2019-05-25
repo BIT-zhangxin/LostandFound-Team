@@ -23,3 +23,5 @@ BEGIN
 	insert into `sub_event`(main_event_id,event_type,user_id)
 	values(main_event_id,2,user_id);
 END //
+
+#未添加数据库，待改动

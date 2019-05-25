@@ -21,3 +21,5 @@ BEGIN
 	insert into `main_event`(event_type,user_id,object_id)
 	values(event_type,user_id,object_id);
 END //
+
+#未添加数据库，待改动

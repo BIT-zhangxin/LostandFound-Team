@@ -23,3 +23,5 @@ BEGIN
 	insert into `report`(user_id,main_event_id)
 	values(user_id,main_event_id);
 END //
+
+#未添加数据库，没用了，待删除

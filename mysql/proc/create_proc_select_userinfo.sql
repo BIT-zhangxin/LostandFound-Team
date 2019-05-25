@@ -17,3 +17,5 @@ CREATE PROCEDURE `proc_select_userinfo` ( IN `id` INT ) BEGIN
 		`user`.`id` = `id`;
 
 END //
+
+#已添加数据库，待改动

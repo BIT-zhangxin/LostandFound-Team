@@ -32,7 +32,7 @@ BEGIN
 	`object`.id as object_id,
 	`object`.name as object_name,
 	`user`.id as user_id,
-	`user`.nickname,
+	`user`.username,
 	`user`.contact_information
 	from `object`,`user`,tmpTable
 	where `object`.id=tmpTable.object_id and

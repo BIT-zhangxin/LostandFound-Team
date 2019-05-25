@@ -18,10 +18,10 @@ BEGIN
 	if (tmp>0) then
 		SIGNAL SQLSTATE 'HY000' SET MESSAGE_TEXT = "手机已被注册";
 	end if;
-	insert into `user`(`phone_number`,`password`,nickname,`security_question`,`security_answer`)
+	insert into `user`(`phone_number`,`password`,username,`security_question`,`security_answer`)
 	values(`phone_number`,`password`,'',`security_question`,`security_answer`);
 	set tmp=last_insert_id();
 	update `user`
-	set `user`.nickname=concat('用户',tmp)
+	set `user`.username=concat('用户',tmp)
 	where `user`.id=tmp;
 END //

@@ -179,11 +179,12 @@ public class MyDataProcesser {
                     } else {
                         String id_or_phone_number = bundle.getString("id_or_phone_number", "");
                         String password = bundle.getString("password", "");
-                        String mysql_sql="call proc_login(?,?)";
-                        String sql_server_sql = "exec proc_login ?,?";
+                        //TODO:判断是手机还是邮箱
+                        String mysql_sql="call proc_login_phone_number(?,?)";
+                        //String sql_server_sql = "exec proc_login_phone_number ?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setString(1, id_or_phone_number);
-                        preSt.setString(2, password);
+                        preSt.setString(1,id_or_phone_number);
+                        preSt.setString(2,password);
                         ResultSet rs = preSt.executeQuery();
                         if (rs.next()) {
                             msg.what = MyDefine.REPLY_SUCCESS;

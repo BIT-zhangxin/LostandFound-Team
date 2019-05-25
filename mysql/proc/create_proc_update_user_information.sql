@@ -2,7 +2,7 @@ USE `LostandFound`;
 delimiter //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_update_user_information`(
 	IN `id` INT,
-	IN `nickname` VARCHAR(20),
+	IN `username` VARCHAR(20),
 	IN `contact_information` VARCHAR(50),
 	IN `personal_profile` VARCHAR(255)
 )
@@ -12,9 +12,9 @@ CONTAINS SQL
 SQL SECURITY DEFINER
 COMMENT ''
 BEGIN
-	if(`nickname`!='') then
+	if(`username`!='') then
 		update `user`
-		set `user`.nickname=nickname
+		set `user`.username=username
 		where `user`.id=id;
 	end if;
 	if(`contact_information`!='') then

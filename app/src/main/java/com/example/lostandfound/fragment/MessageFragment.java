@@ -98,10 +98,9 @@ public class MessageFragment extends Fragment {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
                         String mysql_sql="call proc_select_message";
-                        String sql_server_sql = "exec proc_select_message";
+                        //String sql_server_sql = "exec proc_select_message";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         ResultSet rs = preSt.executeQuery();
-                        Log.d("test","finish");
                         while(rs.next()){
                             MyMessage myMessage=new MyMessage();
                             myMessage.setMain_event_id(rs.getInt("main_event_id"));
@@ -118,7 +117,6 @@ public class MessageFragment extends Fragment {
                 } catch (SQLException e) {
                     e.printStackTrace();
                     msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
-//                    Log.d("test","failed");
                 }
                 messageHandler.sendMessage(msg);
             }

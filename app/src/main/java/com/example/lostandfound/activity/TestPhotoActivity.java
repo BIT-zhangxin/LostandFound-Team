@@ -220,34 +220,34 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         return formatter.format(currentTime);
     }
 
-    //上传图片
-    private void upload(File file,String type){
-        Bundle bundle=MyBundle.PictureBundle(myApplication.getId());
-        switch (type) {
-            case PROFILE_PHOTO_TYPE:
-                MyDataProcesser.UploadProfilePhoto(file,bundle,null);
-                break;
-            case OBJECT_PICTURE_TYPE:
-                MyDataProcesser.UploadObjectPicture(file,bundle,null);
-                break;
-            default:
-                break;
-        }
-    }
-
-    //下载图片
-    private void download(Activity activity,String type){
-        Bundle bundle=MyBundle.PictureBundle(myApplication.getId());
-        switch (type) {
-            case PROFILE_PHOTO_TYPE:
-                MyDataProcesser.DownloadProfilePhoto(activity,bundle,null);
-                break;
-            case OBJECT_PICTURE_TYPE:
-                MyDataProcesser.DownloadObjectPicture(activity,bundle,null);
-                break;
-            default:
-                break;
-        }
-    }
+//    //上传图片
+//    private void upload(File file,String type){
+//        Bundle bundle=MyBundle.PictureBundle(myApplication.getId());
+//        switch (type) {
+//            case PROFILE_PHOTO_TYPE:
+//                MyDataProcesser.UploadProfilePhoto(file,bundle,null);
+//                break;
+//            case OBJECT_PICTURE_TYPE:
+//                MyDataProcesser.UploadObjectPicture(file,bundle,null);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
+//
+//    //下载图片
+//    private void download(Activity activity,String type){
+//        Bundle bundle=MyBundle.PictureBundle(myApplication.getId());
+//        switch (type) {
+//            case PROFILE_PHOTO_TYPE:
+//                MyDataProcesser.DownloadProfilePhoto(activity,bundle,null);
+//                break;
+//            case OBJECT_PICTURE_TYPE:
+//                MyDataProcesser.DownloadObjectPicture(activity,bundle,null);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 }

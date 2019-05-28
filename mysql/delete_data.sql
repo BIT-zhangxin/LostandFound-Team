@@ -1,7 +1,13 @@
 USE `LostandFound`;
-delete from `report`;
-delete from `sub_event`;
-delete from `main_event`;
-delete from `object`;
-delete from `user_security_question`;
-delete from `user`;
+DELETE
+FROM
+	`LostandFound`.`sub_event`;
+DELETE
+FROM
+	`LostandFound`.`main_event`;
+DELETE
+FROM
+	`LostandFound`.`object`;
+DELETE
+FROM
+	`LostandFound`.`user`;

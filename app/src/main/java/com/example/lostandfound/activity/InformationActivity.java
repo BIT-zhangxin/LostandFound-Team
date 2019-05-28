@@ -6,13 +6,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyConnectionHelper;
 import com.example.lostandfound.component.MyDefine;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,6 +55,7 @@ public class InformationActivity extends MyAppCompatActivity {
         initComponent();
         initData();
         initView();
+        //test
     }
 
     private void initComponent(){
@@ -90,14 +89,14 @@ public class InformationActivity extends MyAppCompatActivity {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
                         String mysql_sql="call proc_select_userinfo(?)";
-                        String sql_server_sql = "exec proc_select_userinfo ?";
+                        //String sql_server_sql = "exec proc_select_userinfo ?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         ResultSet rs = preSt.executeQuery();
                         if (rs.next()) {
                             msg.what = MyDefine.REPLY_SUCCESS;
                             myApplication.setPhone_number(rs.getString("phone_number"));
-                            myApplication.setNickname(rs.getString("nickname"));
+                            myApplication.setUsername(rs.getString("username"));
                             myApplication.setContact_information(rs.getString("contact_information"));
                             myApplication.setCredit_score(rs.getInt("credit_score"));
                         } else{
@@ -122,7 +121,7 @@ public class InformationActivity extends MyAppCompatActivity {
     }
 
     private void initView(){
-        tv_info_info_nickname.setText(myApplication.getNickname());
+        tv_info_info_nickname.setText(myApplication.getUsername());
         tv_info_info_id.setText(""+myApplication.getId());
         tv_info_info_phone_number.setText(myApplication.getPhone_number());
         tv_info_info_contact_information.setText(myApplication.getContact_information());

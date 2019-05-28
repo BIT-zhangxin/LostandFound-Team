@@ -33,7 +33,7 @@ public class MyBundle {
         return bundle;
     }
 
-    public static Bundle PublishBundle(int user_id, int event_type, String object_name, String location, String time, String description){
+    public static Bundle PublishBundle(int user_id, int event_type, String object_name, String location, String time, String description,String question){
         Bundle bundle=new Bundle();
         bundle.putInt("user_id",user_id);
         bundle.putInt("event_type",event_type);
@@ -41,6 +41,7 @@ public class MyBundle {
         bundle.putString("location",location);
         bundle.putString("time",time);
         bundle.putString("description",description);
+        bundle.putString("question",question);
         return bundle;
     }
 
@@ -108,6 +109,12 @@ public class MyBundle {
         bundle.putString("location",myMessage.getLocation());
         bundle.putString("time",myMessage.getTime());
         bundle.putString("description",myMessage.getDescription());
+        return bundle;
+    }
+
+    public static Bundle PictureBundle(int id){
+        Bundle bundle=new Bundle();
+        bundle.putInt("id",id);
         return bundle;
     }
 }

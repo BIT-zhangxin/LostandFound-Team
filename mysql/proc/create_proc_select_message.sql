@@ -1,23 +1,25 @@
 USE `LostandFound`;
+DROP PROCEDURE
+IF
+	EXISTS `proc_select_message`;
+
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_select_message`(
-	
-)
-LANGUAGE SQL
-NOT DETERMINISTIC
-CONTAINS SQL
-SQL SECURITY DEFINER
-COMMENT ''
-BEGIN
-	select
-	`main_event`.id as main_event_id,
-	`main_event`.event_type as main_event_type,
-	`object`.id as object_id,
-	`object`.name,
-	`object`.location,
-	`object`.`time`,
-	`object`.description
-	from `object`,`main_event`
-	where `main_event`.object_id=`object`.id
-	and `main_event`.event_type<10;
+CREATE PROCEDURE `proc_select_message` ( ) BEGIN
+	SELECT
+		`main_event`.id AS `main_event_id`,
+		`main_event`.event_type AS `main_event_type`,
+		`main_event`.`object_id` AS `object_id`,
+		`object`.`name` AS `name`,
+		`object`.location AS `location`,
+		`object`.`time` AS `time`,
+		`object`.description AS `description`
+	FROM
+		`LostandFound`.`object`,
+		`LostandFound`.`main_event`
+	WHERE
+		`main_event`.`object_id` = `object`.id
+		AND `main_event`.event_type < 10;
+
 END //
+
+#已添加数据库，待改动

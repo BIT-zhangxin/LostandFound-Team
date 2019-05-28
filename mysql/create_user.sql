@@ -1,2 +1,2 @@
-create user 'LostandFound'@'%' identified by 'LostandFound';
-grant all privileges on LostandFound.* to 'LostandFound'@'%' with grant option; 
+CREATE USER 'remoteuser' @'%' IDENTIFIED BY 'remoteuser';
+GRANT ALL PRIVILEGES ON LostandFound.* TO 'remoteuser' @'%';

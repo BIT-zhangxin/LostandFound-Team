@@ -4,7 +4,11 @@
     package="com.example.lostandfound">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".component.MyApplication"
         android:allowBackup="false"
@@ -48,6 +52,21 @@
         <activity android:name=".activity.phone_mail_QuestionActivity" >
         </activity>
         <activity android:name=".activity.RetrievePassword"/>
+        <activity android:name=".activity.TestPhotoActivity">
+        </activity>
+
+        <provider
+            android:authorities="com.example.lostandfound.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths"/>
+        </provider>
+
+
+
     </application>
 
 </manifest>

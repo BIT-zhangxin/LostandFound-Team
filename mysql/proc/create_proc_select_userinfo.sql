@@ -1,20 +1,21 @@
 USE `LostandFound`;
+DROP PROCEDURE
+IF
+	EXISTS `proc_select_userinfo`;
+
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_select_userinfo`(
-	IN `id` INT
-)
-LANGUAGE SQL
-NOT DETERMINISTIC
-CONTAINS SQL
-SQL SECURITY DEFINER
-COMMENT ''
-BEGIN
-	select
-	`user`.id,
-	`user`.phone_number,
-	`user`.nickname,
-	`user`.contact_information,
-	`user`.credit_score
-	from `user`
-	where `user`.id=id;
+CREATE PROCEDURE `proc_select_userinfo` ( IN `id` INT ) BEGIN
+	SELECT
+		`user`.`id` AS `id`,
+		`user`.`phone_number` AS `phone_number`,
+		`user`.`username` AS `username`,
+		`user`.`contact_information` AS `contact_information`,
+		`user`.`credit_score` AS `credit_score`
+	FROM
+		`LostandFound`.`user`
+	WHERE
+		`user`.`id` = `id`;
+
 END //
+
+#已添加数据库，待改动

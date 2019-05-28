@@ -6,7 +6,7 @@ public class MyApplication extends Application {
 
     private int id;
     private String phone_number;
-    private String nickname;
+    private String username;
     private String contact_information;
     private int credit_score;
 
@@ -26,12 +26,12 @@ public class MyApplication extends Application {
         this.phone_number = phone_number;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getContact_information() {

@@ -172,23 +172,22 @@
         android:layout_marginTop="10dp">
 
         <TextView
-            android:id="@+id/tv_publish_image"
+            android:id="@+id/tv_publish_question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/publish_image"
+            android:text="设置问题："
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/black"
             android:layout_marginStart="20dp"/>
 
-        <TextView
-            android:id="@+id/tv_publish_image_hint"
+        <EditText
+            android:id="@+id/et_publish_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/tv_publish_image"
-            android:layout_marginStart="50dp"
-            android:text="@string/publish_image_hint"
-            android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"/>
+            android:layout_toEndOf="@id/tv_publish_question"
+            android:layout_marginStart="20dp"
+            android:inputType="text"
+            android:textSize="@dimen/text_size_normal"/>
 
         <View
             android:layout_width="match_parent"
@@ -198,6 +197,60 @@
             />
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_publish_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/publish_image"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"/>
+
+        <Button
+            android:id="@+id/btn_publish_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/tv_publish_image"
+            android:text="拍照"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/btn_publish_select_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginStart="25dp"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@id/btn_publish_photo"
+            android:text="选择图片"
+            android:textColor="@color/black"
+            android:textSize="18sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/tv_gray_normal"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/img_publish_image"
+        android:layout_gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:contentDescription="选择的图片"/>
 
     <LinearLayout
         android:layout_width="match_parent"

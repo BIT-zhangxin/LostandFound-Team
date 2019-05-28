@@ -1,7 +1,7 @@
 USE `LostandFound`;
 delimiter //
 CREATE PROCEDURE `proc_getID`(
-	IN `id_or_phone_number` VARCHAR(20)
+	IN `phone_number` VARCHAR(20)
 )
 LANGUAGE SQL
 NOT DETERMINISTIC

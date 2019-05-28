@@ -32,7 +32,7 @@ CREATE TABLE `user`  (
   `credit_score` int(11) NOT NULL DEFAULT 0,
   `security_question` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `security_answer` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `profile_photo` mediumblob NULL,
+  `photo_path` mediumblob NULL,
   `profile_photo_format` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;

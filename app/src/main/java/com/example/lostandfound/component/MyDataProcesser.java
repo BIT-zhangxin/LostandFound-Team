@@ -479,17 +479,17 @@ public class MyDataProcesser {
     }
 
     //上传头像
-    public static void UploadProfilePhoto(File file,Bundle bundle,Handler handler){
+    public static void UploadProfilePhoto(File file,int id,Handler handler){
 
         class MyThread extends Thread{
 
             private File file;
-            private Bundle bundle;
+            private int id;
             private Handler handler;
 
-            private MyThread(File file,Bundle bundle,Handler handler){
+            private MyThread(File file,int id,Handler handler){
                 this.file=file;
-                this.bundle=bundle;
+                this.id=id;
                 this.handler=handler;
             }
 
@@ -501,11 +501,10 @@ public class MyDataProcesser {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        int userId=bundle.getInt("id");
                         String mysql_sql="call proc_upload_profile_photo(?,?,?)";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
 
-                        preSt.setInt(1, userId);
+                        preSt.setInt(1, id);
 
                         String[] result=file.getName().split(".");//切分文件格式
                         String format=result[1];
@@ -521,24 +520,22 @@ public class MyDataProcesser {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                //handler.sendMessage(msg);
+                handler.sendMessage(msg);
             }
         }
-        new MyThread(file,bundle,handler).start();
+        new MyThread(file,id,handler).start();
     }
 
     //下载头像，形成一个文件存储于本地文件夹
-    public static void DownloadProfilePhoto(Activity activity,Bundle bundle,Handler handler){
+    public static void DownloadProfilePhoto(Activity activity,Handler handler){
 
         class MyThread extends Thread{
 
             private Activity activity;
-            private Bundle bundle;
             private Handler handler;
 
-            private MyThread(Activity activity,Bundle bundle,Handler handler){
+            private MyThread(Activity activity,Handler handler){
                 this.activity=activity;
-                this.bundle=bundle;
                 this.handler=handler;
             }
 
@@ -550,7 +547,7 @@ public class MyDataProcesser {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        int userId=bundle.getInt("id");
+                        int userId=((MyApplication)activity.getApplication()).getId();
                         String mysql_sql="call proc_download_profile_photo(?)";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, userId);
@@ -588,125 +585,9 @@ public class MyDataProcesser {
                     e.printStackTrace();
                     msg.what = MyDefine.REPLY_FAILED;
                 }
-                //handler.sendMessage(msg);
+                handler.sendMessage(msg);
             }
         }
-        new MyThread(activity,bundle,handler).start();
-    }
-
-    //上传物品图片
-    public static void UploadObjectPicture(File file,Bundle bundle,Handler handler){
-
-        class MyThread extends Thread{
-
-            private File file;
-            private Bundle bundle;
-            private Handler handler;
-
-            private MyThread(File file,Bundle bundle,Handler handler){
-                this.file=file;
-                this.bundle=bundle;
-                this.handler=handler;
-            }
-
-            @Override
-            public void run() {
-                Message msg=new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        int userId=bundle.getInt("id");
-                        String mysql_sql="call proc_upload_object_picture(?,?,?)";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-
-                        preSt.setInt(1, userId);
-
-                        String[] result=file.getName().split(".");//切分文件格式
-                        String format=result[1];
-
-                        preSt.setString(2, format);
-                        preSt.setBlob(3,new FileInputStream(file));
-                        preSt.executeUpdate();
-                        msg.what = MyDefine.REPLY_SUCCESS;
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    msg.what = MyDefine.REPLY_FAILED;
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                //handler.sendMessage(msg);
-            }
-        }
-        new MyThread(file,bundle,handler).start();
-    }
-
-    //下载物品图片，形成一个文件存储于本地文件夹
-    public static void DownloadObjectPicture(Activity activity,Bundle bundle,Handler handler){
-
-        class MyThread extends Thread{
-
-            private Activity activity;
-            private Bundle bundle;
-            private Handler handler;
-
-            private MyThread(Activity activity,Bundle bundle,Handler handler){
-                this.activity=activity;
-                this.bundle=bundle;
-                this.handler=handler;
-            }
-
-            @Override
-            public void run() {
-                Message msg=new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        int userId=bundle.getInt("id");
-                        String mysql_sql="call proc_download_object_picture(?)";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setInt(1, userId);
-                        ResultSet rs = preSt.executeQuery();
-                        if (rs.next()) {
-                            msg.what = MyDefine.REPLY_SUCCESS;
-                            String format=rs.getString("format");
-                            Blob blob=rs.getBlob("profile_photo");
-                            try {
-
-                                InputStream in = blob.getBinaryStream();
-                                String storagePath=Objects.requireNonNull(activity.getApplication().getExternalFilesDir(Environment.DIRECTORY_PICTURES)).getAbsolutePath();
-                                File storageDir=new File(storagePath);
-                                //noinspection ResultOfMethodCallIgnored
-                                storageDir.mkdirs();
-                                File file=new File(storageDir,TestPhotoActivity.getStringToday()+"."+format);
-                                String absolutePath=file.getAbsolutePath();
-                                OutputStream out = new FileOutputStream(file);
-                                byte [] buff = new byte[1024];
-                                int len;
-                                while((len = in.read(buff)) > 0){
-                                    out.write(buff, 0, len);
-                                }
-                                Bundle bundle=new Bundle();
-                                bundle.putString("absolutePath",absolutePath);
-                                msg.setData(bundle);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else{
-                            msg.what = MyDefine.REPLY_FAILED;
-                        }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    msg.what = MyDefine.REPLY_FAILED;
-                }
-                //handler.sendMessage(msg);
-            }
-        }
-        new MyThread(activity,bundle,handler).start();
+        new MyThread(activity,handler).start();
     }
 }

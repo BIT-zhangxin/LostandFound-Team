@@ -20,10 +20,11 @@ public class InformationActivity extends MyAppCompatActivity {
 
     MyApplication myApplication;
 
-    private TextView tv_info_info_nickname;
-    private TextView tv_info_info_id;
+    private TextView tv_info_info_username;
     private TextView tv_info_info_phone_number;
+    private TextView tv_info_info_email_address;
     private TextView tv_info_info_contact_information;
+    private TextView tv_info_info_introduction;
     private TextView tv_info_info_credit_score;
 
     @SuppressLint("HandlerLeak")
@@ -55,28 +56,25 @@ public class InformationActivity extends MyAppCompatActivity {
         initComponent();
         initData();
         initView();
-        //test
     }
 
     private void initComponent(){
-        tv_info_info_nickname = findViewById(R.id.tv_info_info_nickname);
-        tv_info_info_id = findViewById(R.id.tv_info_info_id);
+        tv_info_info_username = findViewById(R.id.tv_info_info_username);
         tv_info_info_phone_number = findViewById(R.id.tv_info_info_phone_number);
+        tv_info_info_email_address = findViewById(R.id.tv_info_info_email_address);
         tv_info_info_contact_information = findViewById(R.id.tv_info_info_contact_information);
+        tv_info_info_introduction = findViewById(R.id.tv_info_info_introduction);
         tv_info_info_credit_score = findViewById(R.id.tv_info_info_credit_score);
         myApplication=(MyApplication)getApplication();
     }
 
     private void initData(){
-        int id=myApplication.getId();
 
         class MyThread extends Thread{
 
-            private int id;
             private MyApplication myApplication;
 
-            private MyThread(int id,MyApplication myApplication){
-                this.id=id;
+            private MyThread(MyApplication myApplication){
                 this.myApplication=myApplication;
             }
 
@@ -88,6 +86,7 @@ public class InformationActivity extends MyAppCompatActivity {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
+                        int id=myApplication.getId();
                         String mysql_sql="call proc_select_userinfo(?)";
                         //String sql_server_sql = "exec proc_select_userinfo ?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
@@ -95,9 +94,11 @@ public class InformationActivity extends MyAppCompatActivity {
                         ResultSet rs = preSt.executeQuery();
                         if (rs.next()) {
                             msg.what = MyDefine.REPLY_SUCCESS;
-                            myApplication.setPhone_number(rs.getString("phone_number"));
                             myApplication.setUsername(rs.getString("username"));
+                            myApplication.setPhone_number(rs.getString("phone_number"));
+                            myApplication.setEmail_address(rs.getString("email_address"));
                             myApplication.setContact_information(rs.getString("contact_information"));
+                            myApplication.setIntroduction(rs.getString("introduction"));
                             myApplication.setCredit_score(rs.getInt("credit_score"));
                         } else{
                             msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
@@ -111,7 +112,7 @@ public class InformationActivity extends MyAppCompatActivity {
             }
         }
 
-        MyThread myThread=new MyThread(id,myApplication);
+        MyThread myThread=new MyThread(myApplication);
         myThread.start();
         try {
             myThread.join();
@@ -121,10 +122,11 @@ public class InformationActivity extends MyAppCompatActivity {
     }
 
     private void initView(){
-        tv_info_info_nickname.setText(myApplication.getUsername());
-        tv_info_info_id.setText(""+myApplication.getId());
+        tv_info_info_username.setText(myApplication.getUsername());
         tv_info_info_phone_number.setText(myApplication.getPhone_number());
+        tv_info_info_email_address.setText(myApplication.getEmail_address());
         tv_info_info_contact_information.setText(myApplication.getContact_information());
+        tv_info_info_introduction.setText(myApplication.getIntroduction());
         tv_info_info_credit_score.setText(""+myApplication.getCredit_score());
     }
 }

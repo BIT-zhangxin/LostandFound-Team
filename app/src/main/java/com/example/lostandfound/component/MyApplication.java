@@ -1,14 +1,18 @@
 package com.example.lostandfound.component;
 
 import android.app.Application;
+import android.net.Uri;
 
 public class MyApplication extends Application {
 
-    private int id;
-    private String phone_number;
-    private String username;
-    private String contact_information;
-    private int credit_score;
+    private int id;//用户id
+    private String username;//用户名称
+    private String phone_number;//手机号码
+    private String email_address;//电子邮箱
+    private String contact_information;//联系方式
+    private String introduction;//个人简介
+    private int credit_score;//信誉积分
+    private String photo_path;//头像路径
 
     public int getId() {
         return id;
@@ -48,5 +52,29 @@ public class MyApplication extends Application {
 
     public void setCredit_score(int credit_score) {
         this.credit_score = credit_score;
+    }
+
+    public String getEmail_address() {
+        return email_address;
+    }
+
+    public void setEmail_address(String email_address) {
+        this.email_address = email_address;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
+    public String getPhoto_path() {
+        return photo_path;
+    }
+
+    public void setPhoto_path(String photo_path) {
+        this.photo_path = photo_path;
     }
 }

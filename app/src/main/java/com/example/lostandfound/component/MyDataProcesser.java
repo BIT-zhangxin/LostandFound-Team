@@ -206,14 +206,16 @@ public class MyDataProcesser {
     }
 
     //发布信息
-    public static void Publish(Bundle bundle,Handler handler) {
+    public static void Publish(File file,Bundle bundle,Handler handler) {
 
         class MyThread extends Thread {
 
+            private File file;
             private Bundle bundle;
             private Handler handler;
 
-            private MyThread(Bundle bundle, Handler handler) {
+            private MyThread(File file,Bundle bundle, Handler handler) {
+                this.file = file;
                 this.bundle = bundle;
                 this.handler = handler;
             }
@@ -232,8 +234,8 @@ public class MyDataProcesser {
                         String location=bundle.getString("location","");
                         String time=bundle.getString("time","");
                         String description=bundle.getString("description","");
-                        String mysql_sql="call proc_publish(?,?,?,?,?,?)";
-                        String sql_server_sql="exec proc_publish ?,?,?,?,?,?";
+                        String mysql_sql="call proc_publish(?,?,?,?,?,?,?,?)";
+                        //String sql_server_sql="exec proc_publish ?,?,?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,user_id);
                         preSt.setInt(2,event_type);
@@ -241,17 +243,25 @@ public class MyDataProcesser {
                         preSt.setString(4, location);
                         preSt.setString(5,time);
                         preSt.setString(6,description);
+
+                        String[] result=file.getName().split(".");//切分文件格式
+                        String format=result[1];
+                        preSt.setBlob(7,new FileInputStream(file));
+                        preSt.setString(8, format);
+
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
                     msg.what = MyDefine.REPLY_FAILED;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
                 handler.sendMessage(msg);
             }
         }
-        new MyThread(bundle, handler).start();
+        new MyThread(file,bundle, handler).start();
     }
 
     //注册账号

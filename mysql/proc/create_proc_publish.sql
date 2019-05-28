@@ -1,25 +1,29 @@
 USE `LostandFound`;
+DROP PROCEDURE
+IF
+	EXISTS `proc_publish`;
+
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_publish`(
+CREATE PROCEDURE `proc_publish` (
 	IN `user_id` INT,
 	IN `event_type` INT,
-	IN `name` VARCHAR(20),
-	IN `location` VARCHAR(50),
-	IN `time` VARCHAR(50),
-	IN `description` VARCHAR(100)
-)
-LANGUAGE SQL
-NOT DETERMINISTIC
-CONTAINS SQL
-SQL SECURITY DEFINER
-COMMENT ''
-BEGIN
-	declare object_id int;
-	insert into `object`(name,location,`time`,description)
-	values(name,location,`time`,description);
-	set object_id=last_insert_id();
-	insert into `main_event`(event_type,user_id,object_id)
-	values(event_type,user_id,object_id);
-END //
+	IN `name` VARCHAR ( 100 ),
+	IN `location` VARCHAR ( 100 ),
+	IN `time` VARCHAR ( 100 ),
+	IN `description` VARCHAR ( 100 ),
+	IN `question` VARCHAR ( 100 ),
+	IN `picture` BLOB,
+	IN `picture_format` VARCHAR ( 10 )
+	) BEGIN
+	DECLARE
+		`object_id` INT;
+	INSERT INTO `LostandFound`.`object` ( `name`, `location`, `time`, `description`, `picture`, `picture_format` )
+	VALUES
+		( `name`, `location`, `time`, `description`, `picture`, `picture_format` );
 
-#未添加数据库，待改动
+	SET `object_id` = last_insert_id( );
+	INSERT INTO `LostandFound`.`main_event` ( `event_type`, `user_id`, `object_id`, `description`, `time` )
+	VALUES
+		( `event_type`, `user_id`, `object_id`, `question`, NOW( ) );
+
+END // 已添加数据库，改动完成

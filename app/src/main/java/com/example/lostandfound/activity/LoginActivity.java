@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MD5;
@@ -29,7 +31,7 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
     private EditText et_login_password;
     private CheckBox checkbox_login_remember_account;
     private ImageView iv_login_show_password;
-//    private TextView tv_login_forget_password;
+    private TextView tv_login_forget_password;
     private Button btn_login_register;
     private Button btn_login_login;
 
@@ -86,9 +88,9 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
             case R.id.iv_login_show_password:
                 passwordVisibility(iv_login_show_password, et_login_password);
                 break;
-//            case R.id.tv_login_forget_password:
-//                ForgetPassword();
-//                break;
+           case R.id.tv_login_forget_password:
+               ForgetPassword();
+               break;
             case R.id.btn_login_register:
                 Register();
                 break;
@@ -118,7 +120,7 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
         et_login_password = findViewById(R.id.et_login_password);
         checkbox_login_remember_account = findViewById(R.id.checkbox_login_remember_account);
         iv_login_show_password = findViewById(R.id.iv_login_show_password);
-        //tv_login_forget_password = findViewById(R.id.tv_login_forget_password);
+        tv_login_forget_password = findViewById(R.id.tv_login_forget_password);
         btn_login_register = findViewById(R.id.btn_login_register);
         btn_login_login = findViewById(R.id.btn_login_login);
     }
@@ -129,7 +131,7 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
 
     private void initEvent(){
         iv_login_show_password.setOnClickListener(this);
-//        tv_login_forget_password.setOnClickListener(this);
+        tv_login_forget_password.setOnClickListener(this);
         btn_login_register.setOnClickListener(this);
         btn_login_login.setOnClickListener(this);
     }
@@ -193,7 +195,8 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
     }
 
     public void ForgetPassword(){
-
+        Intent intent=new Intent(this,RetrievePassword.class);
+        startActivity(intent);
     }
 
     void LoginSuccess(){

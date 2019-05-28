@@ -76,6 +76,12 @@ public class MyBundle {
         return bundle;
     }
 
+    public static Bundle AccountBundle(String account){
+        Bundle bundle=new Bundle();
+        bundle.putString("id_or_phone_number",account);
+        return bundle;
+    }
+
     public static Bundle UpdatephoneQuestionBundle(int id, String security_answer, String new_phone_mail){
         Bundle bundle=new Bundle();
         bundle.putInt("id",id);

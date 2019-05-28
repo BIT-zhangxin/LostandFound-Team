@@ -1,14 +1,10 @@
 package com.example.lostandfound.component;
 
 import android.app.Activity;
-import android.app.Application;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-
-import android.util.Log;
 import com.example.lostandfound.activity.TestPhotoActivity;
 import java.io.File;
 import java.io.FileInputStream;
@@ -234,7 +230,9 @@ public class MyDataProcesser {
                         String location=bundle.getString("location","");
                         String time=bundle.getString("time","");
                         String description=bundle.getString("description","");
-                        String mysql_sql="call proc_publish(?,?,?,?,?,?,?,?)";
+                        String question=bundle.getString("question","");
+
+                        String mysql_sql="call proc_publish(?,?,?,?,?,?,?,?,?)";
                         //String sql_server_sql="exec proc_publish ?,?,?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,user_id);
@@ -243,11 +241,11 @@ public class MyDataProcesser {
                         preSt.setString(4, location);
                         preSt.setString(5,time);
                         preSt.setString(6,description);
-
-                        String[] result=file.getName().split(".");//切分文件格式
+                        preSt.setString(7,question);
+                        String[] result=file.getName().split("\\.");//切分文件格式
                         String format=result[1];
-                        preSt.setBlob(7,new FileInputStream(file));
-                        preSt.setString(8, format);
+                        preSt.setBlob(8,new FileInputStream(file));
+                        preSt.setString(9, format);
 
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;

@@ -12,7 +12,7 @@ CREATE PROCEDURE `proc_publish` (
 	IN `time` VARCHAR ( 100 ),
 	IN `description` VARCHAR ( 100 ),
 	IN `question` VARCHAR ( 100 ),
-	IN `picture` BLOB,
+	IN `picture` MEDIUMBLOB,
 	IN `picture_format` VARCHAR ( 10 )
 	) BEGIN
 	DECLARE

@@ -8,8 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,14 +27,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyBundle;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
-
 import com.example.lostandfound.component.UriUtils;
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -52,6 +48,7 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
     private EditText et_publish_location;
     private EditText et_publish_time;
     private EditText et_publish_description;
+    private EditText et_publish_question;
     private Button btn_publish_photo;
     private Button btn_publish_select_image;
     private Button btn_publish_publish;
@@ -60,11 +57,9 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
 
     public static final int PHOTO_REQUEST_CODE=1;//拍照
     public static final int PICTURE_SELECT_REQUEST_CODE =2;//选择图片
-    public static final int CROP_REQUEST_CODE=3;//裁剪图片
     private static final int PERMISSION_REQUEST_CODE=4;//获取权限
 
     public static final String JPG_FORMAT=".jpg";//jpg图片格式
-    public static final String JPEG_FORMAT=".jpeg";//jpeg图片格式
 
     private boolean hasPermission=false;//是否已经获取权限
 
@@ -166,6 +161,7 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         et_publish_location=view.findViewById(R.id.et_publish_location);
         et_publish_time=view.findViewById(R.id.et_publish_time);
         et_publish_description=view.findViewById(R.id.et_publish_description);
+        et_publish_question=view.findViewById(R.id.et_publish_question);
         btn_publish_photo=view.findViewById(R.id.btn_publish_photo);
         btn_publish_select_image=view.findViewById(R.id.btn_publish_select_image);
         btn_publish_publish=view.findViewById(R.id.btn_publish_publish);
@@ -191,7 +187,8 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         String location=et_publish_location.getText().toString();
         String time=et_publish_time.getText().toString();
         String description=et_publish_description.getText().toString();
-        Bundle bundle= MyBundle.PublishBundle(user_id,event_type,object_name,location,time,description);
+        String question=et_publish_question.getText().toString();
+        Bundle bundle= MyBundle.PublishBundle(user_id,event_type,object_name,location,time,description,question);
         MyDataProcesser.Publish(uploadFile,bundle,publishHandler);
     }
 
@@ -219,33 +216,6 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         Intent intent=new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent,PICTURE_SELECT_REQUEST_CODE);
-    }
-
-    //调用图片裁剪
-    private Uri goCrop(Uri inputUri){
-        Intent intent=new Intent("com.android.camera.action.CROP");
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        intent.setDataAndType(inputUri,"image/*");
-        intent.putExtra("scale",true);
-        //aspectX aspectY 是宽高的比例
-        intent.putExtra("aspectX",1);
-        intent.putExtra("aspectY",1);
-        //outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX",250);
-        intent.putExtra("outputY",250);
-        //取消人脸识别
-        intent.putExtra("noFaceDetection",true);
-        //创建裁剪图片的文件
-        uploadFile=createFile(JPEG_FORMAT);
-        Uri outputUri=Uri.fromFile(uploadFile);
-        //设置不要返回图片数据，而是存储在uri位置
-        intent.putExtra("return-data",false);
-        intent.putExtra("output",outputUri);
-        //设置图片格式，只支持png，jpeg和webp
-        intent.putExtra("outputFormat",Bitmap.CompressFormat.JPEG.toString());
-        startActivityForResult(intent,CROP_REQUEST_CODE);
-        return outputUri;
     }
 
     //动态检查权限

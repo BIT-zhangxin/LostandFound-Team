@@ -65,10 +65,8 @@ public class MessageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext=getActivity();
-//        for(int i=0;i<1000;i++){
-//            initData();
-//        }
-        initData();
+        //TODO:@彭青峰，条件接口
+        initData("");
     }
 
     @Nullable
@@ -86,9 +84,17 @@ public class MessageFragment extends Fragment {
         refreshLayout=view.findViewById(R.id.refreshLayout);
     }
 
-    void initData(){
+    void initData(String condition){
+
 
         class MyThread extends Thread{
+
+            private String condition;
+
+            private MyThread(String condition){
+                this.condition=condition;
+            }
+
             @Override
             public void run() {
                 Message msg=new Message();
@@ -97,19 +103,27 @@ public class MessageFragment extends Fragment {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        String mysql_sql="call proc_select_message";
+                        String condition_sql="%"+condition+"%";
+                        String mysql_sql="call proc_select_message(?)";
                         //String sql_server_sql = "exec proc_select_message";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+                        preSt.setString(1,condition_sql);
                         ResultSet rs = preSt.executeQuery();
                         while(rs.next()){
                             MyMessage myMessage=new MyMessage();
                             myMessage.setMain_event_id(rs.getInt("main_event_id"));
                             myMessage.setMain_event_type(rs.getInt("main_event_type"));
+                            myMessage.setUser_id(rs.getInt("user_id"));
+                            myMessage.setUser_name(rs.getString("user_name"));
                             myMessage.setObject_id(rs.getInt("object_id"));
+                            myMessage.setQuestion(rs.getString("question"));
+                            myMessage.setDate(rs.getDate("date"));
                             myMessage.setName(rs.getString("name"));
-                            myMessage.setLocation(rs.getString("location"));
                             myMessage.setTime(rs.getString("time"));
+                            myMessage.setLocation(rs.getString("location"));
                             myMessage.setDescription(rs.getString("description"));
+                            myMessage.setPicture(rs.getBlob("picture"));
+                            myMessage.setFormat(rs.getString("format"));
                             myMessageList.add(myMessage);
                         }
                         msg.what=MyDefine.REPLY_SUCCESS;
@@ -122,7 +136,7 @@ public class MessageFragment extends Fragment {
             }
         }
 
-        MyThread myThread=new MyThread();
+        MyThread myThread=new MyThread(condition);
         myMessageList.clear();
         myThread.start();
         try {
@@ -150,14 +164,14 @@ public class MessageFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                initData();
+                initData("");
                 refreshlayout.finishRefresh(200/*,false*/);//传入false表示刷新失败
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                initData();
+                initData("");
                 refreshlayout.finishLoadMore(200/*,false*/);//传入false表示加载失败
             }
         });

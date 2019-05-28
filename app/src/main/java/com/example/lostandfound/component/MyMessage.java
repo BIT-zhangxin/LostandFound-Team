@@ -1,20 +1,35 @@
 package com.example.lostandfound.component;
 
+import java.sql.Blob;
+import java.util.Date;
+
 public class MyMessage {
 
-    private int main_event_id;
+    private int main_event_id;//事件id
 
-    private int main_event_type;
+    private int main_event_type;//事件类型
 
-    private int object_id;
+    private int user_id;//用户id
 
-    private String name;
+    private String user_name;//用户名
 
-    private String location;
+    private int object_id;//物品id
 
-    private String time;
+    private String question;//问题
 
-    private String description;
+    private Date date;//事件发生时间
+
+    private String name;//物品名称
+
+    private String time;//物品描述事件
+
+    private String location;//位置
+
+    private String description;//描述
+
+    private Blob picture;//图片
+
+    private String format;//图片类型
 
     public int getMain_event_id() {
         return main_event_id;
@@ -70,5 +85,53 @@ public class MyMessage {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Blob getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Blob picture) {
+        this.picture = picture;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
     }
 }

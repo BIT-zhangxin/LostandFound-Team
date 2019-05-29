@@ -189,7 +189,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/tv_publish_question"
-            android:hint="必须填写"
+            android:hint="拾物事件必须填写"
             android:layout_marginStart="20dp"
             android:inputType="text"
             android:textSize="16sp"/>

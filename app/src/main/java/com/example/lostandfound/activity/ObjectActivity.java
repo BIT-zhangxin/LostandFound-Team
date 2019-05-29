@@ -38,8 +38,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private TextView tv_object_description;
     private Button btn_object_apply;
 
-    private int objectId;//物品id
-    private String question;//验证问题
+    private Bundle bundle;//传入的数据
 
     @SuppressLint("HandlerLeak")
     private Handler ObjectPictureHandler=new Handler(){
@@ -102,7 +101,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_object_apply:
-                questionAndAnswer(question);
+                questionAndAnswer();
                 break;
             default:
                 break;
@@ -110,10 +109,17 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     //显示弹出的验证问题框
-    public void questionAndAnswer(String question)
+    public void questionAndAnswer()
     {
+        String title;
+        if(bundle.getInt("main_event_type")==1){
+            title="请填写相应的拾物事件id";
+        }
+        else {
+            title="问题："+bundle.getString("question");
+        }
         final MyQuestionDialog myQuestionDialog=new MyQuestionDialog(ObjectActivity.this,0,
-            question, "确定", "算了吧", false);
+            title, "确定", "算了吧", false);
         myQuestionDialog.setView(new EditText(ObjectActivity.this));
         myQuestionDialog.setOnCertainButtonClickListener(new MyQuestionDialog.onMyAlertDialogListener() {
             @Override
@@ -123,7 +129,6 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
 
             @Override
             public void onCertainButtonClick() {
-                //todo
                 String answer = myQuestionDialog.getAnswer();
                 Apply(answer);
             }
@@ -153,28 +158,25 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     private void initData(){
-        Bundle messageBundle = getIntent().getExtras();
-        assert messageBundle != null;
-        objectId=messageBundle.getInt("object_id",0);
-        tv_object_id.setText(String.valueOf(objectId));
-        tv_object_user_name.setText(messageBundle.getString("user_name",""));
-        tv_object_name.setText(messageBundle.getString("name",""));
-        tv_object_main_event_type.setText(MyEventChange.MainEventToString(messageBundle.getInt("main_event_type",0)));
-        tv_object_location.setText(messageBundle.getString("location",""));
-        tv_object_time.setText(messageBundle.getString("time",""));
-        tv_object_description.setText(messageBundle.getString("description",""));
-        question=messageBundle.getString("question");
+        bundle = getIntent().getExtras();
+        assert bundle != null;
+        tv_object_id.setText(String.valueOf(bundle.getInt("object_id")));
+        tv_object_user_name.setText(bundle.getString("user_name",""));
+        tv_object_name.setText(bundle.getString("name",""));
+        tv_object_main_event_type.setText(MyEventChange.MainEventToString(bundle.getInt("main_event_type")));
+        tv_object_location.setText(bundle.getString("location",""));
+        tv_object_time.setText(bundle.getString("time",""));
+        tv_object_description.setText(bundle.getString("description",""));
 
         //下载图片
-        MyDataProcesser.DownloadObjectPicture(this,messageBundle.getInt("object_id",0),ObjectPictureHandler);
+        MyDataProcesser.DownloadObjectPicture(this,bundle.getInt("object_id",0),ObjectPictureHandler);
 
     }
 
     private void Apply(String answer){
-        int user_id=((MyApplication)getApplication()).getId();
-        int main_event_id=objectId;
-        Bundle bundle=MyBundle.ApplyBundle(user_id,main_event_id);
-        MyDataProcesser.Apply(bundle,ApplyHandler);
+        int id=((MyApplication)getApplication()).getId();
+        Bundle applyBundle=MyBundle.ApplyBundle(id,answer,bundle);
+        MyDataProcesser.Apply(applyBundle,ApplyHandler);
     }
 
     private void LoadProfilePhoto(String absolutePath){

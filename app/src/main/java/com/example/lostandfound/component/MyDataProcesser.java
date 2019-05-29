@@ -43,23 +43,24 @@ public class MyDataProcesser {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        int user_id = bundle.getInt("user_id", 0);
-                        int main_event_id = bundle.getInt("main_event_id",0);
+                        int main_event_id=bundle.getInt("main_event_id");
+                        int event_type=bundle.getInt("event_type");
+                        int origin_user_id=bundle.getInt("origin_user_id");
+                        int aim_user_id=bundle.getInt("aim_user_id");
+                        String description=bundle.getString("description");
                         String mysql_sql="call proc_apply(?,?)";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setInt(1, user_id);
-                        preSt.setInt(2, main_event_id);
+                        preSt.setInt(1, main_event_id);
+                        preSt.setInt(2, event_type);
+                        preSt.setInt(3, origin_user_id);
+                        preSt.setInt(4, aim_user_id);
+                        preSt.setString(5, description);
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    if(e.getMessage().equals("self")){
-                        msg.what = MyDefine.REPLY_FAILED;
-                    }
-                    else{
-                        msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
-                    }
+                    msg.what = MyDefine.REPLY_FAILED;
                 }
                 handler.sendMessage(msg);
             }

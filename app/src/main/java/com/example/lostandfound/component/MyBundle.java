@@ -4,10 +4,13 @@ import android.os.Bundle;
 
 public class MyBundle {
 
-    public static Bundle ApplyBundle(int user_id, int main_event_id){
+    public static Bundle ApplyBundle(int origin_user_id,String answer,Bundle oldBundle){
         Bundle bundle=new Bundle();
-        bundle.putInt("user_id",user_id);
-        bundle.putInt("main_event_id",main_event_id);
+        bundle.putInt("main_event_id",oldBundle.getInt("main_event_id"));
+        bundle.putInt("event_type",1);
+        bundle.putInt("origin_user_id",origin_user_id);
+        bundle.putInt("aim_user_id",oldBundle.getInt("user_id"));
+        bundle.putString("description",answer);
         return bundle;
     }
 
@@ -52,13 +55,6 @@ public class MyBundle {
         bundle.putString("password",password);
         bundle.putString("question",question);
         bundle.putString("answer",answer);
-        return bundle;
-    }
-
-    public static Bundle ReportBundle(int user_id, int main_event_id){
-        Bundle bundle=new Bundle();
-        bundle.putInt("user_id",user_id);
-        bundle.putInt("main_event_id",main_event_id);
         return bundle;
     }
 
@@ -124,10 +120,12 @@ public class MyBundle {
         bundle.putInt("main_event_type",myMessage.getMain_event_type());
         bundle.putInt("object_id",myMessage.getObject_id());
         bundle.putString("name",myMessage.getName());
+        bundle.putInt("user_id",myMessage.getUser_id());
         bundle.putString("user_name",myMessage.getUser_name());
         bundle.putString("location",myMessage.getLocation());
         bundle.putString("time",myMessage.getTime());
         bundle.putString("description",myMessage.getDescription());
+        bundle.putString("question",myMessage.getQuestion());
         return bundle;
     }
 

@@ -176,16 +176,22 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
 
     void Publish(){
         String object_name=et_publish_object_name.getText().toString();
+        if(object_name.equals("")){
+            Toast.makeText(mContext,"物品名称不能为空",Toast.LENGTH_LONG).show();
+            return;
+        }
         String description=et_publish_description.getText().toString();
+        if(description.equals("")){
+            Toast.makeText(mContext,"详细描述不能为空",Toast.LENGTH_LONG).show();
+            return;
+        }
+        int event_type=(int)spinner_event_type.getSelectedItemId()+1;
         String question=et_publish_question.getText().toString();
-        if(object_name.equals("")||description.equals("")||question.equals("")){
-            Message message=new Message();
-            message.what=MyDefine.REPLY_FAILED;
-            publishHandler.sendMessage(message);
+        if(event_type==2&&question.equals("")){
+            Toast.makeText(mContext,"拾物事件问题不能为空",Toast.LENGTH_LONG).show();
             return;
         }
         int user_id=((MyApplication)Objects.requireNonNull(getActivity()).getApplication()).getId();
-        int event_type=(int)spinner_event_type.getSelectedItemId()+1;
         String location=et_publish_location.getText().toString();
         String time=et_publish_time.getText().toString();
         Bundle bundle= MyBundle.PublishBundle(user_id,event_type,object_name,location,time,description,question);

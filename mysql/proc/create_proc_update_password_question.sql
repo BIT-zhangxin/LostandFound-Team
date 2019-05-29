@@ -2,7 +2,7 @@ USE `LostandFound`;
 delimiter //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_update_password_question`(
 	IN `id` INT,
-	IN `security_answer` VARCHAR(50),
+	IN `security_answer` VARCHAR(100),
 	IN `new_password` CHAR(32)
 )
 LANGUAGE SQL
@@ -21,5 +21,3 @@ BEGIN
 	set `user`.`password`=`new_password`
 	where `user`.id=id;
 END //
-
-#未添加数据库，待改动

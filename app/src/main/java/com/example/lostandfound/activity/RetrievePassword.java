@@ -118,11 +118,20 @@ public class RetrievePassword extends MyAppCompatActivity implements View.OnClic
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        String id_or_phone_number = bundle.getString("id_or_phone_number", "");
-                        String mysql_sql="call proc_getID(?)";
-                        String sql_server_sql = "exec proc_getID ?";
+                        String phone_number = bundle.getString("id_or_phone_number", "");
+                        int type=0;
+                        if(phone_number.contains("@"))
+                            type=1;
+                        else
+                            type=0;
+                        String mysql_sql=null;
+                        if(type==0)
+                            mysql_sql="call proc_phone_getID(?)";
+                        else if(type==1)
+                            mysql_sql="call proc_mail_getID(?)";
+//                        String sql_server_sql = "exec proc_getID ?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setString(1, id_or_phone_number);
+                        preSt.setString(1, phone_number);
                         ResultSet rs = preSt.executeQuery();
                         if (rs.next()) {
                             msg.what = MyDefine.REPLY_SUCCESS;

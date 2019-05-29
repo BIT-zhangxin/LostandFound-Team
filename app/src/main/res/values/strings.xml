@@ -24,7 +24,7 @@
 
     <string name="home_title">欢迎</string>
 
-    <string name="valid_character">0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ</string>
+    <string name="valid_character">0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ@.</string>
 
     <string name="main_title_message">消息</string>
     <string name="main_title_publish">发布</string>
@@ -73,7 +73,8 @@
     <string name="information_security_choose_set_question">设置密保问题</string>
     <string name="information_security_choose_password">通过密码修改密码</string>
     <string name="information_security_choose_question">通过密保修改密码</string>
-    <string name="information_security_choose_phone_mail">通过密保修改手机或邮箱</string>
+    <string name="information_security_choose_phone">通过密码修改手机</string>
+    <string name="information_security_choose_mail">通过密码修改邮箱</string>
 
     <string name="information_security_set_question_title">设置密保问题</string>
     <string name="information_security_set_question_question_hint">请输入密保问题</string>

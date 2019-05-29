@@ -24,8 +24,9 @@ import java.sql.SQLException;
 
 public class SecurityChooseActivity extends MyAppCompatActivity implements View.OnClickListener {
 
-    private Button btn_security_choose_phone_mail;
-    private Button btn_security_choose_question;
+    private Button btn_security_choose_phone;
+    private Button btn_security_choose_mail;
+    private Button btn_security_choose_password;
 
 //    @SuppressLint("HandlerLeak")
 //    private Handler securityQuestionHandler=new Handler(){
@@ -112,11 +113,14 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_security_choose_phone_mail:
-                StartQuestion_2();
+            case R.id.btn_security_choose_password:
+                StartPassword();
                 break;
-            case R.id.btn_security_choose_question:
-                StartQuestion();
+            case R.id.btn_security_choose_mail:
+                Start_mail();
+                break;
+            case R.id.btn_security_choose_phone:
+                Start_phone();
                 break;
             default:
                 break;
@@ -124,13 +128,15 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
     }
 
     private void initComponent(){
-        btn_security_choose_question = findViewById(R.id.btn_security_choose_question);
-        btn_security_choose_phone_mail=findViewById(R.id.btn_security_choose_phone_mail);
+        btn_security_choose_phone = findViewById(R.id.btn_security_choose_phone);
+        btn_security_choose_mail=findViewById(R.id.btn_security_choose_mail);
+        btn_security_choose_password=findViewById(R.id.btn_security_choose_password);
     }
 
     private void initEvent(){
-        btn_security_choose_phone_mail.setOnClickListener(this);
-        btn_security_choose_question.setOnClickListener(this);
+        btn_security_choose_mail.setOnClickListener(this);
+        btn_security_choose_phone.setOnClickListener(this);
+        btn_security_choose_password.setOnClickListener(this);
     }
 
 //    private void StartSetQuestion(){
@@ -199,106 +205,116 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
         myAlertDialog.show();
     }
 
-//    private void StartPassword(){
-//        Intent intent=new Intent(SecurityChooseActivity.this,PasswordPasswordActivity.class);
-//        startActivity(intent);
+    private void StartPassword(){
+        Intent intent=new Intent(SecurityChooseActivity.this,PasswordPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    private void Start_phone(){
+        Intent intent=new Intent(SecurityChooseActivity.this,PasswordPhoneActivity.class);
+        startActivity(intent);
+    }
+
+    private void Start_mail(){
+        Intent intent=new Intent(SecurityChooseActivity.this,PasswordMailActivity.class);
+        startActivity(intent);
+    }
+
+//    private void StartQuestion(){
+//
+//        class MyThread extends Thread{
+//
+//            private int id;
+//
+//            private MyThread(int id){
+//                this.id=id;
+//            }
+//
+//            @Override
+//            public void run() {
+//                Message msg=new Message();
+//                try {
+//                    Connection connection = MyConnectionHelper.getConnection();
+//                    if (connection == null) {
+//                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+//                    } else {
+//                        String mysql_sql="call proc_select_security_question(?)";
+//                        String sql_server_sql = "exec proc_select_security_question ?";
+//                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+//                        preSt.setInt(1,id);
+//                        ResultSet rs = preSt.executeQuery();
+//                        if (rs.next()) {
+//                            msg.what = MyDefine.REPLY_SUCCESS;
+//                            Bundle bundle=new Bundle();
+//                            bundle.putString("security_question",rs.getString("security_question"));
+//                            msg.setData(bundle);
+//                        } else{
+//                            msg.what = MyDefine.REPLY_FAILED;
+//                        }
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                    msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
+//                }
+//                setByQuestionHandler.sendMessage(msg);
+//            }
+//        }
+//
+//        MyThread myThread=new MyThread(((MyApplication)getApplication()).getId());
+//        myThread.start();
+//        try {
+//            myThread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 //    }
-
-    private void StartQuestion(){
-
-        class MyThread extends Thread{
-
-            private int id;
-
-            private MyThread(int id){
-                this.id=id;
-            }
-
-            @Override
-            public void run() {
-                Message msg=new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        String mysql_sql="call proc_select_security_question(?)";
-                        String sql_server_sql = "exec proc_select_security_question ?";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setInt(1,id);
-                        ResultSet rs = preSt.executeQuery();
-                        if (rs.next()) {
-                            msg.what = MyDefine.REPLY_SUCCESS;
-                            Bundle bundle=new Bundle();
-                            bundle.putString("security_question",rs.getString("security_question"));
-                            msg.setData(bundle);
-                        } else{
-                            msg.what = MyDefine.REPLY_FAILED;
-                        }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
-                }
-                setByQuestionHandler.sendMessage(msg);
-            }
-        }
-
-        MyThread myThread=new MyThread(((MyApplication)getApplication()).getId());
-        myThread.start();
-        try {
-            myThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void StartQuestion_2() {
-        class MyThread extends Thread{
-
-            private int id;
-
-            private MyThread(int id){
-                this.id=id;
-            }
-            @Override
-            public void run() {
-                Message msg = new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        String mysql_sql = "call proc_select_security_question(?)";
-                        String sql_server_sql = "exec proc_select_security_question ?";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setInt(1, id);
-                        ResultSet rs = preSt.executeQuery();
-                        if (rs.next()) {
-                            msg.what = MyDefine.REPLY_SUCCESS;
-                            Bundle bundle=new Bundle();
-                            bundle.putString("security_question",rs.getString("security_question"));
-                            msg.setData(bundle);
-                        } else{
-                            msg.what = MyDefine.REPLY_FAILED;
-                        }
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
-                }
-                setByQuestionHandler_2.sendMessage(msg);
-            }
-        }
-
-        MyThread myThread=new MyThread(((MyApplication)getApplication()).getId());
-        myThread.start();
-        try {
-            myThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    private void StartQuestion_2() {
+//        class MyThread extends Thread{
+//
+//            private int id;
+//
+//            private MyThread(int id){
+//                this.id=id;
+//            }
+//            @Override
+//            public void run() {
+//                Message msg = new Message();
+//                try {
+//                    Connection connection = MyConnectionHelper.getConnection();
+//                    if (connection == null) {
+//                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+//                    } else {
+//                        String mysql_sql = "call proc_select_security_question(?)";
+//                        String sql_server_sql = "exec proc_select_security_question ?";
+//                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+//                        preSt.setInt(1, id);
+//                        ResultSet rs = preSt.executeQuery();
+//                        if (rs.next()) {
+//                            msg.what = MyDefine.REPLY_SUCCESS;
+//                            Bundle bundle=new Bundle();
+//                            bundle.putString("security_question",rs.getString("security_question"));
+//                            msg.setData(bundle);
+//                        } else{
+//                            msg.what = MyDefine.REPLY_FAILED;
+//                        }
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                    msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
+//                }
+//                setByQuestionHandler_2.sendMessage(msg);
+//            }
+//        }
+//
+//        MyThread myThread=new MyThread(((MyApplication)getApplication()).getId());
+//        myThread.start();
+//        try {
+//            myThread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 

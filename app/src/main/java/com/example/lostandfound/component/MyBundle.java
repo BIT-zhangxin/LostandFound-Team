@@ -45,8 +45,9 @@ public class MyBundle {
         return bundle;
     }
 
-    public static Bundle RegisterBundle(String phone_number, String password,String question, String answer){
+    public static Bundle RegisterBundle(int phone_mail_type,String phone_number, String password,String question, String answer){
         Bundle bundle=new Bundle();
+        bundle.putInt("phone_mail_type",phone_mail_type);
         bundle.putString("phone_number",phone_number);
         bundle.putString("password",password);
         bundle.putString("question",question);
@@ -66,6 +67,22 @@ public class MyBundle {
         bundle.putInt("id",id);
         bundle.putString("old_password",old_password);
         bundle.putString("new_password",new_password);
+        return bundle;
+    }
+
+    public static Bundle UpdatePasswordMailBundle(int id, String old_password, String new_mail){
+        Bundle bundle=new Bundle();
+        bundle.putInt("id",id);
+        bundle.putString("old_password",old_password);
+        bundle.putString("new_mail",new_mail);
+        return bundle;
+    }
+
+    public static Bundle UpdatePasswordPhoneBundle(int id, String old_password, String new_phone){
+        Bundle bundle=new Bundle();
+        bundle.putInt("id",id);
+        bundle.putString("old_password",old_password);
+        bundle.putString("new_phone",new_phone);
         return bundle;
     }
 
@@ -91,10 +108,10 @@ public class MyBundle {
         return bundle;
     }
 
-    public static Bundle UpdateUserInformationBundle(int id, String nickname, String contact_information,String personal_profile){
+    public static Bundle UpdateUserInformationBundle(int id, String username, String contact_information,String personal_profile){
         Bundle bundle=new Bundle();
         bundle.putInt("id",id);
-        bundle.putString("nickname",nickname);
+        bundle.putString("username",username);
         bundle.putString("contact_information",contact_information);
         bundle.putString("personal_profile",personal_profile);
         return bundle;

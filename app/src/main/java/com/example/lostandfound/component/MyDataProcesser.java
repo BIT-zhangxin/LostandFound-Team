@@ -283,12 +283,17 @@ public class MyDataProcesser {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
+                        int phone_mail_type=bundle.getInt("phone_mail_type",0);
                         String phone_number = bundle.getString("phone_number", "");
                         String password = bundle.getString("password", "");
                         String question =bundle.getString("question","");
                         String answer =bundle.getString("answer","");
-                        String mysql_sql = "call proc_register(?,?,?,?)";
-                        String sql_server_sql="exec proc_register ?,?,?,?";
+                        String mysql_sql;
+                        if(phone_mail_type==0)
+                            mysql_sql= "call proc_register_phone(?,?,?,?)";
+                        else
+                            mysql_sql= "call proc_register_mail(?,?,?,?)";
+                        String sql_server_sql="exec proc_register ?,?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setString(1, phone_number);
                         preSt.setString(2, password);
@@ -383,6 +388,90 @@ public class MyDataProcesser {
                         preSt.setInt(1,id);
                         preSt.setString(2, old_password);
                         preSt.setString(3, new_password);
+                        preSt.executeUpdate();
+                        msg.what = MyDefine.REPLY_SUCCESS;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    msg.what = MyDefine.REPLY_FAILED;
+                }
+                handler.sendMessage(msg);
+            }
+        }
+        new MyThread(bundle, handler).start();
+    }
+
+    public static void UpdatePasswordMail(Bundle bundle,Handler handler) {
+
+        class MyThread extends Thread {
+
+            private Bundle bundle;
+            private Handler handler;
+
+            private MyThread(Bundle bundle, Handler handler) {
+                this.bundle = bundle;
+                this.handler = handler;
+            }
+
+            @Override
+            public void run() {
+                Message msg = new Message();
+                try {
+                    Connection connection = MyConnectionHelper.getConnection();
+                    if (connection == null) {
+                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+                    } else {
+                        int id=bundle.getInt("id",0);
+                        String old_password=bundle.getString("old_password", "");
+                        String new_mail=bundle.getString("new_mail", "");
+                        String mysql_sql="call proc_update_password_mail(?,?,?)";
+                        String sql_server_sql = "exec proc_update_password_mail ?,?,?";
+                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+                        preSt.setInt(1,id);
+                        preSt.setString(2, old_password);
+                        preSt.setString(3, new_mail);
+                        preSt.executeUpdate();
+                        msg.what = MyDefine.REPLY_SUCCESS;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    msg.what = MyDefine.REPLY_FAILED;
+                }
+                handler.sendMessage(msg);
+            }
+        }
+        new MyThread(bundle, handler).start();
+    }
+
+    public static void UpdatePasswordPhone(Bundle bundle,Handler handler) {
+
+        class MyThread extends Thread {
+
+            private Bundle bundle;
+            private Handler handler;
+
+            private MyThread(Bundle bundle, Handler handler) {
+                this.bundle = bundle;
+                this.handler = handler;
+            }
+
+            @Override
+            public void run() {
+                Message msg = new Message();
+                try {
+                    Connection connection = MyConnectionHelper.getConnection();
+                    if (connection == null) {
+                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+                    } else {
+                        int id=bundle.getInt("id",0);
+                        String old_password=bundle.getString("old_password", "");
+                        String new_phone=bundle.getString("new_phone", "");
+                        String mysql_sql="call proc_update_password_phone(?,?,?)";
+                        String sql_server_sql = "exec proc_update_password_phone ?,?,?";
+                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+                        preSt.setInt(1,id);
+                        preSt.setString(2, old_password);
+                        preSt.setString(3, new_phone);
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
                     }
@@ -503,14 +592,14 @@ public class MyDataProcesser {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
                         int id=bundle.getInt("id",0);
-                        String nickname=bundle.getString("nickname", "");
+                        String username=bundle.getString("username", "");
                         String contact_information=bundle.getString("contact_information", "");
                         String personal_profile=bundle.getString("personal_profile", "");
                         String mysql_sql="call proc_update_user_information(?,?,?,?)";
                         String sql_server_sql = "exec proc_update_user_information ?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
-                        preSt.setString(2, nickname);
+                        preSt.setString(2, username);
                         preSt.setString(3, contact_information);
                         preSt.setString(4, personal_profile);
                         preSt.executeUpdate();

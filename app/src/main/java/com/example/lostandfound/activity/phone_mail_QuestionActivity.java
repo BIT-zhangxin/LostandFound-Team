@@ -14,11 +14,16 @@ import android.widget.Toast;
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MD5;
 import com.example.lostandfound.component.MyAlertDialog;
+import java.sql.PreparedStatement;
 import com.example.lostandfound.component.MyAppCompatActivity;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyBundle;
+import com.example.lostandfound.component.MyConnectionHelper;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class phone_mail_QuestionActivity extends MyAppCompatActivity implements View.OnClickListener {
 
@@ -93,10 +98,59 @@ public class phone_mail_QuestionActivity extends MyAppCompatActivity implements 
 //            return;
 //        }
         int id=((MyApplication)getApplication()).getId();
+//        Gettype(int id);
         Bundle bundle=MyBundle.UpdatephoneQuestionBundle(id,security_answer,phone_mail);
         MyDataProcesser.UpdatephoneQuestion(bundle,updatePQHandler);
     }
 
+//    private void Gettype(int id){
+//
+//        class MyThread extends Thread{
+//            private int id;
+//
+//            private MyThread(int id){
+//                this.id=id;
+//            }
+//
+//            @Override
+//            public void run() {
+//                Message msg=new Message();
+//                try {
+//                    Connection connection = MyConnectionHelper.getConnection();
+//                    if (connection == null) {
+//                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+//                    } else {
+//                        String sql_mysql_phone_mail="call proc_get_number(?,?,?)";
+//                        PreparedStatement preSt = connection.prepareStatement(sql_mysql_phone_mail);
+//
+//                        preSt.setInt(1, id);
+//                        ResultSet rs = preSt.executeQuery();
+//                        if (rs.next()) {
+//                            msg.what = MyDefine.REPLY_SUCCESS;
+//                            Bundle bundle=new Bundle();
+//                            bundle.putInt("id",rs.getInt("id"));
+//                            bundle.putString("security_question",rs.getString("security_question"));
+//                            msg.setData(bundle);
+//                        } else{
+//                            msg.what = MyDefine.REPLY_FAILED;
+//                        }
+//                    }
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                    msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
+//                }
+//                RPHandler.sendMessage(msg);
+//            }
+//        }
+//
+//        MyThread myThread=new MyThread(bundle);
+//        myThread.start();
+//        try {
+//            myThread.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//    }
 //    void warningTip(){
 //        MyAlertDialog myAlertDialog=new MyAlertDialog(phone_mail_QuestionActivity.this,0,
 //                "提示","两次密码输入不一致！","知道了","",true);

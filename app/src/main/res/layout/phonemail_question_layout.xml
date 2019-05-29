@@ -115,7 +115,7 @@
             android:hint="@string/register_phone_number_hint"
             android:inputType="text"
             android:maxLines="1"
-            android:maxLength="20"
+            android:maxLength="50"
             android:textColor="@color/black"
             android:textColorHint="@color/gray_deep"
             android:textSize="@dimen/text_size_normal" />

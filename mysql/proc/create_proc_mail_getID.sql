@@ -1,7 +1,7 @@
 USE `LostandFound`;
 delimiter //
-CREATE PROCEDURE `proc_getID`(
-	IN `phone_number` VARCHAR(20)
+CREATE PROCEDURE `proc_mail_getID`(
+	IN `phone_number` VARCHAR(50)
 )
 LANGUAGE SQL
 NOT DETERMINISTIC
@@ -9,11 +9,6 @@ CONTAINS SQL
 SQL SECURITY DEFINER
 COMMENT ''
 BEGIN
-	if char_length(id_or_phone_number)=11 then
-		select id,security_question from `user` where
-		phone_number=id_or_phone_number;
-	else
-		select id,security_question from `user` where
-		id=id_or_phone_number;
-	end if;
+	select id,security_question from `user` where
+	email_address=phone_number;
 END //

@@ -128,11 +128,11 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
 
     private String checkInput(){
         if(getEditPhoneNumber().isEmpty()){
-            return "手机号不能为空！";
+            return "手机号和邮箱不能为空！";
         }
-        else if(getEditPhoneNumber().length()!=MyDefine.LENGTH_PHONENUMBER){
-            return "手机号不合法！";
-        }
+//        else if(getEditPhoneNumber().length()!=MyDefine.LENGTH_PHONENUMBER){
+//            return "手机号和邮箱不合法！";
+//        }
         else if(getEditPassword().isEmpty()){
             return "密码不能为空！";
         }
@@ -205,7 +205,12 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
     void Register(){
         String security_question=et_information_security_set_question_question.getText().toString();
         String security_answer=et_information_security_set_question_answer.getText().toString();
-        Bundle bundle= MyBundle.RegisterBundle(getEditPhoneNumber(),getEditPassword(),security_question,security_answer);
+        int phone_mail_type=0;
+        if(getEditPhoneNumber().contains("@"))
+            phone_mail_type=1;
+        else
+            phone_mail_type=0;
+        Bundle bundle= MyBundle.RegisterBundle(phone_mail_type,getEditPhoneNumber(),getEditPassword(),security_question,security_answer);
         MyDataProcesser.Register(bundle,registerHandler);
     }
 

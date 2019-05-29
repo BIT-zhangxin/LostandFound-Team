@@ -51,6 +51,10 @@
         </activity>
         <activity android:name=".activity.phone_mail_QuestionActivity" >
         </activity>
+        <activity android:name=".activity.PasswordMailActivity" >
+        </activity>
+        <activity android:name=".activity.PasswordPhoneActivity" >
+        </activity>
         <activity android:name=".activity.RetrievePassword"/>
         <activity android:name=".activity.TestPhotoActivity">
         </activity>

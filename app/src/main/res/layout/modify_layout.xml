@@ -15,12 +15,39 @@
         android:layout_marginBottom="50dp"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="match_parent"
+        android:layout_width="100pt"
         android:layout_height="100dp"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="30dp"
         android:src="@drawable/head_portrait"
         />
+
+    <Button
+        android:id="@+id/btn_modify_photo_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button"
+        android:text="拍照"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_button" />
+
+    <Button
+        android:id="@+id/btn_modify_photo_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="200dp"
+        android:layout_marginRight="@dimen/margin"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/button"
+        android:text="选择本地图片"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_button" />
+
 
     <RelativeLayout
         android:id="@+id/rl_modify_nickname"

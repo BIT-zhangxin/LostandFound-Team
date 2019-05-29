@@ -76,10 +76,10 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
 
     private void Modify(){
         int id=((MyApplication)getApplication()).getId();
-        String nickname=et_modify_nickname.getText().toString();
+        String username=et_modify_nickname.getText().toString();
         String contact_information=et_modify_contact_information.getText().toString();
         String personal_profile=et_modify_personal_profile.getText().toString();
-        Bundle bundle=MyBundle.UpdateUserInformationBundle(id,nickname,contact_information,personal_profile);
+        Bundle bundle=MyBundle.UpdateUserInformationBundle(id,username,contact_information,personal_profile);
         MyDataProcesser.UpdateUseInformation(bundle,modifyHandler);
     }
 }

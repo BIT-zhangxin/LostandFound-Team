@@ -119,10 +119,12 @@ public class MyBundle {
 
     public static Bundle ObjectBundle(MyMessage myMessage){
         Bundle bundle=new Bundle();
+
         bundle.putInt("main_event_id",myMessage.getMain_event_id());
         bundle.putInt("main_event_type",myMessage.getMain_event_type());
         bundle.putInt("object_id",myMessage.getObject_id());
         bundle.putString("name",myMessage.getName());
+        bundle.putString("user_name",myMessage.getUser_name());
         bundle.putString("location",myMessage.getLocation());
         bundle.putString("time",myMessage.getTime());
         bundle.putString("description",myMessage.getDescription());

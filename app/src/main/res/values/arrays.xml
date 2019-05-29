@@ -4,4 +4,8 @@
         <item>失物事件</item>
         <item>拾物事件</item>
     </string-array>
+    <string-array name="search_type">
+        <item>失物</item>
+        <item>拾物</item>
+    </string-array>
 </resources>

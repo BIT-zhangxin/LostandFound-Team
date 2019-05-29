@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -26,8 +26,7 @@
         </activity>
         <activity android:name=".activity.RegisterActivity">
         </activity>
-        <activity android:name=".activity.MainActivity">
-
+        <activity android:name=".activity.LoginActivity">
         </activity>
         <activity android:name=".activity.ObjectActivity">
         </activity>
@@ -58,7 +57,6 @@
         <activity android:name=".activity.RetrievePassword"/>
         <activity android:name=".activity.TestPhotoActivity">
         </activity>
-
         <provider
             android:authorities="com.example.lostandfound.fileprovider"
             android:name="android.support.v4.content.FileProvider"
@@ -68,8 +66,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"/>
         </provider>
-
-
 
     </application>
 

@@ -3,6 +3,7 @@ package com.example.lostandfound.fragment;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.lostandfound.R;
 import com.example.lostandfound.activity.ObjectActivity;
@@ -34,11 +39,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MessageFragment extends Fragment {
 
     private Context mContext;
-
+    private int search_type;    //如果事件id==1 ：失物事件     id==2 ：拾物事件    by pqf
+    private Button search_button;
+    private Spinner search_spinner;
+    private EditText search_edit;
     private List<MyMessage> myMessageList=new ArrayList<>();
     private ListView listView;
 
@@ -65,14 +75,56 @@ public class MessageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext=getActivity();
-        //TODO:@彭青峰，条件接口
+
         initData("");
+    }
+
+
+    //搜索比配函数 by pqf
+    private boolean searchMatching(String str,String mat){
+        Pattern pattern=Pattern.compile(mat);
+        Matcher matcher=pattern.matcher(str);
+        boolean ans=matcher.find();
+        return ans;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.message_layout,container,false);
+        //获取spinner里的内容进行判断  对搜索按钮事件进行绑定
+
+        search_edit=view.findViewById(R.id.editText3);
+        search_button=view.findViewById(R.id.button2);
+        search_spinner=view.findViewById(R.id.spinner);
+
+        search_button.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                String search_string=search_edit.getText().toString();
+                String select_item=search_spinner.getSelectedItem().toString();
+                int mymessage_num=myMessageList.size();
+                List<MyMessage> myMessageList2=new ArrayList<>();
+                myMessageList2.clear();
+                int select_item_code=(select_item.equals("失物")?1:2);
+                System.out.println(select_item_code);
+                for(int i=0;i<mymessage_num;i++)
+                {
+                    boolean result_compare = searchMatching(myMessageList.get(i).getName(),search_string);
+                    if(result_compare&&select_item_code==myMessageList.get(i).getMain_event_type())
+                    {
+                        //去掉myMessageList中不符合条件的item
+                        myMessageList2.add(myMessageList.get(i));
+                    }
+                }
+                MyMessageAdapter myMessageAdapter=new MyMessageAdapter(getActivity(),R.layout.message_item,myMessageList2);
+                listView.setAdapter(myMessageAdapter);
+            }
+        });
+
+
+
         initComponent(view);
         initView();
         initEvent();

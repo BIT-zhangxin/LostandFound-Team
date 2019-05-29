@@ -28,7 +28,7 @@ public class MyBundle {
 
     public static Bundle LoginBundle(String account, String password){
         Bundle bundle=new Bundle();
-        bundle.putString("id_or_phone_number",account);
+        bundle.putString("phone_number_or_email_address",account);
         bundle.putString("password",password);
         return bundle;
     }

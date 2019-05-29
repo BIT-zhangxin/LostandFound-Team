@@ -24,6 +24,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private TextView tv_object_location;
     private TextView tv_object_time;
     private TextView tv_object_description;
+    private TextView tv_object_question;
     private Button btn_object_apply;
     private Button btn_object_report;
 

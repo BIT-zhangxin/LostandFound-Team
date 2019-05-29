@@ -30,52 +30,28 @@
         android:layout_below="@id/iv_info_info_photo"/>
 
     <TextView
-        android:id="@+id/tv_info_info_nickname_hint"
+        android:id="@+id/tv_info_info_username_hint"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="@string/information_information_nickname_hint"
+        android:text="用户名称"
         android:layout_below="@id/iv_info_info_photo"/>
 
     <TextView
-        android:id="@+id/tv_info_info_nickname"
+        android:id="@+id/tv_info_info_username"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
         android:layout_below="@id/iv_info_info_photo"
-        android:layout_toEndOf="@id/tv_info_info_nickname_hint"/>
+        android:layout_toEndOf="@id/tv_info_info_username_hint"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"
         android:background="@color/tv_gray_normal"
-        android:layout_below="@id/tv_info_info_nickname"/>
-
-    <TextView
-        android:id="@+id/tv_info_info_id_hint"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:text="@string/information_information_id_hint"
-        android:layout_below="@id/tv_info_info_nickname"/>
-
-    <TextView
-        android:id="@+id/tv_info_info_id"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textSize="20sp"
-        android:gravity="center_vertical"
-        android:layout_below="@id/tv_info_info_nickname"
-        android:layout_toEndOf="@id/tv_info_info_id_hint"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"
-        android:background="@color/tv_gray_normal"
-        android:layout_below="@id/tv_info_info_id"/>
+        android:layout_below="@id/tv_info_info_username"/>
 
     <TextView
         android:id="@+id/tv_info_info_phone_number_hint"
@@ -83,8 +59,8 @@
         android:layout_height="50dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="@string/information_information_phone_number_hint"
-        android:layout_below="@id/tv_info_info_id"/>
+        android:text="手机号码"
+        android:layout_below="@id/tv_info_info_username"/>
 
     <TextView
         android:id="@+id/tv_info_info_phone_number"
@@ -92,8 +68,8 @@
         android:layout_height="50dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:layout_toEndOf="@id/tv_info_info_phone_number_hint"
-        android:layout_below="@id/tv_info_info_id"/>
+        android:layout_below="@id/tv_info_info_username"
+        android:layout_toEndOf="@id/tv_info_info_phone_number_hint"/>
 
     <View
         android:layout_width="match_parent"
@@ -102,13 +78,37 @@
         android:layout_below="@id/tv_info_info_phone_number"/>
 
     <TextView
+        android:id="@+id/tv_info_info_email_address_hint"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:text="电子邮箱"
+        android:layout_below="@id/tv_info_info_phone_number"/>
+
+    <TextView
+        android:id="@+id/tv_info_info_email_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@id/tv_info_info_email_address_hint"
+        android:layout_below="@id/tv_info_info_phone_number"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/tv_gray_normal"
+        android:layout_below="@id/tv_info_info_email_address"/>
+
+    <TextView
         android:id="@+id/tv_info_info_contact_information_hint"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="@string/information_information_contact_information_hint"
-        android:layout_below="@id/tv_info_info_phone_number"/>
+        android:text="联系方式"
+        android:layout_below="@id/tv_info_info_email_address"/>
 
     <TextView
         android:id="@+id/tv_info_info_contact_information"
@@ -117,7 +117,7 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         android:layout_toEndOf="@id/tv_info_info_contact_information_hint"
-        android:layout_below="@id/tv_info_info_phone_number"/>
+        android:layout_below="@id/tv_info_info_email_address"/>
 
     <View
         android:layout_width="match_parent"
@@ -126,13 +126,38 @@
         android:layout_below="@id/tv_info_info_contact_information"/>
 
     <TextView
+        android:id="@+id/tv_info_info_introduction_hint"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:text="个人简介"
+        android:layout_below="@id/tv_info_info_contact_information"/>
+
+    <TextView
+        android:id="@+id/tv_info_info_introduction"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:gravity="center_vertical"
+        android:layout_toEndOf="@id/tv_info_info_introduction_hint"
+        android:layout_below="@id/tv_info_info_contact_information"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/tv_gray_normal"
+        android:layout_below="@id/tv_info_info_introduction"/>
+
+
+    <TextView
         android:id="@+id/tv_info_info_credit_score_hint"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:textSize="20sp"
         android:gravity="center_vertical"
-        android:text="@string/information_information_credit_score_hint"
-        android:layout_below="@id/tv_info_info_contact_information"/>
+        android:text="信誉积分"
+        android:layout_below="@id/tv_info_info_introduction"/>
 
     <TextView
         android:id="@+id/tv_info_info_credit_score"
@@ -141,7 +166,7 @@
         android:textSize="20sp"
         android:gravity="center_vertical"
         android:layout_toEndOf="@id/tv_info_info_credit_score_hint"
-        android:layout_below="@id/tv_info_info_contact_information"/>
+        android:layout_below="@id/tv_info_info_introduction"/>
 
     <View
         android:layout_width="match_parent"

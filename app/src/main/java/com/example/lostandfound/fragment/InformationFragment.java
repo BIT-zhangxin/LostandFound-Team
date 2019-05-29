@@ -15,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
@@ -27,7 +28,6 @@ import com.example.lostandfound.activity.UserPublishActivity;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
-import de.hdodenhof.circleimageview.CircleImageView;
 import java.io.File;
 import java.util.Objects;
 
@@ -35,7 +35,7 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
 
     private Context mContext;
 
-    private CircleImageView circleImageView;
+    private ImageView circleImageView;
 
     private TextView tv_information_information;
     private TextView tv_information_modify;
@@ -73,13 +73,20 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1){
+            LoadProfilePhoto();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.information_layout,container,false);
         initComponent(view);
         initEvent();
-        LoadProfilePhoto();
         return view;
     }
 
@@ -130,7 +137,7 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
 
     private void StartModify(){
         Intent intent=new Intent(getActivity(),ModifyActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 
     private void StartSecurityChoose(){

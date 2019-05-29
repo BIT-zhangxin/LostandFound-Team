@@ -1,20 +1,28 @@
 package com.example.lostandfound.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyConnectionHelper;
 import com.example.lostandfound.component.MyDefine;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class InformationActivity extends MyAppCompatActivity {
 
@@ -26,6 +34,8 @@ public class InformationActivity extends MyAppCompatActivity {
     private TextView tv_info_info_contact_information;
     private TextView tv_info_info_introduction;
     private TextView tv_info_info_credit_score;
+
+    private ImageView iv_info_info_photo;
 
     @SuppressLint("HandlerLeak")
     private Handler informationHandler=new Handler(){
@@ -65,7 +75,8 @@ public class InformationActivity extends MyAppCompatActivity {
         tv_info_info_contact_information = findViewById(R.id.tv_info_info_contact_information);
         tv_info_info_introduction = findViewById(R.id.tv_info_info_introduction);
         tv_info_info_credit_score = findViewById(R.id.tv_info_info_credit_score);
-        myApplication=(MyApplication)getApplication();
+        iv_info_info_photo = findViewById(R.id.iv_info_info_photo);
+        myApplication = (MyApplication)getApplication();
     }
 
     private void initData(){
@@ -127,5 +138,28 @@ public class InformationActivity extends MyAppCompatActivity {
         tv_info_info_contact_information.setText(myApplication.getContact_information());
         tv_info_info_introduction.setText(myApplication.getIntroduction());
         tv_info_info_credit_score.setText(""+myApplication.getCredit_score());
+        LoadProfilePhoto();
+    }
+
+    private void LoadProfilePhoto(){
+        String photo_path=((MyApplication)this.getApplication()).getPhoto_path();
+        if(photo_path==null){
+            return;
+        }
+        File file=new File(photo_path);
+        Uri uri=getUriForFile(this,file);
+        Glide.with(this).load(uri).into(iv_info_info_photo);
+    }
+
+    //获取文件uri(android7.0后必须使用FileProvider)
+    private Uri getUriForFile(Context context,File file){
+        Uri uri;
+        if(Build.VERSION.SDK_INT>=24){
+            uri=FileProvider.getUriForFile(context,"com.example.lostandfound.fileprovider",file);
+        }
+        else{
+            uri=Uri.fromFile(file);
+        }
+        return uri;
     }
 }

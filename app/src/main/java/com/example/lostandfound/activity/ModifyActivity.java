@@ -93,6 +93,7 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         setContentView(R.layout.modify_layout);
         initComponent();
         initData();
+        LoadProfilePhoto();
     }
 
     @Override
@@ -129,9 +130,7 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         btn_modify_commit.setOnClickListener(this);
     }
 
-    private void SetProfilePhoto(String absolutePath){
-        ((MyApplication)getApplication()).setPhoto_path(absolutePath);
-    }
+
 
     private void Modify(){
         int id=((MyApplication)getApplication()).getId();
@@ -236,6 +235,20 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
                     PERMISSION_REQUEST_CODE);
             }
         }
+    }
+
+    private void SetProfilePhoto(String absolutePath){
+        ((MyApplication)getApplication()).setPhoto_path(absolutePath);
+    }
+
+    private void LoadProfilePhoto(){
+        String photo_path=((MyApplication)this.getApplication()).getPhoto_path();
+        if(photo_path==null){
+            return;
+        }
+        File file=new File(photo_path);
+        Uri uri=getUriForFile(this,file);
+        Glide.with(this).load(uri).into(iv_modify_profile_photo);
     }
 
     //获取文件uri(android7.0后必须使用FileProvider)

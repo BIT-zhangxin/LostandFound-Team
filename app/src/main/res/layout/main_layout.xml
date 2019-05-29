@@ -37,6 +37,7 @@
             android:id="@+id/navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
             app:itemIconTint="@color/selector_main_icon"
             app:itemTextColor="@color/selector_main_icon"
             app:menu="@menu/navigation" />

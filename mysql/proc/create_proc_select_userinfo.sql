@@ -17,4 +17,4 @@ CREATE PROCEDURE `proc_select_userinfo` ( IN `id` INT ) BEGIN
 	WHERE
 		`user`.`id` = `id`;
 
-END // #已添加数据库，待改动
+END // #已添加数据库，改动完成

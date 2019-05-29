@@ -26,4 +26,4 @@ CREATE PROCEDURE `proc_publish` (
 	VALUES
 		( `event_type`, `user_id`, `object_id`, `question`, NOW( ) );
 
-END // 已添加数据库，改动完成
+END // #已添加数据库，改动完成

@@ -1,15 +1,14 @@
 USE `LostandFound`;
+DROP PROCEDURE
+IF
+	EXISTS `proc_update_password_question`;
+
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_update_password_question`(
+CREATE PROCEDURE `proc_update_password_question`(
 	IN `id` INT,
 	IN `security_answer` VARCHAR(100),
 	IN `new_password` CHAR(32)
 )
-LANGUAGE SQL
-NOT DETERMINISTIC
-CONTAINS SQL
-SQL SECURITY DEFINER
-COMMENT ''
 BEGIN
 	declare tmp int;
 	set tmp=(select count(1) from `user` where `user`.id=id
@@ -20,4 +19,4 @@ BEGIN
 	update `user`
 	set `user`.`password`=`new_password`
 	where `user`.id=id;
-END //
+END // #已添加数据库，改动完成

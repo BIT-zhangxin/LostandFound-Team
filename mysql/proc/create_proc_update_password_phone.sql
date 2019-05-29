@@ -1,15 +1,14 @@
 USE `LostandFound`;
+DROP PROCEDURE
+IF
+	EXISTS `proc_update_password_phone`;
+
 delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_update_password_phone`(
+CREATE PROCEDURE `proc_update_password_phone`(
 	IN `id` INT,
 	IN `old_password` CHAR(32),
 	IN `new_phone` CHAR(11)
 )
-LANGUAGE SQL
-NOT DETERMINISTIC
-CONTAINS SQL
-SQL SECURITY DEFINER
-COMMENT ''
 BEGIN
 	declare tmp int;
 	set tmp=(select count(1) from `user` where `user`.id=id and `user`.`password`=`old_password`);
@@ -19,4 +18,4 @@ BEGIN
 	update `user`
 	set `user`.`phone_number`=`new_phone`
 	where `user`.id=id;
-END //
+END // #已添加数据库，改动完成

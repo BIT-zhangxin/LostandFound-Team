@@ -13,4 +13,4 @@ CREATE PROCEDURE `proc_download_object_picture` ( IN `id` INT ) BEGIN
 	WHERE
 		`object`.`id` = `id`;
 
-END // #未添加数据库，改动完成
+END // #已添加数据库，改动完成

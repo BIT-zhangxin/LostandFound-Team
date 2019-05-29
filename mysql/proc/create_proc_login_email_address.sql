@@ -13,6 +13,4 @@ CREATE PROCEDURE `proc_login_email_address` ( IN `email_address` VARCHAR ( 50 ),
 		`user`.`email_address` = `email_address`
 		AND `user`.`password` = `password`;
 
-END //
-
-#已添加数据库，改动完成
+END // #已添加数据库，改动完成

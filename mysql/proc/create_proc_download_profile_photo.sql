@@ -13,4 +13,4 @@ CREATE PROCEDURE `proc_download_profile_photo` ( IN `id` INT ) BEGIN
 	WHERE
 		`user`.`id` = `id`;
 
-END // #未添加数据库，改动完成
+END // #已添加数据库，改动完成

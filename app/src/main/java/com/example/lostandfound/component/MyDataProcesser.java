@@ -173,13 +173,18 @@ public class MyDataProcesser {
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        String id_or_phone_number = bundle.getString("id_or_phone_number", "");
+                        String phone_number_or_email_address = bundle.getString("phone_number_or_email_address", "");
                         String password = bundle.getString("password", "");
-                        //TODO:判断是手机还是邮箱
-                        String mysql_sql="call proc_login_phone_number(?,?)";
+                        String mysql_sql;
+                        if(phone_number_or_email_address.contains("@")){
+                            mysql_sql="call proc_login_email_address(?,?)";
+                        }
+                        else{
+                            mysql_sql="call proc_login_phone_number(?,?)";
+                        }
                         //String sql_server_sql = "exec proc_login_phone_number ?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setString(1,id_or_phone_number);
+                        preSt.setString(1,phone_number_or_email_address);
                         preSt.setString(2,password);
                         ResultSet rs = preSt.executeQuery();
                         if (rs.next()) {

@@ -247,10 +247,17 @@ public class MyDataProcesser {
                         preSt.setString(5,time);
                         preSt.setString(6,description);
                         preSt.setString(7,question);
-                        String[] result=file.getName().split("\\.");//切分文件格式
-                        String format=result[1];
-                        preSt.setBlob(8,new FileInputStream(file));
-                        preSt.setString(9, format);
+
+                        if(file==null){
+                            preSt.setBlob(8, (Blob) null);
+                            preSt.setString(9, null);
+                        }
+                        else {
+                            String[] result=file.getName().split("\\.");//切分文件格式
+                            String format=result[1];
+                            preSt.setBlob(8,new FileInputStream(file));
+                            preSt.setString(9, format);
+                        }
 
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;

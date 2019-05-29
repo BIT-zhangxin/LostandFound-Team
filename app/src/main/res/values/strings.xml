@@ -37,7 +37,7 @@
     <string name="publish_location">丢失地点：</string>
     <string name="publish_time">丢失时间：</string>
     <string name="publish_description">详细描述：</string>
-    <string name="publish_image">物品图片</string>
+    <string name="publish_image">物品图片(可选)</string>
     <string name="publish_image_hint">无</string>
     <string name="publish_publish">发布</string>
 

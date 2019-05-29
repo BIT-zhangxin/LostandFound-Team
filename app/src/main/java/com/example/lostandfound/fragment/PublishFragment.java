@@ -176,7 +176,9 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
 
     void Publish(){
         String object_name=et_publish_object_name.getText().toString();
-        if(object_name.equals("")){
+        String description=et_publish_description.getText().toString();
+        String question=et_publish_question.getText().toString();
+        if(object_name.equals("")||description.equals("")||question.equals("")){
             Message message=new Message();
             message.what=MyDefine.REPLY_FAILED;
             publishHandler.sendMessage(message);
@@ -186,8 +188,6 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         int event_type=(int)spinner_event_type.getSelectedItemId()+1;
         String location=et_publish_location.getText().toString();
         String time=et_publish_time.getText().toString();
-        String description=et_publish_description.getText().toString();
-        String question=et_publish_question.getText().toString();
         Bundle bundle= MyBundle.PublishBundle(user_id,event_type,object_name,location,time,description,question);
         MyDataProcesser.Publish(uploadFile,bundle,publishHandler);
     }

@@ -57,9 +57,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/tv_publish_object_name"
+            android:hint="必须填写"
             android:layout_marginStart="20dp"
             android:inputType="text"
-            android:textSize="@dimen/text_size_normal"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -89,9 +90,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/tv_publish_location"
+            android:hint="选择填写"
             android:layout_marginStart="20dp"
             android:inputType="text"
-            android:textSize="@dimen/text_size_normal"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -121,9 +123,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/tv_publish_time"
+            android:hint="选择填写"
             android:layout_marginStart="20dp"
             android:inputType="text"
-            android:textSize="@dimen/text_size_normal"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -152,10 +155,11 @@
             android:id="@+id/et_publish_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="必须填写"
             android:layout_toEndOf="@id/tv_publish_description"
             android:layout_marginStart="20dp"
             android:inputType="text"
-            android:textSize="@dimen/text_size_normal"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -185,9 +189,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/tv_publish_question"
+            android:hint="必须填写"
             android:layout_marginStart="20dp"
             android:inputType="text"
-            android:textSize="@dimen/text_size_normal"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -208,9 +213,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/publish_image"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"/>
+
 
         <Button
             android:id="@+id/btn_publish_photo"

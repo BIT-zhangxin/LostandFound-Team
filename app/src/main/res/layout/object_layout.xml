@@ -24,6 +24,12 @@
         android:scaleType="fitXY"/>
 
     <TextView
+        android:id="@+id/tv_object_id"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:textSize="15sp" />
+
+    <TextView
         android:id="@+id/tv_object_user_name"
         android:layout_width="match_parent"
         android:layout_height="25dp"

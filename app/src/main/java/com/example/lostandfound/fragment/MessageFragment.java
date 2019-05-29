@@ -107,17 +107,47 @@ public class MessageFragment extends Fragment {
                 int mymessage_num=myMessageList.size();
                 List<MyMessage> myMessageList2=new ArrayList<>();
                 myMessageList2.clear();
-                int select_item_code=(select_item.equals("失物")?1:2);
-                System.out.println(select_item_code);
-                for(int i=0;i<mymessage_num;i++)
+                int select_item_code;
+                if(select_item.equals("失物"))
                 {
-                    boolean result_compare = searchMatching(myMessageList.get(i).getName(),search_string);
-                    if(result_compare&&select_item_code==myMessageList.get(i).getMain_event_type())
+                    select_item_code=1;
+                }
+                else if(select_item.equals("拾物"))
+                {
+                    select_item_code=2;
+                }
+                else
+                {
+                    select_item_code=3;
+                }
+
+                if(select_item_code!=3)
+                {
+                    for(int i=0;i<mymessage_num;i++)
                     {
-                        //去掉myMessageList中不符合条件的item
-                        myMessageList2.add(myMessageList.get(i));
+                        boolean result_compare = searchMatching(myMessageList.get(i).getName(),search_string);
+                        if(result_compare)
+                        {
+                            //去掉myMessageList中不符合条件的item
+                            if(select_item_code==myMessageList.get(i).getMain_event_type())
+                                myMessageList2.add(myMessageList.get(i));
+                        }
                     }
                 }
+
+                else
+                {
+                    for(int i=0;i<mymessage_num;i++)
+                    {
+                        String object_id_u=String.valueOf(myMessageList.get(i).getObject_id());
+                        if(object_id_u.equals(search_string))
+                        {
+                            //去掉myMessageList中不符合条件的item
+                            myMessageList2.add(myMessageList.get(i));
+                        }
+                    }
+                }
+
                 MyMessageAdapter myMessageAdapter=new MyMessageAdapter(getActivity(),R.layout.message_item,myMessageList2);
                 listView.setAdapter(myMessageAdapter);
             }
@@ -174,8 +204,7 @@ public class MessageFragment extends Fragment {
                             myMessage.setTime(rs.getString("time"));
                             myMessage.setLocation(rs.getString("location"));
                             myMessage.setDescription(rs.getString("description"));
-                            myMessage.setPicture(rs.getBlob("picture"));
-                            myMessage.setFormat(rs.getString("format"));
+
                             myMessageList.add(myMessage);
                         }
                         msg.what=MyDefine.REPLY_SUCCESS;

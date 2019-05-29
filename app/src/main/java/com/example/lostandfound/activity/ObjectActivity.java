@@ -23,6 +23,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private TextView tv_object_user_name;
     private TextView tv_object_main_event_type;
     private TextView tv_object_location;
+    private TextView tv_object_id;
     private TextView tv_object_time;
     private TextView tv_object_description;
     private TextView tv_object_question;
@@ -102,6 +103,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     private void initComponent(){
+        tv_object_id=findViewById(R.id.tv_object_id);
         tv_object_user_name=findViewById(R.id.tv_object_user_name);
         tv_object_name = findViewById(R.id.tv_object_name);
         tv_object_main_event_type = findViewById(R.id.tv_object_main_event_type);
@@ -121,6 +123,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private void initData(){
         messageBundle = getIntent().getExtras();
         assert messageBundle != null;
+        tv_object_id.setText(String.valueOf(messageBundle.getInt("object_id",0)));
         tv_object_user_name.setText(messageBundle.getString("user_name",""));
         tv_object_name.setText(messageBundle.getString("name",""));
         tv_object_main_event_type.setText(MyEventChange.MainEventToString(messageBundle.getInt("main_event_type",0)));

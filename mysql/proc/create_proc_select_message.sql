@@ -17,8 +17,6 @@ CREATE PROCEDURE `proc_select_message` ( IN `condition` VARCHAR ( 100 ) ) BEGIN
 		`object`.`time` AS `time`,
 		`object`.location AS `location`,
 		`object`.`description` AS `description`,
-		`object`.`picture` AS ` picture`,
-		`object`.`picture_format` AS `format`
 	FROM
 		`LostandFound`.`main_event`,
 		`LostandFound`.`user`,

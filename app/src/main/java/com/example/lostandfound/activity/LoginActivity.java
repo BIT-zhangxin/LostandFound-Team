@@ -41,7 +41,7 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
-                    Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(LoginActivity.this,"登陆成功",Toast.LENGTH_LONG).show();
                     setUserId(msg.getData());
                     LoginSuccess();
                     break;

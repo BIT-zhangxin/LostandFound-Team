@@ -88,7 +88,6 @@ public class InformationActivity extends MyAppCompatActivity {
                     } else {
                         int id=myApplication.getId();
                         String mysql_sql="call proc_select_userinfo(?)";
-                        //String sql_server_sql = "exec proc_select_userinfo ?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         ResultSet rs = preSt.executeQuery();

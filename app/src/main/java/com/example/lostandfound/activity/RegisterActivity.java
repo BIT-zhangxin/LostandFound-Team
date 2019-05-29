@@ -128,11 +128,15 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
 
     private String checkInput(){
         if(getEditPhoneNumber().isEmpty()){
-            return "手机号和邮箱不能为空！";
+            return "手机号或邮箱不能为空！";
         }
 //        else if(getEditPhoneNumber().length()!=MyDefine.LENGTH_PHONENUMBER){
 //            return "手机号和邮箱不合法！";
 //        }
+        else if(!getEditPhoneNumber().contains("@")&&getEditPhoneNumber().length()!=11)
+        {
+            return "手机号长度必须为11位！";
+        }
         else if(getEditPassword().isEmpty()){
             return "密码不能为空！";
         }

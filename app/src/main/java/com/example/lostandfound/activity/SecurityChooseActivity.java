@@ -188,23 +188,6 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
 //        }
 //    }
 
-    void warningTip(String tip){
-        MyAlertDialog myAlertDialog=new MyAlertDialog(SecurityChooseActivity.this,0,
-                "提示",tip,"知道了","",true);
-        myAlertDialog.setOnCertainButtonClickListener(new MyAlertDialog.onMyAlertDialogListener() {
-            public void onCancelButtonClick() {
-
-            }
-            public void onCertainButtonClick() {
-
-            }
-            public void onDismissListener() {
-
-            }
-        });
-        myAlertDialog.show();
-    }
-
     private void StartPassword(){
         Intent intent=new Intent(SecurityChooseActivity.this,PasswordPasswordActivity.class);
         startActivity(intent);

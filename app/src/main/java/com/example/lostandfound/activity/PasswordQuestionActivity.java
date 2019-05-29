@@ -1,6 +1,7 @@
 package com.example.lostandfound.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
     private EditText et_information_security_question_hint;
     private EditText et_information_security_question_new_hint;
     private EditText et_information_security_question_new_repeat_hint;
+    private ImageView iv_information_security_password_1;
     private Button btn_information_security_question_commit;
 
     @SuppressLint("HandlerLeak")
@@ -35,7 +38,8 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
                     Toast.makeText(PasswordQuestionActivity.this,"修改成功",Toast.LENGTH_LONG).show();
-                    finish();
+                    Intent intent=new Intent(PasswordQuestionActivity.this,LoginActivity.class);
+                    startActivity(intent);
                     break;
                 case MyDefine.REPLY_FAILED:
                     Toast.makeText(PasswordQuestionActivity.this,"密保答案错误",Toast.LENGTH_LONG).show();
@@ -61,6 +65,9 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.iv_information_security_password_1:
+                passwordVisibility(iv_information_security_password_1, et_information_security_question_new_hint);
+                break;
             case R.id.btn_information_security_question_commit:
                 UpdatePasswordQuestion();
                 break;
@@ -70,6 +77,7 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
     }
 
     private void initComponent(){
+        iv_information_security_password_1=findViewById(R.id.iv_information_security_password_1);
         tv_information_security_question=findViewById(R.id.tv_information_security_question);
         et_information_security_question_hint=findViewById(R.id.et_information_security_question_hint);
         et_information_security_question_new_hint=findViewById(R.id.et_information_security_question_new_hint);
@@ -78,6 +86,7 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
     }
 
     private void initEvent(){
+        iv_information_security_password_1.setOnClickListener(this);
         btn_information_security_question_commit.setOnClickListener(this);
     }
 

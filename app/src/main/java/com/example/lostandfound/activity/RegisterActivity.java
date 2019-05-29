@@ -20,6 +20,8 @@ import com.example.lostandfound.component.MyBundle;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
 import com.example.lostandfound.R;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends MyAppCompatActivity implements View.OnClickListener{
 
@@ -120,6 +122,22 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
         return MD5.md5(et_register_password_repetition.getText().toString());
     }
 
+    //判断密码格式，正确返回true
+    boolean checkPasswordFormat(String password){
+        if(password.length()<6){
+            return false;
+        }
+        if(password.length()>20){
+            return false;
+        }
+        else {
+            String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(password);
+            return !m.find();
+        }
+    }
+
     boolean checkPasswordRepetition(){
         String Password= getEditPassword();
         String PasswordRepetition= getEditPasswordRepetition();
@@ -130,12 +148,8 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
         if(getEditPhoneNumber().isEmpty()){
             return "手机号或邮箱不能为空！";
         }
-//        else if(getEditPhoneNumber().length()!=MyDefine.LENGTH_PHONENUMBER){
-//            return "手机号和邮箱不合法！";
-//        }
-        else if(!getEditPhoneNumber().contains("@")&&getEditPhoneNumber().length()!=11)
-        {
-            return "手机号长度必须为11位！";
+        else if(!getEditPhoneNumber().contains("@")&&getEditPhoneNumber().length()!=MyDefine.LENGTH_PHONENUMBER){
+            return "手机号或邮箱不合法！";
         }
         else if(getEditPassword().isEmpty()){
             return "密码不能为空！";
@@ -150,7 +164,10 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
             return "密保密码不能为空！";
         }
         else if(!checkPasswordRepetition()){
-            return "两次密码输入不一致！！";
+            return "两次密码输入不一致！";
+        }
+        else if(!checkPasswordFormat(getEditPassword())){
+            return "密码格式不正确！";
         }
         else{
             return "";

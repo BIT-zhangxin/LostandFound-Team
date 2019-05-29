@@ -46,6 +46,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
                 case MyDefine.REPLY_SUCCESS:
                     Bundle bundle=msg.getData();
                     String absolutePath=bundle.getString("absolutePath");
+
                     LoadProfilePhoto(absolutePath);
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:

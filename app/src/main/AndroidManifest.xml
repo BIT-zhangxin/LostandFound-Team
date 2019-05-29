@@ -54,7 +54,7 @@
         </activity>
         <activity android:name=".activity.PasswordPhoneActivity" >
         </activity>
-        <activity android:name=".activity.RetrievePassword"/>
+        <activity android:name=".activity.RetrievePasswordActivity"/>
         <activity android:name=".activity.TestPhotoActivity">
         </activity>
         <provider

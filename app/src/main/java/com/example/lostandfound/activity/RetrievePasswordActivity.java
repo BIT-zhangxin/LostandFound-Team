@@ -9,17 +9,12 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lostandfound.R;
-import com.example.lostandfound.component.MD5;
-import com.example.lostandfound.component.MyAlertDialog;
 import com.example.lostandfound.component.MyAppCompatActivity;
-import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyBundle;
 import com.example.lostandfound.component.MyConnectionHelper;
-import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
 
 import java.sql.Connection;
@@ -27,8 +22,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RetrievePassword extends MyAppCompatActivity implements View.OnClickListener {
-    private TextView tv_retrieve_password_title;
+public class RetrievePasswordActivity extends MyAppCompatActivity implements View.OnClickListener {
+
     private EditText et_retrieve_password_account;
     private Button btn_retrieve_password_next;
 
@@ -38,22 +33,16 @@ public class RetrievePassword extends MyAppCompatActivity implements View.OnClic
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
-                    setUserId(msg.getData());
-                    Intent intent=new Intent(RetrievePassword.this,PasswordQuestionActivity.class);
-                    Bundle bundle_2=new Bundle();
-                    bundle_2.putString("security_question",msg.getData().getString("security_question",""));
-                    Message msg_2=new Message();
-                    msg_2.setData(bundle_2);
-                    intent.putExtras(msg_2.getData());
-                    startActivity(intent);
+                    next(msg.getData());
                     break;
                 case MyDefine.REPLY_FAILED:
+                    Toast.makeText(RetrievePasswordActivity.this,"账号不存在",Toast.LENGTH_LONG).show();
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
-                    Toast.makeText(RetrievePassword.this,"未知错误",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RetrievePasswordActivity.this,"未知错误",Toast.LENGTH_LONG).show();
                     break;
                 case MyDefine.REPLY_NO_RESPONSE:
-                    Toast.makeText(RetrievePassword.this,"服务器无响应",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RetrievePasswordActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
@@ -61,46 +50,60 @@ public class RetrievePassword extends MyAppCompatActivity implements View.OnClic
         }
     };
 
-    private String getEditAccount(){
-        return et_retrieve_password_account.getText().toString();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.retrieve_password_layout);
+        initComponent();
+        initEvent();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_retrieve_password_next:
-                Bundle bundle= MyBundle.AccountBundle(getEditAccount());
-                GetID(bundle);
+                checkInput();
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.retrieve_password);
-        initComponent();
-        initEvent();
+    private void initComponent(){
+        et_retrieve_password_account = findViewById(R.id.et_retrieve_password_account);
+        btn_retrieve_password_next = findViewById(R.id.btn_retrieve_password_next);
     }
 
     private void initEvent(){
         btn_retrieve_password_next.setOnClickListener(this);
     }
 
-    private void initComponent(){
-        tv_retrieve_password_title = findViewById(R.id.tv_retrieve_password_title);
-        et_retrieve_password_account = findViewById(R.id.et_retrieve_password_account);
-        btn_retrieve_password_next = findViewById(R.id.btn_retrieve_password_next);
+    private void next(Bundle bundle){
+        Intent intent=new Intent(this,PasswordQuestionActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
-    private void setUserId(Bundle bundle){
-        MyApplication myApplication=(MyApplication)getApplication();
-        myApplication.setId(bundle.getInt("id",0));
+    private void checkInput(){
+        String string=getEditAccount();
+
+        if(string.equals("")){
+            Toast.makeText(RetrievePasswordActivity.this,"输入不能为空",Toast.LENGTH_LONG).show();
+        }
+        else if(!string.contains("@")&&string.length()!=MyDefine.LENGTH_PHONENUMBER){
+            Toast.makeText(RetrievePasswordActivity.this,"输入格式有误",Toast.LENGTH_LONG).show();
+        }
+        else{
+            getId(MyBundle.AccountBundle(string));
+        }
+
     }
 
-    private void GetID(Bundle bundle){
+    private String getEditAccount(){
+        return et_retrieve_password_account.getText().toString();
+    }
+
+    private void getId(Bundle bundle){
 
         class MyThread extends Thread{
 
@@ -118,20 +121,17 @@ public class RetrievePassword extends MyAppCompatActivity implements View.OnClic
                     if (connection == null) {
                         msg.what = MyDefine.REPLY_NO_RESPONSE;
                     } else {
-                        String phone_number = bundle.getString("id_or_phone_number", "");
-                        int type=0;
-                        if(phone_number.contains("@"))
-                            type=1;
-                        else
-                            type=0;
-                        String mysql_sql=null;
-                        if(type==0)
-                            mysql_sql="call proc_phone_getID(?)";
-                        else if(type==1)
-                            mysql_sql="call proc_mail_getID(?)";
-//                        String sql_server_sql = "exec proc_getID ?";
+                        String phone_number_or_email_address = bundle.getString("phone_number_or_email_address", "");
+                        String mysql_sql;
+                        if(phone_number_or_email_address.contains("@")){
+                            mysql_sql="call proc_select_id_by_email_address(?)";
+
+                        }
+                        else{
+                            mysql_sql="call proc_select_id_by_phone_number(?)";
+                        }
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setString(1, phone_number);
+                        preSt.setString(1, phone_number_or_email_address);
                         ResultSet rs = preSt.executeQuery();
                         if (rs.next()) {
                             msg.what = MyDefine.REPLY_SUCCESS;

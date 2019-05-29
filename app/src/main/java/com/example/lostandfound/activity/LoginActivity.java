@@ -195,7 +195,7 @@ public class LoginActivity extends MyAppCompatActivity implements View.OnClickLi
     }
 
     public void ForgetPassword(){
-        Intent intent=new Intent(this,RetrievePassword.class);
+        Intent intent=new Intent(this,RetrievePasswordActivity.class);
         startActivity(intent);
     }
 

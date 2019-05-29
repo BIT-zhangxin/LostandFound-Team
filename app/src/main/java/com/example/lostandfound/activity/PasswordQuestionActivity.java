@@ -21,6 +21,8 @@ import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyBundle;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PasswordQuestionActivity extends MyAppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +32,8 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
     private EditText et_information_security_question_new_repeat_hint;
     private ImageView iv_information_security_password_1;
     private Button btn_information_security_question_commit;
+
+    private int id;//用户id
 
     @SuppressLint("HandlerLeak")
     private Handler updatePQHandler=new Handler(){
@@ -94,24 +98,56 @@ public class PasswordQuestionActivity extends MyAppCompatActivity implements Vie
         Bundle bundle=getIntent().getExtras();
         assert bundle != null;
         tv_information_security_question.setText(bundle.getString("security_question",""));
+        id=bundle.getInt("id");
+    }
+
+    //判断密码格式，正确返回true
+    boolean checkPasswordFormat(String password){
+        if(password.length()<6){
+            return false;
+        }
+        if(password.length()>20){
+            return false;
+        }
+        else {
+            String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
+            Pattern p = Pattern.compile(regEx);
+            Matcher m = p.matcher(password);
+            return !m.find();
+        }
     }
 
     private void UpdatePasswordQuestion(){
         String security_answer=et_information_security_question_hint.getText().toString();
-        String new_password=MD5.md5(et_information_security_question_new_hint.getText().toString());
-        String new_password_repeat=MD5.md5(et_information_security_question_new_repeat_hint.getText().toString());
-        if(!new_password.equals(new_password_repeat)){
-            warningTip();
+        if(security_answer.equals("")){
+            warningTip("密保问题不能为空");
             return;
         }
-        int id=((MyApplication)getApplication()).getId();
-        Bundle bundle=MyBundle.UpdatePasswordQuestionBundle(id,security_answer,new_password);
+        String new_password=et_information_security_question_new_hint.getText().toString();
+        if(new_password.equals("")){
+            warningTip("密码不能为空");
+            return;
+        }
+        String new_password_repeat=et_information_security_question_new_repeat_hint.getText().toString();
+        if(new_password_repeat.equals("")){
+            warningTip("密码重复不能为空");
+            return;
+        }
+        if(!new_password.equals(new_password_repeat)){
+            warningTip("两次密码输入不一致");
+            return;
+        }
+        if(!checkPasswordFormat(new_password)){
+            warningTip("密码格式不正确");
+            return;
+        }
+        Bundle bundle=MyBundle.UpdatePasswordQuestionBundle(id,security_answer,MD5.md5(new_password));
         MyDataProcesser.UpdatePasswordQuestion(bundle,updatePQHandler);
     }
 
-    void warningTip(){
+    void warningTip(String warning){
         MyAlertDialog myAlertDialog=new MyAlertDialog(PasswordQuestionActivity.this,0,
-                "提示","两次密码输入不一致！","知道了","",true);
+            "提示",warning,"知道了","",true);
         myAlertDialog.setOnCertainButtonClickListener(new MyAlertDialog.onMyAlertDialogListener() {
             public void onCancelButtonClick() {
 

@@ -48,7 +48,7 @@ public class MyDataProcesser {
                         int origin_user_id=bundle.getInt("origin_user_id");
                         int aim_user_id=bundle.getInt("aim_user_id");
                         String description=bundle.getString("description");
-                        String mysql_sql="call proc_apply(?,?)";
+                        String mysql_sql="call proc_apply(?,?,?,?,?)";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, main_event_id);
                         preSt.setInt(2, event_type);
@@ -528,14 +528,16 @@ public class MyDataProcesser {
     }
 
     //修改个人信息
-    public static void UpdateUseInformation(Bundle bundle, Handler handler) {
+    public static void UpdateUseInformation(File file,Bundle bundle, Handler handler) {
 
         class MyThread extends Thread {
 
+            private File file;
             private Bundle bundle;
             private Handler handler;
 
-            private MyThread(Bundle bundle, Handler handler) {
+            private MyThread(File file,Bundle bundle, Handler handler) {
+                this.file = file;
                 this.bundle = bundle;
                 this.handler = handler;
             }
@@ -552,60 +554,29 @@ public class MyDataProcesser {
                         String username=bundle.getString("username", "");
                         String contact_information=bundle.getString("contact_information", "");
                         String personal_profile=bundle.getString("personal_profile", "");
-                        String mysql_sql="call proc_update_user_information(?,?,?,?)";
+                        String mysql_sql="call proc_update_user_information(?,?,?,?,?,?)";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, username);
                         preSt.setString(3, contact_information);
                         preSt.setString(4, personal_profile);
+
+                        if(file==null){
+                            preSt.setBlob(5, (Blob) null);
+                            preSt.setString(6, null);
+                        }
+                        else {
+                            String[] result=file.getName().split("\\.");//切分文件格式
+                            String format=result[1];
+                            preSt.setBlob(5,new FileInputStream(file));
+                            preSt.setString(6, format);
+                        }
+
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    msg.what = MyDefine.REPLY_FAILED;
-                }
-                handler.sendMessage(msg);
-            }
-        }
-        new MyThread(bundle, handler).start();
-    }
-
-    //上传头像
-    public static void UploadProfilePhoto(File file,int id,Handler handler){
-
-        class MyThread extends Thread{
-
-            private File file;
-            private int id;
-            private Handler handler;
-
-            private MyThread(File file,int id,Handler handler){
-                this.file=file;
-                this.id=id;
-                this.handler=handler;
-            }
-
-            @Override
-            public void run() {
-                Message msg=new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        String mysql_sql="call proc_upload_profile_photo(?,?,?)";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-
-                        preSt.setInt(1, id);
-
-                        String[] result=file.getName().split(".");//切分文件格式
-                        String format=result[1];
-
-                        preSt.setString(2, format);
-                        preSt.setBlob(3,new FileInputStream(file));
-                        preSt.executeUpdate();
-                        msg.what = MyDefine.REPLY_SUCCESS;
+                        Bundle bundle1=new Bundle();
+                        bundle1.putString("absolutePath",file.getAbsolutePath());
+                        msg.setData(bundle1);
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -616,7 +587,7 @@ public class MyDataProcesser {
                 handler.sendMessage(msg);
             }
         }
-        new MyThread(file,id,handler).start();
+        new MyThread(file,bundle,handler).start();
     }
 
     //下载头像，形成一个文件存储于本地文件夹
@@ -715,6 +686,7 @@ public class MyDataProcesser {
 
                             String format=rs.getString("picture_format");
                             Blob blob=rs.getBlob("picture");
+                            String absolutePath;
                             try {
 
                                 InputStream in = blob.getBinaryStream();
@@ -723,7 +695,7 @@ public class MyDataProcesser {
                                 //noinspection ResultOfMethodCallIgnored
                                 storageDir.mkdirs();
                                 File file=new File(storageDir,TestPhotoActivity.getStringToday()+"."+format);
-                                String absolutePath=file.getAbsolutePath();
+                                absolutePath=file.getAbsolutePath();
                                 OutputStream out = new FileOutputStream(file);
                                 byte [] buff = new byte[1024];
                                 int len;

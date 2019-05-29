@@ -40,12 +40,7 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     public static final String JPG_FORMAT=".jpg";//jpg图片格式
     public static final String JPEG_FORMAT=".jpeg";//jpeg图片格式
 
-    public static final String PROFILE_PHOTO_TYPE="profile_photo";
-    public static final String OBJECT_PICTURE_TYPE="object_picture";
-
     private boolean hasPermission=false;//是否已经获取权限
-
-    private MyApplication myApplication;
 
     private Uri photoUri;//保存拍照时返回的uri
     private Uri pictureUri;//保存选择图片时返回的uri
@@ -54,7 +49,6 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
     private File photoFile;//保存拍照文件
     private File pictureFile;//保存选择图片文件
     private File cropFile;//保存裁剪文件
-
 
 
     private Button button1;
@@ -78,7 +72,6 @@ public class TestPhotoActivity extends MyAppCompatActivity implements View.OnCli
         button2=findViewById(R.id.btn_test_photo_select);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
-        myApplication=(MyApplication)getApplication();
     }
 
     @Override

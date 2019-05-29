@@ -146,6 +146,9 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
 
     private void LoadProfilePhoto(){
         String photo_path=((MyApplication)Objects.requireNonNull(getActivity()).getApplication()).getPhoto_path();
+        if(photo_path==null){
+            return;
+        }
         File file=new File(photo_path);
         Uri uri=getUriForFile(getContext(),file);
         Glide.with(this).load(uri).into(circleImageView);

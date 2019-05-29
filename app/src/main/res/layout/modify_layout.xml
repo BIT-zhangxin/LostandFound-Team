@@ -15,11 +15,13 @@
         android:layout_marginBottom="50dp"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="100pt"
+        android:id="@+id/iv_modify_profile_photo"
+        android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/head_portrait"
+        android:src="@drawable/default_picture"
         />
 
     <Button

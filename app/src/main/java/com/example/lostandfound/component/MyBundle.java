@@ -128,10 +128,4 @@ public class MyBundle {
         bundle.putString("question",myMessage.getQuestion());
         return bundle;
     }
-
-    public static Bundle PictureBundle(int id){
-        Bundle bundle=new Bundle();
-        bundle.putInt("id",id);
-        return bundle;
-    }
 }

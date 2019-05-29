@@ -48,7 +48,6 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
                 case MyDefine.REPLY_SUCCESS:
                     Bundle bundle=msg.getData();
                     String absolutePath=bundle.getString("absolutePath");
-
                     LoadProfilePhoto(absolutePath);
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
@@ -180,6 +179,9 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     private void LoadProfilePhoto(String absolutePath){
+        if(absolutePath==null){
+            return;
+        }
         File file=new File(absolutePath);
         Uri uri=getUriForFile(this,file);
         Glide.with(this).load(uri).into(iv_object_picture);

@@ -176,7 +176,7 @@ public class MessageFragment extends Fragment {
                             myMessage.setUser_name(rs.getString("user_name"));
                             myMessage.setObject_id(rs.getInt("object_id"));
                             myMessage.setQuestion(rs.getString("question"));
-                            myMessage.setDate(rs.getDate("date"));
+                            myMessage.setDate(rs.getTimestamp("date"));
                             myMessage.setName(rs.getString("name"));
                             myMessage.setTime(rs.getString("time"));
                             myMessage.setLocation(rs.getString("location"));

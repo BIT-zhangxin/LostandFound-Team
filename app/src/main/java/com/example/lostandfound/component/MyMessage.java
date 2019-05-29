@@ -1,7 +1,6 @@
 package com.example.lostandfound.component;
 
-import java.sql.Blob;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class MyMessage {
 
@@ -17,7 +16,9 @@ public class MyMessage {
 
     private String question;//问题
 
-    private Date date;//事件发生时间
+
+
+    private Timestamp date;//事件发生时间
 
     private String name;//物品名称
 
@@ -26,10 +27,6 @@ public class MyMessage {
     private String location;//位置
 
     private String description;//描述
-
-    private Blob picture;//图片
-
-    private String format;//图片类型
 
     public int getMain_event_id() {
         return main_event_id;
@@ -111,27 +108,11 @@ public class MyMessage {
         this.question = question;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
-    }
-
-    public Blob getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Blob picture) {
-        this.picture = picture;
-    }
-
-    public String getFormat() {
-        return format;
-    }
-
-    public void setFormat(String format) {
-        this.format = format;
     }
 }

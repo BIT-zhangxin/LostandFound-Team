@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.lostandfound.R;
-
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MyMessageAdapter extends ArrayAdapter<MyMessage> {
@@ -37,7 +35,14 @@ public class MyMessageAdapter extends ArrayAdapter<MyMessage> {
         tv_message_main_event_type.setText(MyEventChange.MainEventToString(message.getMain_event_type()));
         tv_message_name.setText(message.getName());
         tv_message_location.setText(message.getLocation());
-        tv_message_time.setText(message.getDate().toString());
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //格式可以自己根据需要修改
+        String dateString = simpleDateFormat.format(message.getDate());
+
+        tv_message_time.setText(dateString);
+
         return view;
     }
 }

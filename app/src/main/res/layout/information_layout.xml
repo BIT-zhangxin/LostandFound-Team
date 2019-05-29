@@ -6,11 +6,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_profile_photo"
-        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="@dimen/input_margin"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/head_portrait"
+        android:src="@drawable/default_picture"
         />
 
     <View

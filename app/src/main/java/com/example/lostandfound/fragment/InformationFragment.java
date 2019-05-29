@@ -49,6 +49,7 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
+                    SetProfilePhoto(msg.getData().getString("absolutePath"));
                     LoadProfilePhoto();
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
@@ -67,7 +68,9 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext=getActivity();
-        MyDataProcesser.DownloadProfilePhoto(getActivity(),profilePhotoHandler);
+        if(((MyApplication)Objects.requireNonNull(getActivity()).getApplication()).getPhoto_path()==null){
+            MyDataProcesser.DownloadProfilePhoto(getActivity(),profilePhotoHandler);
+        }
     }
 
     @Nullable
@@ -76,6 +79,7 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
         View view=inflater.inflate(R.layout.information_layout,container,false);
         initComponent(view);
         initEvent();
+        LoadProfilePhoto();
         return view;
     }
 
@@ -142,6 +146,10 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
     private void StartUserApply(){
         Intent intent=new Intent(getActivity(),ApplyInfoActivity.class);
         startActivity(intent);
+    }
+
+    private void SetProfilePhoto(String absolutePath){
+        ((MyApplication)Objects.requireNonNull(getActivity()).getApplication()).setPhoto_path(absolutePath);
     }
 
     private void LoadProfilePhoto(){

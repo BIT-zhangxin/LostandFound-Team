@@ -70,6 +70,8 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
+                    String absolutePath=msg.getData().getString("absolutePath");
+                    SetProfilePhoto(absolutePath);
                     Toast.makeText(ModifyActivity.this,"修改成功",Toast.LENGTH_LONG).show();
                     finish();
                     break;
@@ -125,6 +127,10 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         btn_modify_photo_photo.setOnClickListener(this);
         btn_modify_photo_select.setOnClickListener(this);
         btn_modify_commit.setOnClickListener(this);
+    }
+
+    private void SetProfilePhoto(String absolutePath){
+        ((MyApplication)getApplication()).setPhoto_path(absolutePath);
     }
 
     private void Modify(){

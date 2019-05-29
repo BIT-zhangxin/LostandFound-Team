@@ -37,7 +37,7 @@ CREATE PROCEDURE `proc_update_user_information` (
 
 	END IF;
 	IF
-		( `picture` IS NULL ) THEN
+		( `profile_photo` IS NOT NULL ) THEN
 			UPDATE `user`
 			SET `user`.`profile_photo` = `profile_photo`,
 			`user`.`profile_photo_format` = `profile_photo_format`

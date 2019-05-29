@@ -28,7 +28,6 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private TextView tv_object_question;
     private Button btn_object_apply;
     private Button btn_object_report;
-
     private Bundle messageBundle;
 
     @SuppressLint("HandlerLeak")
@@ -122,7 +121,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private void initData(){
         messageBundle = getIntent().getExtras();
         assert messageBundle != null;
-        tv_object_user_name.setText(messageBundle.getString("name",""));
+        tv_object_user_name.setText(messageBundle.getString("user_name",""));
         tv_object_name.setText(messageBundle.getString("name",""));
         tv_object_main_event_type.setText(MyEventChange.MainEventToString(messageBundle.getInt("main_event_type",0)));
         tv_object_location.setText(messageBundle.getString("location",""));

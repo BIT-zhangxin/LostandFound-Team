@@ -20,6 +20,7 @@ import com.example.lostandfound.component.MyEventChange;
 public class ObjectActivity extends MyAppCompatActivity implements View.OnClickListener {
 
     private TextView tv_object_name;
+    private TextView tv_object_user_name;
     private TextView tv_object_main_event_type;
     private TextView tv_object_location;
     private TextView tv_object_time;
@@ -102,6 +103,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     private void initComponent(){
+        tv_object_user_name=findViewById(R.id.tv_object_user_name);
         tv_object_name = findViewById(R.id.tv_object_name);
         tv_object_main_event_type = findViewById(R.id.tv_object_main_event_type);
         tv_object_location = findViewById(R.id.tv_object_location);
@@ -120,6 +122,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private void initData(){
         messageBundle = getIntent().getExtras();
         assert messageBundle != null;
+        tv_object_user_name.setText(messageBundle.getString("name",""));
         tv_object_name.setText(messageBundle.getString("name",""));
         tv_object_main_event_type.setText(MyEventChange.MainEventToString(messageBundle.getInt("main_event_type",0)));
         tv_object_location.setText(messageBundle.getString("location",""));

@@ -20,7 +20,7 @@ public class MyMessage {
 
     private String name;//物品名称
 
-    private String time;//物品描述事件
+    private String time;//物品描述时间
 
     private String location;//位置
 

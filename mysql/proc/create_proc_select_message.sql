@@ -11,7 +11,7 @@ CREATE PROCEDURE `proc_select_message` ( ) BEGIN
 		`main_event`.`user_id` AS `user_id`,
 		`user`.`username` AS `user_name`,
 		`main_event`.`object_id` AS `object_id`,
-		`main_event`.`description` AS `question`,
+		`main_event`.`question` AS `question`,
 		`main_event`.`time` AS `date`,
 		`object`.`name` AS `name`,
 		`object`.`time` AS `time`,

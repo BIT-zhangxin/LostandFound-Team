@@ -10,6 +10,7 @@ import android.os.Message;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import com.example.lostandfound.component.MyBundle;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
 import com.example.lostandfound.component.MyEventChange;
+import com.example.lostandfound.component.MyQuestionDialog;
 import java.io.File;
 
 public class ObjectActivity extends MyAppCompatActivity implements View.OnClickListener {
@@ -36,7 +38,8 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private TextView tv_object_description;
     private Button btn_object_apply;
 
-    private int objectId;
+    private int objectId;//物品id
+    private String question;//验证问题
 
     @SuppressLint("HandlerLeak")
     private Handler ObjectPictureHandler=new Handler(){
@@ -99,11 +102,38 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_object_apply:
-                Apply();
+                questionAndAnswer(question);
                 break;
             default:
                 break;
         }
+    }
+
+    //显示弹出的验证问题框
+    public void questionAndAnswer(String question)
+    {
+        final MyQuestionDialog myQuestionDialog=new MyQuestionDialog(ObjectActivity.this,0,
+            question, "确定", "算了吧", false);
+        myQuestionDialog.setView(new EditText(ObjectActivity.this));
+        myQuestionDialog.setOnCertainButtonClickListener(new MyQuestionDialog.onMyAlertDialogListener() {
+            @Override
+            public void onCancelButtonClick() {
+
+            }
+
+            @Override
+            public void onCertainButtonClick() {
+                //todo
+                String answer = myQuestionDialog.getAnswer();
+                Apply(answer);
+            }
+
+            @Override
+            public void onDismissListener() {
+
+            }
+        });
+        myQuestionDialog.show();
     }
 
     private void initComponent(){
@@ -133,13 +163,14 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
         tv_object_location.setText(messageBundle.getString("location",""));
         tv_object_time.setText(messageBundle.getString("time",""));
         tv_object_description.setText(messageBundle.getString("description",""));
+        question=messageBundle.getString("question");
 
         //下载图片
         MyDataProcesser.DownloadObjectPicture(this,messageBundle.getInt("object_id",0),ObjectPictureHandler);
 
     }
 
-    private void Apply(){
+    private void Apply(String answer){
         int user_id=((MyApplication)getApplication()).getId();
         int main_event_id=objectId;
         Bundle bundle=MyBundle.ApplyBundle(user_id,main_event_id);

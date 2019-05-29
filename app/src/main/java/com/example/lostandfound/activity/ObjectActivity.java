@@ -28,7 +28,6 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     private TextView tv_object_description;
     private TextView tv_object_question;
     private Button btn_object_apply;
-    private Button btn_object_report;
     private Bundle messageBundle;
 
     @SuppressLint("HandlerLeak")
@@ -55,29 +54,6 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
         }
     };
 
-    @SuppressLint("HandlerLeak")
-    private Handler reportHandler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case MyDefine.REPLY_SUCCESS:
-                    Toast.makeText(ObjectActivity.this,"举报成功",Toast.LENGTH_LONG).show();
-                    finish();
-                    break;
-                case MyDefine.REPLY_FAILED:
-                    Toast.makeText(ObjectActivity.this,"不能举报自己发布的事件",Toast.LENGTH_LONG).show();
-                    break;
-                case MyDefine.REPLY_UNKNOWN_ERROR:
-                    Toast.makeText(ObjectActivity.this,"举报失败,重复举报",Toast.LENGTH_LONG).show();
-                    break;
-                    case MyDefine.REPLY_NO_RESPONSE:
-                    Toast.makeText(ObjectActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,9 +70,6 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
             case R.id.btn_object_apply:
                 Apply();
                 break;
-            case R.id.btn_object_report:
-                Report();
-                break;
             default:
                 break;
         }
@@ -111,13 +84,10 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
         tv_object_time = findViewById(R.id.tv_object_time);
         tv_object_description = findViewById(R.id.tv_object_description);
         btn_object_apply = findViewById(R.id.btn_object_apply);
-        btn_object_report = findViewById(R.id.btn_object_report);
     }
 
     private void initEvent(){
         btn_object_apply.setOnClickListener(this);
-        btn_object_report.setOnClickListener(this);
-
     }
 
     private void initData(){
@@ -137,12 +107,5 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
         int main_event_id=messageBundle.getInt("main_event_id",0);
         Bundle bundle=MyBundle.ApplyBundle(user_id,main_event_id);
         MyDataProcesser.Apply(bundle,ApplyHandler);
-    }
-
-    private void Report(){
-        int user_id=((MyApplication)getApplication()).getId();
-        int main_event_id=messageBundle.getInt("main_event_id",0);
-        Bundle bundle=MyBundle.ReportBundle(user_id,main_event_id);
-        MyDataProcesser.Report(bundle,reportHandler);
     }
 }

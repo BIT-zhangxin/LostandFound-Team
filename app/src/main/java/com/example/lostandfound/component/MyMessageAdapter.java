@@ -28,18 +28,16 @@ public class MyMessageAdapter extends ArrayAdapter<MyMessage> {
         MyMessage message=getItem(position);
         @SuppressLint("ViewHolder") View view=LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
 
-        ImageView imageView=view.findViewById(R.id.iv_message_object);
         TextView tv_message_name=view.findViewById(R.id.tv_message_name);
         TextView tv_message_main_event_type=view.findViewById(R.id.tv_message_main_event_type);
         TextView tv_message_location=view.findViewById(R.id.tv_message_location);
         TextView tv_message_time=view.findViewById(R.id.tv_message_time);
 
-        imageView.setImageResource(R.drawable.default_picture);
         assert message != null;
         tv_message_main_event_type.setText(MyEventChange.MainEventToString(message.getMain_event_type()));
         tv_message_name.setText(message.getName());
         tv_message_location.setText(message.getLocation());
-        tv_message_time.setText(message.getTime());
+        tv_message_time.setText(message.getDate().toString());
         return view;
     }
 }

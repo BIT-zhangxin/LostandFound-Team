@@ -5,6 +5,7 @@
         <item>拾物事件</item>
     </string-array>
     <string-array name="search_type">
+        <item>空</item>
         <item>失物</item>
         <item>拾物</item>
         <item>ID</item>

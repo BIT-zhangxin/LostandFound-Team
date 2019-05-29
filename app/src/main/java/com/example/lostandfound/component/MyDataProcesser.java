@@ -46,7 +46,6 @@ public class MyDataProcesser {
                         int user_id = bundle.getInt("user_id", 0);
                         int main_event_id = bundle.getInt("main_event_id",0);
                         String mysql_sql="call proc_apply(?,?)";
-                        String sql_server_sql = "exec proc_apply ?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, user_id);
                         preSt.setInt(2, main_event_id);
@@ -92,7 +91,6 @@ public class MyDataProcesser {
                         int user_id = bundle.getInt("user_id", 0);
                         int main_event_id = bundle.getInt("main_event_id",0);
                         String mysql_sql="call proc_commit_end(?,?)";
-                        String sql_server_sql = "exec proc_commit_end ?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, user_id);
                         preSt.setInt(2, main_event_id);
@@ -134,7 +132,6 @@ public class MyDataProcesser {
                         String question = bundle.getString("question", "");
                         String answer = bundle.getString("answer", "");
                         String mysql_sql = "call proc_insert_security_question(?,?,?)";
-                        String sql_server_sql = "exec proc_insert_security_question ?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, question);
@@ -238,7 +235,6 @@ public class MyDataProcesser {
                         String question=bundle.getString("question","");
 
                         String mysql_sql="call proc_publish(?,?,?,?,?,?,?,?,?)";
-                        //String sql_server_sql="exec proc_publish ?,?,?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,user_id);
                         preSt.setInt(2,event_type);
@@ -305,7 +301,6 @@ public class MyDataProcesser {
                             mysql_sql= "call proc_register_phone(?,?,?,?)";
                         else
                             mysql_sql= "call proc_register_mail(?,?,?,?)";
-                        String sql_server_sql="exec proc_register ?,?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setString(1, phone_number);
                         preSt.setString(2, password);
@@ -348,7 +343,6 @@ public class MyDataProcesser {
                         int user_id=bundle.getInt("user_id",0);
                         int main_event_id=bundle.getInt("main_event_id",0);
                         String mysql_sql="call proc_report(?,?)";
-                        String sql_server_sql = "exec proc_report ?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,user_id);
                         preSt.setInt(2, main_event_id);
@@ -395,7 +389,6 @@ public class MyDataProcesser {
                         String old_password=bundle.getString("old_password", "");
                         String new_password=bundle.getString("new_password", "");
                         String mysql_sql="call proc_update_password_password(?,?,?)";
-                        String sql_server_sql = "exec proc_update_password_password ?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, old_password);
@@ -437,7 +430,6 @@ public class MyDataProcesser {
                         String old_password=bundle.getString("old_password", "");
                         String new_mail=bundle.getString("new_mail", "");
                         String mysql_sql="call proc_update_password_mail(?,?,?)";
-                        String sql_server_sql = "exec proc_update_password_mail ?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, old_password);
@@ -479,7 +471,6 @@ public class MyDataProcesser {
                         String old_password=bundle.getString("old_password", "");
                         String new_phone=bundle.getString("new_phone", "");
                         String mysql_sql="call proc_update_password_phone(?,?,?)";
-                        String sql_server_sql = "exec proc_update_password_phone ?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, old_password);
@@ -521,7 +512,6 @@ public class MyDataProcesser {
                         String security_answer=bundle.getString("security_answer", "");
                         String new_phone_mail=bundle.getString("new_phone_mail", "");
                         String mysql_sql="call proc_update_phone_mail_question(?,?,?)";
-                        String sql_server_sql = "exec proc_update_phone_mail_question ?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, security_answer);
@@ -564,7 +554,6 @@ public class MyDataProcesser {
                         String security_answer=bundle.getString("security_answer", "");
                         String new_password=bundle.getString("new_password", "");
                         String mysql_sql="call proc_update_password_question(?,?,?)";
-                        String sql_server_sql = "exec proc_update_password_question ?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, security_answer);
@@ -608,7 +597,6 @@ public class MyDataProcesser {
                         String contact_information=bundle.getString("contact_information", "");
                         String personal_profile=bundle.getString("personal_profile", "");
                         String mysql_sql="call proc_update_user_information(?,?,?,?)";
-                        //String sql_server_sql = "exec proc_update_user_information ?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, username);

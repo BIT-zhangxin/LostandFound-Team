@@ -601,7 +601,7 @@ public class MyDataProcesser {
                         String contact_information=bundle.getString("contact_information", "");
                         String personal_profile=bundle.getString("personal_profile", "");
                         String mysql_sql="call proc_update_user_information(?,?,?,?)";
-                        String sql_server_sql = "exec proc_update_user_information ?,?,?,?";
+                        //String sql_server_sql = "exec proc_update_user_information ?,?,?,?";
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1,id);
                         preSt.setString(2, username);

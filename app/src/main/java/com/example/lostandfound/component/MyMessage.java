@@ -16,8 +16,6 @@ public class MyMessage {
 
     private String question;//问题
 
-
-
     private Timestamp date;//事件发生时间
 
     private String name;//物品名称
@@ -27,6 +25,8 @@ public class MyMessage {
     private String location;//位置
 
     private String description;//描述
+
+    private String picture_absolutePath;//图片的绝对路径
 
     public int getMain_event_id() {
         return main_event_id;
@@ -114,5 +114,13 @@ public class MyMessage {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public String getPicture_absolutePath() {
+        return picture_absolutePath;
+    }
+
+    public void setPicture_absolutePath(String picture_absolutePath) {
+        this.picture_absolutePath = picture_absolutePath;
     }
 }

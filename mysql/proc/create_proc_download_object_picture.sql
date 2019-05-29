@@ -1,13 +1,16 @@
 USE `LostandFound`;
-delimiter //
-CREATE PROCEDURE `proc_download_object_picture`(
-  IN `id` INT
-)
-BEGIN
-  select `object`.`picture_format`,`object`.`picture`
-  from `LostandFound`.`object`
-  where `object`.`id`=`id`;
-END //
-delimiter ;
+DROP PROCEDURE
+IF
+	EXISTS `proc_download_object_picture`;
 
-#未添加数据库，待改动
+delimiter //
+CREATE PROCEDURE `proc_download_object_picture` ( IN `id` INT ) BEGIN
+	SELECT
+		`object`.`picture_format`,
+		`object`.`picture`
+	FROM
+		`LostandFound`.`object`
+	WHERE
+		`object`.`id` = `id`;
+
+END // #未添加数据库，改动完成

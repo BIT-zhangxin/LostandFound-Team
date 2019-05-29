@@ -319,51 +319,6 @@ public class MyDataProcesser {
         new MyThread(bundle, handler).start();
     }
 
-    //进行举报
-    public static void Report(Bundle bundle, Handler handler) {
-
-        class MyThread extends Thread {
-
-            private Bundle bundle;
-            private Handler handler;
-
-            private MyThread(Bundle bundle, Handler handler) {
-                this.bundle = bundle;
-                this.handler = handler;
-            }
-
-            @Override
-            public void run() {
-                Message msg = new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        int user_id=bundle.getInt("user_id",0);
-                        int main_event_id=bundle.getInt("main_event_id",0);
-                        String mysql_sql="call proc_report(?,?)";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setInt(1,user_id);
-                        preSt.setInt(2, main_event_id);
-                        preSt.executeUpdate();
-                        msg.what = MyDefine.REPLY_SUCCESS;
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    if(e.getMessage().equals("self")){
-                        msg.what = MyDefine.REPLY_FAILED;
-                    }
-                    else{
-                        msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
-                    }
-                }
-                handler.sendMessage(msg);
-            }
-        }
-        new MyThread(bundle, handler).start();
-    }
-
     //通过密码修改密码
     public static void UpdatePasswordPassword(Bundle bundle,Handler handler) {
 
@@ -727,4 +682,72 @@ public class MyDataProcesser {
         }
         new MyThread(activity,handler).start();
     }
+
+    //下载图片，形成一个文件存储于本地文件夹
+    public static void DownloadObjectPicture(Activity activity,int objectId,Handler handler){
+
+        class MyThread extends Thread{
+
+            private Activity activity;
+            private int objectId;
+            private Handler handler;
+
+            private MyThread(Activity activity,int objectId,Handler handler){
+                this.activity=activity;
+                this.objectId=objectId;
+                this.handler=handler;
+            }
+
+            @Override
+            public void run() {
+                Message msg=new Message();
+                try {
+                    Connection connection = MyConnectionHelper.getConnection();
+                    if (connection == null) {
+                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+                    } else {
+                        String mysql_sql="call proc_download_object_picture(?)";
+                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+                        preSt.setInt(1, objectId);
+                        ResultSet rs = preSt.executeQuery();
+                        if (rs.next()) {
+
+                            String format=rs.getString("picture_format");
+                            Blob blob=rs.getBlob("picture");
+                            try {
+
+                                InputStream in = blob.getBinaryStream();
+                                String storagePath=Objects.requireNonNull(activity.getApplication().getExternalFilesDir(Environment.DIRECTORY_PICTURES)).getAbsolutePath();
+                                File storageDir=new File(storagePath);
+                                //noinspection ResultOfMethodCallIgnored
+                                storageDir.mkdirs();
+                                File file=new File(storageDir,TestPhotoActivity.getStringToday()+"."+format);
+                                String absolutePath=file.getAbsolutePath();
+                                OutputStream out = new FileOutputStream(file);
+                                byte [] buff = new byte[1024];
+                                int len;
+                                while((len = in.read(buff)) > 0){
+                                    out.write(buff, 0, len);
+                                }
+                                Bundle bundle=new Bundle();
+                                bundle.putString("absolutePath",absolutePath);
+                                msg.setData(bundle);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            msg.what = MyDefine.REPLY_SUCCESS;
+                        } else{
+                            msg.what = MyDefine.REPLY_FAILED;
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    msg.what = MyDefine.REPLY_FAILED;
+                }
+                handler.sendMessage(msg);
+            }
+        }
+        new MyThread(activity,objectId,handler).start();
+    }
+
 }

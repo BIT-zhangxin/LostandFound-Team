@@ -10,7 +10,7 @@ public class MyBundle {
         Bundle bundle=new Bundle();
         bundle.putInt("sub_event_id",myApplyInfo.getSub_event_id());
         bundle.putInt("main_event_id",myApplyInfo.getMain_event_id());
-        bundle.putInt("object_name",myApplyInfo.getObject_name());
+        bundle.putString("object_name",myApplyInfo.getObject_name());
         bundle.putInt("sub_event_type",myApplyInfo.getSub_event_type());
         bundle.putInt("origin_user_id",myApplyInfo.getOrigin_user_id());
         bundle.putString("origin_user_name",myApplyInfo.getOrigin_user_name());

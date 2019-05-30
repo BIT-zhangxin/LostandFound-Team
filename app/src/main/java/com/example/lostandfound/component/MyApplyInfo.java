@@ -8,7 +8,7 @@ public class MyApplyInfo {
 
     private int main_event_id;//主事件id
 
-    private int object_name;//物品名称
+    private String object_name;//物品名称
 
     private int sub_event_type;//子事件类型
 
@@ -42,11 +42,11 @@ public class MyApplyInfo {
         this.main_event_id = main_event_id;
     }
 
-    public int getObject_name() {
+    public String getObject_name() {
         return object_name;
     }
 
-    public void setObject_name(int object_name) {
+    public void setObject_name(String object_name) {
         this.object_name = object_name;
     }
 

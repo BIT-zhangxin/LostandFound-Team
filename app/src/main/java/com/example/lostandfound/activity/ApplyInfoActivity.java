@@ -30,7 +30,8 @@ public class ApplyInfoActivity extends MyAppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.object_layout);
+        setContentView(R.layout.apply_info_layout);
+        bundle=getIntent().getExtras();
         initComponent();
         initView();
         initEvent();

@@ -20,15 +20,17 @@ public class MyEventChange {
     public static String SubEventToString(int sub_event_type){
         switch (sub_event_type){
             case 1:
-                return "发布";
+                return "失物事件申请";
             case 2:
-                return "申请";
+                return "失物事件申请拒绝";
             case 3:
-                return "同意申请";
-            case 4:
-                return "拒绝申请";
-            case 5:
-                return "结束事件";
+                return "失物事件申请同意";
+            case 6:
+                return "拾物事件申请";
+            case 7:
+                return "拾物事件申请拒绝";
+            case 8:
+                return "拾物事件申请同意";
             default:
                 return "";
         }

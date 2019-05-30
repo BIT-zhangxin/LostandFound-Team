@@ -100,7 +100,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
                             MyApplyInfo myApplyInfo=new MyApplyInfo();
                             myApplyInfo.setSub_event_id(rs.getInt("sub_event_id"));
                             myApplyInfo.setMain_event_id(rs.getInt("main_event_id"));
-                            myApplyInfo.setObject_name(rs.getInt("object_name"));
+                            myApplyInfo.setObject_name(rs.getString("object_name"));
                             myApplyInfo.setSub_event_type(rs.getInt("sub_event_type"));
                             myApplyInfo.setOrigin_user_id(rs.getInt("origin_user_id"));
                             myApplyInfo.setOrigin_user_name(rs.getString("origin_user_name"));
@@ -140,7 +140,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
         list_view_apply_info.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(ApplyRecordActivity.this,ApplyRecordActivity.class);
+                Intent intent=new Intent(ApplyRecordActivity.this,ApplyInfoActivity.class);
                 intent.putExtras(MyBundle.ApplyInfoBundle(myApplyInfoList.get(position)));
                 startActivity(intent);
             }

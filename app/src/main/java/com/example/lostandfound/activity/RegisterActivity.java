@@ -115,11 +115,11 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
     }
 
     private String getEditPassword(){
-        return MD5.md5(et_register_password.getText().toString());
+        return et_register_password.getText().toString();
     }
 
     private String getEditPasswordRepetition(){
-        return MD5.md5(et_register_password_repetition.getText().toString());
+        return et_register_password_repetition.getText().toString();
     }
 
     //判断密码格式，正确返回true
@@ -203,6 +203,7 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
 
             }
             public void onCertainButtonClick() {
+
                 Register();
             }
             public void onDismissListener() {
@@ -226,12 +227,14 @@ public class RegisterActivity extends MyAppCompatActivity implements View.OnClic
     void Register(){
         String security_question=et_information_security_set_question_question.getText().toString();
         String security_answer=et_information_security_set_question_answer.getText().toString();
-        int phone_mail_type=0;
-        if(getEditPhoneNumber().contains("@"))
+        int phone_mail_type;
+        if(getEditPhoneNumber().contains("@")){
             phone_mail_type=1;
-        else
+        }
+        else{
             phone_mail_type=0;
-        Bundle bundle= MyBundle.RegisterBundle(phone_mail_type,getEditPhoneNumber(),getEditPassword(),security_question,security_answer);
+        }
+        Bundle bundle= MyBundle.RegisterBundle(phone_mail_type,getEditPhoneNumber(),MD5.md5(getEditPassword()),security_question,security_answer);
         MyDataProcesser.Register(bundle,registerHandler);
     }
 

@@ -1,44 +1,31 @@
 USE `LostandFound`;
-delimiter //
-CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_select_apply_info`(
-	IN `id` INT
-)
-LANGUAGE SQL
-NOT DETERMINISTIC
-CONTAINS SQL
-SQL SECURITY DEFINER
-COMMENT ''
-BEGIN
-	create temporary table if not exists tmpTable
-   (
-      object_id int,
-      user_id int
-   ) ENGINE = MEMORY;
-   
-   insert into tmpTable
-   select
-   `main_event`.object_id,
-   `sub_event`.user_id
-   from `main_event`,`sub_event`
-   where `sub_event`.main_event_id in
-   (
-		select `main_event`.id from `main_event`
-		where `main_event`.user_id=id
-		and `main_event`.event_type<10
-	)
-	and `sub_event`.main_event_id=`main_event`.id;
-   
-   select
-	`object`.id as object_id,
-	`object`.name as object_name,
-	`user`.id as user_id,
-	`user`.username,
-	`user`.contact_information
-	from `object`,`user`,tmpTable
-	where `object`.id=tmpTable.object_id and
-	`user`.id=tmpTable.user_id;
-   
-   truncate table tmpTable;
-END //
+DROP PROCEDURE
+IF
+	EXISTS `proc_select_apply_info`;
 
-#未添加数据库，待改动
+delimiter //
+CREATE PROCEDURE `proc_select_apply_info` ( IN `user_id` INT ) BEGIN
+	SELECT
+		`sub_event`.`id ` AS `sub_event_id`,
+		`sub_event`.`main_event_id` AS `main_event_id`,
+		`object`.`name` AS `object_name`,
+		`sub_event`.`event_type` AS `sub_event_type`,
+		`sub_event`.`origin_user_id` AS `origin_user_id`,
+		`user1`.`username` AS `origin_user_name`,
+		`sub_event`.`aim_user_id` AS `aim_user_id`,
+		`user2`.`username` AS `aim_user_name`,
+		`sub_event`.`description` AS `description`,
+		`sub_event`.`time` AS `time`,
+		( CASE `sub_event`.`event_type` WHEN 8 THEN `user1`.`contact_information` ELSE NULL END ) AS `contact_information`
+	FROM
+		`LostandFound`.`sub_event`,
+		`LostandFound`.`object`,
+		`LostandFound`.`user` AS `user1`,
+		`LostandFound`.`user` AS `user2`
+	WHERE
+		( `sub_event`.`origin_user_id` = `user_id` OR `sub_event`.`aim_user_id` = `user_id` )
+		AND `main_event`.`object_id` = `object.id`
+		AND `sub_event`.`origin_user_id` = `user1.id`
+		AND `sub_event`.`aim_user_id` = `user2.id`;
+
+END // #已添加数据库，改动完成

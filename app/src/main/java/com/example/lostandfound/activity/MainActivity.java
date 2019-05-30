@@ -1,5 +1,7 @@
 package com.example.lostandfound.activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.lostandfound.component.MyAlertDialog;
 import com.example.lostandfound.fragment.InformationFragment;
 import com.example.lostandfound.fragment.MessageFragment;
 import com.example.lostandfound.fragment.PublishFragment;
@@ -42,6 +45,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_layout);
         initComponent();
         initEvent();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        registerTip();
+    }
+
+    private void exit(){
+        ActivityManager am = (ActivityManager)getSystemService (Context.ACTIVITY_SERVICE);
+        am.killBackgroundProcesses(getPackageName());
+        System.exit(0);
+    }
+
+    void registerTip(){
+        MyAlertDialog myAlertDialog=new MyAlertDialog(MainActivity.this,0,
+            "提示","你确认退出么？","确认","返回",false);
+        myAlertDialog.setOnCertainButtonClickListener(new MyAlertDialog.onMyAlertDialogListener() {
+            public void onCancelButtonClick() {
+
+            }
+            public void onCertainButtonClick() {
+
+                //exit();
+            }
+            public void onDismissListener() {
+
+            }
+        });
+        myAlertDialog.show();
     }
 
     private void initComponent(){

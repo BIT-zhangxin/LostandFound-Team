@@ -130,13 +130,18 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         btn_modify_commit.setOnClickListener(this);
     }
 
-
-
     private void Modify(){
         int id=((MyApplication)getApplication()).getId();
         String username=et_modify_nickname.getText().toString();
         String contact_information=et_modify_contact_information.getText().toString();
         String personal_profile=et_modify_personal_profile.getText().toString();
+
+        if(username.equals("")&&contact_information.equals("")&&personal_profile.equals("")&&cropFile==null){
+            Toast.makeText(ModifyActivity.this,"没有任何修改",Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
         Bundle bundle=MyBundle.UpdateUserInformationBundle(id,username,contact_information,personal_profile);
         MyDataProcesser.UpdateUseInformation(cropFile,bundle,modifyHandler);
     }

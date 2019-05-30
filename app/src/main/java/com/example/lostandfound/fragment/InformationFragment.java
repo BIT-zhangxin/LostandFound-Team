@@ -50,6 +50,8 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
                     SetProfilePhoto(msg.getData().getString("absolutePath"));
                     LoadProfilePhoto();
                     break;
+                case MyDefine.REPLY_FAILED:
+                    break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
                     Toast.makeText(mContext,"未知错误",Toast.LENGTH_LONG).show();
                     break;

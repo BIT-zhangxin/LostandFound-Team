@@ -109,46 +109,6 @@ public class MyDataProcesser {
         new MyThread(bundle, handler).start();
     }
 
-    //修改主事件状态为结束
-    public static void CommitEnd(Bundle bundle,Handler handler) {
-
-        class MyThread extends Thread {
-
-            private Bundle bundle;
-            private Handler handler;
-
-            private MyThread(Bundle bundle, Handler handler) {
-                this.bundle = bundle;
-                this.handler = handler;
-            }
-
-            @Override
-            public void run() {
-                Message msg = new Message();
-                try {
-                    Connection connection = MyConnectionHelper.getConnection();
-                    if (connection == null) {
-                        msg.what = MyDefine.REPLY_NO_RESPONSE;
-                    } else {
-                        int user_id = bundle.getInt("user_id", 0);
-                        int main_event_id = bundle.getInt("main_event_id",0);
-                        String mysql_sql="call proc_commit_end(?,?)";
-                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
-                        preSt.setInt(1, user_id);
-                        preSt.setInt(2, main_event_id);
-                        preSt.executeUpdate();
-                        msg.what = MyDefine.REPLY_SUCCESS;
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    msg.what = MyDefine.REPLY_FAILED;
-                }
-                handler.sendMessage(msg);
-            }
-        }
-        new MyThread(bundle, handler).start();
-    }
-
     //登录查询
     public static void Login(Bundle bundle,Handler handler){
 
@@ -533,7 +493,9 @@ public class MyDataProcesser {
                         preSt.executeUpdate();
                         msg.what = MyDefine.REPLY_SUCCESS;
                         Bundle bundle1=new Bundle();
-                        bundle1.putString("absolutePath",file.getAbsolutePath());
+                        if(file!=null){
+                            bundle1.putString("absolutePath",file.getAbsolutePath());
+                        }
                         msg.setData(bundle1);
                     }
                 } catch (SQLException e) {
@@ -574,6 +536,7 @@ public class MyDataProcesser {
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, userId);
                         ResultSet rs = preSt.executeQuery();
+                        //如果没有图片则不进入下面的条件
                         if (rs.next()) {
                             msg.what = MyDefine.REPLY_SUCCESS;
                             String format=rs.getString("format");
@@ -599,13 +562,13 @@ public class MyDataProcesser {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        } else{
+                        }else {
                             msg.what = MyDefine.REPLY_FAILED;
                         }
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    msg.what = MyDefine.REPLY_FAILED;
+                    msg.what = MyDefine.REPLY_UNKNOWN_ERROR;
                 }
                 handler.sendMessage(msg);
             }
@@ -640,6 +603,8 @@ public class MyDataProcesser {
                         PreparedStatement preSt = connection.prepareStatement(mysql_sql);
                         preSt.setInt(1, objectId);
                         ResultSet rs = preSt.executeQuery();
+                        msg.what = MyDefine.REPLY_SUCCESS;
+                        //如果没有图片则不进入下面的条件
                         if (rs.next()) {
 
                             String format=rs.getString("picture_format");
@@ -666,9 +631,6 @@ public class MyDataProcesser {
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            msg.what = MyDefine.REPLY_SUCCESS;
-                        } else{
-                            msg.what = MyDefine.REPLY_FAILED;
                         }
                     }
                 } catch (SQLException e) {

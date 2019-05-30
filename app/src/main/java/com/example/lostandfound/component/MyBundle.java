@@ -7,7 +7,12 @@ public class MyBundle {
     public static Bundle ApplyBundle(int origin_user_id,String answer,Bundle oldBundle){
         Bundle bundle=new Bundle();
         bundle.putInt("main_event_id",oldBundle.getInt("main_event_id"));
-        bundle.putInt("event_type",1);
+        if(oldBundle.getInt("main_event_type")==1){
+            bundle.putInt("event_type",1);//失物事件
+        }
+        else {
+            bundle.putInt("event_type",6);//拾物事件
+        }
         bundle.putInt("origin_user_id",origin_user_id);
         bundle.putInt("aim_user_id",oldBundle.getInt("user_id"));
         bundle.putString("description",answer);

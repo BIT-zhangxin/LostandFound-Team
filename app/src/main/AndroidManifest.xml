@@ -18,45 +18,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.MainActivity">
-        </activity>
-        <activity android:name=".activity.RegisterActivity">
-        </activity>
+
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ObjectActivity">
-        </activity>
-        <activity android:name=".activity.InformationActivity">
-        </activity>
-        <activity android:name=".activity.ModifyActivity">
-        </activity>
-        <activity android:name=".activity.SecurityChooseActivity">
-        </activity>
-        <activity android:name=".activity.SecurityQuestionSetActivity">
-        </activity>
-        <activity android:name=".activity.PasswordPasswordActivity">
-        </activity>
-        <activity android:name=".activity.PasswordQuestionActivity">
-        </activity>
-        <activity android:name=".activity.UserPublishActivity">
-        </activity>
-        <activity android:name=".activity.UserObjectActivity">
-        </activity>
-        <activity android:name=".activity.ApplyInfoActivity">
-        </activity>
-        <activity android:name=".activity.phone_mail_QuestionActivity" >
-        </activity>
-        <activity android:name=".activity.PasswordMailActivity" >
-        </activity>
-        <activity android:name=".activity.PasswordPhoneActivity" >
-        </activity>
+
+        <activity android:name=".activity.RegisterActivity"/>
         <activity android:name=".activity.RetrievePasswordActivity"/>
-        <activity android:name=".activity.TestPhotoActivity">
-        </activity>
+        <activity android:name=".activity.PasswordQuestionActivity"/>
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.ObjectActivity"/>
+        <activity android:name=".activity.InformationActivity"/>
+        <activity android:name=".activity.ModifyActivity"/>
+        <activity android:name=".activity.SecurityChooseActivity"/>
+        <activity android:name=".activity.PasswordPasswordActivity"/>
+        <activity android:name=".activity.PasswordMailActivity"/>
+        <activity android:name=".activity.PasswordPhoneActivity"/>
+        <activity android:name=".activity.ApplyInfoActivity"/>
+
         <provider
             android:authorities="com.example.lostandfound.fileprovider"
             android:name="android.support.v4.content.FileProvider"

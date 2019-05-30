@@ -1,106 +1,18 @@
 package com.example.lostandfound.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
 import com.example.lostandfound.R;
-import com.example.lostandfound.component.MyAlertDialog;
 import com.example.lostandfound.component.MyAppCompatActivity;
-import com.example.lostandfound.component.MyApplication;
-import com.example.lostandfound.component.MyConnectionHelper;
-import com.example.lostandfound.component.MyDefine;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class SecurityChooseActivity extends MyAppCompatActivity implements View.OnClickListener {
 
     private Button btn_security_choose_phone;
     private Button btn_security_choose_mail;
     private Button btn_security_choose_password;
-
-//    @SuppressLint("HandlerLeak")
-//    private Handler securityQuestionHandler=new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            switch (msg.what){
-//                case MyDefine.REPLY_SUCCESS:
-//                    warningTip("你已设置密保，无需再次设置");
-//                    break;
-//                case MyDefine.REPLY_FAILED:
-//                    Intent intent=new Intent(SecurityChooseActivity.this,SecurityQuestionSetActivity.class);
-//                    startActivity(intent);
-//                    break;
-//                case MyDefine.REPLY_UNKNOWN_ERROR:
-//                    Toast.makeText(SecurityChooseActivity.this,"未知错误",Toast.LENGTH_LONG).show();
-//                    break;
-//                case MyDefine.REPLY_NO_RESPONSE:
-//                    Toast.makeText(SecurityChooseActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    };
-
-    @SuppressLint("HandlerLeak")
-    private Handler setByQuestionHandler =new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case MyDefine.REPLY_SUCCESS:
-                    Intent intent=new Intent(SecurityChooseActivity.this,PasswordQuestionActivity.class);
-                    intent.putExtras(msg.getData());
-                    startActivity(intent);
-                    break;
-//                case MyDefine.REPLY_FAILED:
-//                    warningTip("你还未设置密保");
-//                    break;
-                case MyDefine.REPLY_UNKNOWN_ERROR:
-                    Toast.makeText(SecurityChooseActivity.this,"未知错误",Toast.LENGTH_LONG).show();
-                    break;
-                case MyDefine.REPLY_NO_RESPONSE:
-                    Toast.makeText(SecurityChooseActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    @SuppressLint("HandlerLeak")
-    private Handler setByQuestionHandler_2 =new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case MyDefine.REPLY_SUCCESS:
-                    Intent intent=new Intent(SecurityChooseActivity.this,phone_mail_QuestionActivity.class);
-                    intent.putExtras(msg.getData());
-                    startActivity(intent);
-                    break;
-//                case MyDefine.REPLY_FAILED:
-//                    warningTip("你还未设置密保");
-//                    break;
-                case MyDefine.REPLY_UNKNOWN_ERROR:
-                    Toast.makeText(SecurityChooseActivity.this,"未知错误",Toast.LENGTH_LONG).show();
-                    break;
-                case MyDefine.REPLY_NO_RESPONSE:
-                    Toast.makeText(SecurityChooseActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

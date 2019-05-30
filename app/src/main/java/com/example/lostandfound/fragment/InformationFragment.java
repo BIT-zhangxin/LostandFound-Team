@@ -24,7 +24,6 @@ import com.example.lostandfound.activity.ApplyInfoActivity;
 import com.example.lostandfound.activity.InformationActivity;
 import com.example.lostandfound.activity.ModifyActivity;
 import com.example.lostandfound.activity.SecurityChooseActivity;
-import com.example.lostandfound.activity.UserPublishActivity;
 import com.example.lostandfound.component.MyApplication;
 import com.example.lostandfound.component.MyDataProcesser;
 import com.example.lostandfound.component.MyDefine;
@@ -40,7 +39,6 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
     private TextView tv_information_information;
     private TextView tv_information_modify;
     private TextView tv_information_security;
-    private TextView tv_information_publish;
     private TextView tv_information_event;
 
     @SuppressLint("HandlerLeak")
@@ -102,9 +100,6 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
             case R.id.tv_information_security:
                 StartSecurityChoose();
                 break;
-            case R.id.tv_information_publish:
-                StartUserPublish();
-                break;
             case R.id.tv_information_event:
                 StartUserApply();
                 break;
@@ -117,7 +112,6 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
         tv_information_information = view.findViewById(R.id.tv_information_information);
         tv_information_modify = view.findViewById(R.id.tv_information_modify);
         tv_information_security = view.findViewById(R.id.tv_information_security);
-        tv_information_publish = view.findViewById(R.id.tv_information_publish);
         tv_information_event = view.findViewById(R.id.tv_information_event);
         circleImageView=view.findViewById(R.id.img_profile_photo);
     }
@@ -126,7 +120,6 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
         tv_information_information.setOnClickListener(this);
         tv_information_modify.setOnClickListener(this);
         tv_information_security.setOnClickListener(this);
-        tv_information_publish.setOnClickListener(this);
         tv_information_event.setOnClickListener(this);
     }
 
@@ -142,11 +135,6 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
 
     private void StartSecurityChoose(){
         Intent intent=new Intent(getActivity(),SecurityChooseActivity.class);
-        startActivity(intent);
-    }
-
-    private void StartUserPublish(){
-        Intent intent=new Intent(getActivity(),UserPublishActivity.class);
         startActivity(intent);
     }
 

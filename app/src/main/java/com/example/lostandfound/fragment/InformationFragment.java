@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
-import com.example.lostandfound.activity.ApplyInfoActivity;
+import com.example.lostandfound.activity.ApplyRecordActivity;
 import com.example.lostandfound.activity.InformationActivity;
 import com.example.lostandfound.activity.ModifyActivity;
 import com.example.lostandfound.activity.SecurityChooseActivity;
@@ -139,7 +139,7 @@ public class InformationFragment extends Fragment  implements View.OnClickListen
     }
 
     private void StartUserApply(){
-        Intent intent=new Intent(getActivity(),ApplyInfoActivity.class);
+        Intent intent=new Intent(getActivity(),ApplyRecordActivity.class);
         startActivity(intent);
     }
 

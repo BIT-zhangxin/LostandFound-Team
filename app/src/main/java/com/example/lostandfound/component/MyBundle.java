@@ -1,8 +1,32 @@
 package com.example.lostandfound.component;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import java.text.SimpleDateFormat;
 
 public class MyBundle {
+
+    public static Bundle ApplyInfoBundle(MyApplyInfo myApplyInfo){
+        Bundle bundle=new Bundle();
+        bundle.putInt("sub_event_id",myApplyInfo.getSub_event_id());
+        bundle.putInt("main_event_id",myApplyInfo.getMain_event_id());
+        bundle.putInt("object_name",myApplyInfo.getObject_name());
+        bundle.putInt("sub_event_type",myApplyInfo.getSub_event_type());
+        bundle.putInt("origin_user_id",myApplyInfo.getOrigin_user_id());
+        bundle.putString("origin_user_name",myApplyInfo.getOrigin_user_name());
+        bundle.putInt("aim_user_id",myApplyInfo.getAim_user_id());
+        bundle.putString("aim_user_name",myApplyInfo.getAim_user_name());
+        bundle.putString("description",myApplyInfo.getDescription());
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //格式可以自己根据需要修改
+        String dateString = simpleDateFormat.format(myApplyInfo.getTime());
+
+        bundle.putString("time",dateString);
+        bundle.putString("contact_information",myApplyInfo.getContact_information());
+        return bundle;
+    }
 
     public static Bundle ApplyBundle(int origin_user_id,String answer,Bundle oldBundle){
         Bundle bundle=new Bundle();
@@ -16,21 +40,6 @@ public class MyBundle {
         bundle.putInt("origin_user_id",origin_user_id);
         bundle.putInt("aim_user_id",oldBundle.getInt("user_id"));
         bundle.putString("description",answer);
-        return bundle;
-    }
-
-    public static Bundle CommitEndBundle(int user_id,int main_event_id){
-        Bundle bundle=new Bundle();
-        bundle.putInt("user_id",user_id);
-        bundle.putInt("main_event_id",main_event_id);
-        return bundle;
-    }
-
-    public static Bundle InsertSecurityQuestionBundle(int id, String question, String answer){
-        Bundle bundle=new Bundle();
-        bundle.putInt("id",id);
-        bundle.putString("question",question);
-        bundle.putString("answer",answer);
         return bundle;
     }
 
@@ -98,14 +107,6 @@ public class MyBundle {
     public static Bundle AccountBundle(String account){
         Bundle bundle=new Bundle();
         bundle.putString("phone_number_or_email_address",account);
-        return bundle;
-    }
-
-    public static Bundle UpdatephoneQuestionBundle(int id, String security_answer, String new_phone_mail){
-        Bundle bundle=new Bundle();
-        bundle.putInt("id",id);
-        bundle.putString("security_answer",security_answer);
-        bundle.putString("new_phone_mail",new_phone_mail);
         return bundle;
     }
 

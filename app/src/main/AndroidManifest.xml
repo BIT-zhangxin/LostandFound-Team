@@ -37,6 +37,7 @@
         <activity android:name=".activity.PasswordPasswordActivity"/>
         <activity android:name=".activity.PasswordMailActivity"/>
         <activity android:name=".activity.PasswordPhoneActivity"/>
+        <activity android:name=".activity.ApplyRecordActivity"/>
         <activity android:name=".activity.ApplyInfoActivity"/>
 
         <provider

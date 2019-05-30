@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.lostandfound.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class MyApplyInfoAdapter extends ArrayAdapter<MyApplyInfo> {
@@ -28,13 +29,20 @@ public class MyApplyInfoAdapter extends ArrayAdapter<MyApplyInfo> {
         @SuppressLint("ViewHolder") View view=LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
 
         TextView tv_apply_info_object_name=view.findViewById(R.id.tv_apply_info_object_name);
-        TextView tv_apply_info_nickname=view.findViewById(R.id.tv_apply_info_nickname);
-        TextView tv_apply_info_contact_information=view.findViewById(R.id.tv_apply_info_contact_information);
+        TextView tv_apply_info_event_type=view.findViewById(R.id.tv_apply_info_event_type);
+        TextView tv_apply_info_time=view.findViewById(R.id.tv_apply_info_time);
 
         assert myApplyInfo != null;
         tv_apply_info_object_name.setText(myApplyInfo.getObject_name());
-        tv_apply_info_nickname.setText(myApplyInfo.getNickname());
-        tv_apply_info_contact_information.setText(myApplyInfo.getContact_information());
+        int sub_event_type=myApplyInfo.getSub_event_type();
+        tv_apply_info_event_type.setText(MyEventChange.SubEventToString(sub_event_type));
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat =
+            new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //格式可以自己根据需要修改
+        String dateString = simpleDateFormat.format(myApplyInfo.getTime());
+
+        tv_apply_info_time.setText(dateString);
         return view;
     }
 }

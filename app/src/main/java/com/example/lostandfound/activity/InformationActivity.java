@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -139,6 +140,7 @@ public class InformationActivity extends MyAppCompatActivity {
         tv_info_info_introduction.setText(myApplication.getIntroduction());
         tv_info_info_credit_score.setText(""+myApplication.getCredit_score());
         LoadProfilePhoto();
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     private void LoadProfilePhoto(){

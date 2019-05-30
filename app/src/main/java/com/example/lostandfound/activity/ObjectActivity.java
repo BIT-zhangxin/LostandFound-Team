@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
@@ -92,6 +93,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.object_layout);
         initComponent();
+        initView();
         initEvent();
         initData();
     }
@@ -163,6 +165,10 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
         tv_object_time = findViewById(R.id.tv_object_time);
         tv_object_description = findViewById(R.id.tv_object_description);
         btn_object_apply = findViewById(R.id.btn_object_apply);
+    }
+
+    private void initView(){
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     private void initEvent(){

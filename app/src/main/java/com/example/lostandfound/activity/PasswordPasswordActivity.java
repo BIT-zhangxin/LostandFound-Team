@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +55,7 @@ public class PasswordPasswordActivity extends MyAppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_password_layout);
         initComponent();
+        initView();
         initEvent();
     }
 
@@ -77,6 +79,10 @@ public class PasswordPasswordActivity extends MyAppCompatActivity implements Vie
         et_information_security_password_new_repeat_hint=findViewById(R.id.et_information_security_password_new_repeat_hint);
         iv_information_security_password=findViewById(R.id.iv_information_security_password);
         btn_information_security_password_commit=findViewById(R.id.btn_information_security_password_commit);
+    }
+
+    private void initView(){
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     private void initEvent(){

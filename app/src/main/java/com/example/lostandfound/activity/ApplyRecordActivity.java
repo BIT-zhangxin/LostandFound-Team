@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -143,6 +144,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity {
     void initView(){
         MyApplyInfoAdapter myApplyInfoAdapter=new MyApplyInfoAdapter(ApplyRecordActivity.this,R.layout.apply_info_item,myApplyInfoList);
         list_view_apply_info.setAdapter(myApplyInfoAdapter);
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     void initEvent(){

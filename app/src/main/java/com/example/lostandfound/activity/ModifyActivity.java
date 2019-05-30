@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.Button;
@@ -92,6 +93,7 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modify_layout);
         initComponent();
+        initView();
         initData();
         LoadProfilePhoto();
     }
@@ -122,6 +124,10 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         btn_modify_photo_select=findViewById(R.id.btn_modify_photo_select);
         btn_modify_commit = findViewById(R.id.btn_modify_commit);
         iv_modify_profile_photo=findViewById(R.id.iv_modify_profile_photo);
+    }
+
+    private void initView(){
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     private void initData(){

@@ -3,6 +3,7 @@ package com.example.lostandfound.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import com.example.lostandfound.R;
@@ -19,6 +20,7 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.security_choose_layout);
         initComponent();
+        initView();
         initEvent();
     }
 
@@ -43,6 +45,10 @@ public class SecurityChooseActivity extends MyAppCompatActivity implements View.
         btn_security_choose_phone = findViewById(R.id.btn_security_choose_phone);
         btn_security_choose_mail=findViewById(R.id.btn_security_choose_mail);
         btn_security_choose_password=findViewById(R.id.btn_security_choose_password);
+    }
+
+    private void initView(){
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     private void initEvent(){

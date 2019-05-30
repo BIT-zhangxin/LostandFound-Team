@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,7 @@ public class PasswordPhoneActivity extends MyAppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_phone_layout);
         initComponent();
+        initView();
         initEvent();
     }
 
@@ -72,6 +74,10 @@ public class PasswordPhoneActivity extends MyAppCompatActivity implements View.O
         btn_information_security_password_phone_commit=findViewById(R.id.btn_information_security_password_phone_commit);
     }
 
+    private void initView(){
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
+    }
+
     private void initEvent(){
         btn_information_security_password_phone_commit.setOnClickListener(this);
     }
@@ -83,21 +89,4 @@ public class PasswordPhoneActivity extends MyAppCompatActivity implements View.O
         Bundle bundle=MyBundle.UpdatePasswordPhoneBundle(id,old_password,new_phone);
         MyDataProcesser.UpdatePasswordPhone(bundle,updatePPHandler);
     }
-
-//    void warningTip(){
-//        MyAlertDialog myAlertDialog=new MyAlertDialog(PasswordPhoneActivity.this,0,
-//                "提示","两次密码输入不一致！","知道了","",true);
-//        myAlertDialog.setOnCertainButtonClickListener(new MyAlertDialog.onMyAlertDialogListener() {
-//            public void onCancelButtonClick() {
-//
-//            }
-//            public void onCertainButtonClick() {
-//
-//            }
-//            public void onDismissListener() {
-//
-//            }
-//        });
-//        myAlertDialog.show();
-//    }
 }

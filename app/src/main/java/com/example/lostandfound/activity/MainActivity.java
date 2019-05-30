@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.example.lostandfound.R;
@@ -45,6 +46,7 @@ public class MainActivity extends MyAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         initComponent();
+        initView();
         initEvent();
     }
 
@@ -104,6 +106,10 @@ public class MainActivity extends MyAppCompatActivity {
                     .add(R.id.main_framelayout,mContent)
                     .commit();
         }
+    }
+
+    private void initView(){
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     private void initEvent(){

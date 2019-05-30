@@ -154,7 +154,7 @@ public class MessageFragment extends Fragment {
     }
 
     void initData(){
-
+        myMessageList.clear();
         class MyThread extends Thread{
 
             @Override
@@ -194,7 +194,6 @@ public class MessageFragment extends Fragment {
         }
 
         MyThread myThread=new MyThread();
-        myMessageList.clear();
         myThread.start();
         try {
             myThread.join();

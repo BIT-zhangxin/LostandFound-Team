@@ -6,6 +6,13 @@ import java.text.SimpleDateFormat;
 
 public class MyBundle {
 
+    public static Bundle ReplyBundle(int sub_event_id,int event_type){
+        Bundle bundle=new Bundle();
+        bundle.putInt("sub_event_id",sub_event_id);
+        bundle.putInt("event_type",event_type);
+        return bundle;
+    }
+
     public static Bundle ApplyInfoBundle(MyApplyInfo myApplyInfo){
         Bundle bundle=new Bundle();
         bundle.putInt("sub_event_id",myApplyInfo.getSub_event_id());

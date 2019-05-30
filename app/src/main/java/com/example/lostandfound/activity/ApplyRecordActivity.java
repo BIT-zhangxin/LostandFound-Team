@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -62,10 +63,17 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.apply_record_layout);
         initComponent();
+        initEvent();
         initData();
         initView();
-        initEvent();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==1){
+            refreshLayout_user_apply_info.autoRefresh();
+        }
     }
 
     void initComponent(){
@@ -74,6 +82,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
     }
 
     private void initData(){
+        myApplyInfoList.clear();
         int id=((MyApplication)getApplication()).getId();
 
         class MyThread extends Thread{
@@ -142,7 +151,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(ApplyRecordActivity.this,ApplyInfoActivity.class);
                 intent.putExtras(MyBundle.ApplyInfoBundle(myApplyInfoList.get(position)));
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -150,6 +159,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 initData();
+                initView();
                 refreshlayout.finishRefresh(200/*,false*/);//传入false表示刷新失败
             }
         });
@@ -157,6 +167,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 initData();
+                initView();
                 refreshlayout.finishLoadMore(200/*,false*/);//传入false表示加载失败
             }
         });

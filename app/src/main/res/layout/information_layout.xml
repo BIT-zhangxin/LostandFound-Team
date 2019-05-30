@@ -121,38 +121,6 @@
         android:layout_marginTop="10dp">
 
         <ImageView
-            android:id="@+id/iv_information_publish"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_publish"
-            android:scaleType="fitXY"
-            android:contentDescription="@string/login_account"/>
-
-        <TextView
-            android:id="@+id/tv_information_publish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/information_publish"
-            android:textSize="@dimen/text_size_title"
-            android:textColor="@color/style"
-            android:layout_toEndOf="@id/iv_information_publish"
-            android:layout_marginStart="20dp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"
-            android:background="@color/tv_gray_normal"
-            android:layout_alignParentBottom="true"
-            />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp">
-
-        <ImageView
             android:id="@+id/iv_information_event"
             android:layout_width="30dp"
             android:layout_height="30dp"

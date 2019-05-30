@@ -22,6 +22,47 @@ import java.util.Objects;
 public class MyDataProcesser {
     //所有可以异步处理的网络通信操作
 
+    //注册账号
+    public static void Reply(Bundle bundle,Handler handler) {
+
+        class MyThread extends Thread {
+
+            private Bundle bundle;
+            private Handler handler;
+
+            private MyThread(Bundle bundle, Handler handler) {
+                this.bundle = bundle;
+                this.handler = handler;
+            }
+
+            @Override
+            public void run() {
+                Message msg = new Message();
+                try {
+                    Connection connection = MyConnectionHelper.getConnection();
+                    if (connection == null) {
+                        msg.what = MyDefine.REPLY_NO_RESPONSE;
+                    } else {
+                        int sub_event_id=bundle.getInt("sub_event_id");
+                        int event_type=bundle.getInt("event_type");
+                        String mysql_sql="call proc_apply_reply(?,?)";
+                        PreparedStatement preSt = connection.prepareStatement(mysql_sql);
+                        preSt.setInt(1, sub_event_id);
+                        preSt.setInt(2, event_type);
+
+                        preSt.executeUpdate();
+                        msg.what = MyDefine.REPLY_SUCCESS;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    msg.what = MyDefine.REPLY_FAILED;
+                }
+                handler.sendMessage(msg);
+            }
+        }
+        new MyThread(bundle, handler).start();
+    }
+
     //对主事件进行申请
     public static void Apply(Bundle bundle,Handler handler) {
 

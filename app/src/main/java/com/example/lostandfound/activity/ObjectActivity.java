@@ -192,6 +192,9 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     private void LoadProfilePhoto(String absolutePath){
+        if(isDestroyed()){
+            return;
+        }
         if(absolutePath==null){
             return;
         }

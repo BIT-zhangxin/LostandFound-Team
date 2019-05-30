@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplyRecordActivity extends MyAppCompatActivity{
+public class ApplyRecordActivity extends MyAppCompatActivity {
 
     private List<MyApplyInfo> myApplyInfoList=new ArrayList<>();
     private ListView list_view_apply_info;
@@ -42,6 +42,7 @@ public class ApplyRecordActivity extends MyAppCompatActivity{
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
+                    Toast.makeText(ApplyRecordActivity.this,"刷新成功",Toast.LENGTH_SHORT).show();
                     break;
                 case MyDefine.REPLY_FAILED:
                     Toast.makeText(ApplyRecordActivity.this,"系统出现故障",Toast.LENGTH_LONG).show();

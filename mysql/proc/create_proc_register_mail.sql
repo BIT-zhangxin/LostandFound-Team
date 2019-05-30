@@ -20,9 +20,9 @@ CREATE PROCEDURE `proc_register_mail` (
 			SET MESSAGE_TEXT = "邮箱号已被注册";
 
 	END IF;
-	INSERT INTO `user` ( `email_address`, `password`, username, `security_question`, `security_answer` )
+	INSERT INTO `user` ( `email_address`, `password`, username, `security_question`, `security_answer`, `contact_infotmation` )
 	VALUES
-		( `phone_number`, `password`, '', `security_question`, `security_answer` );
+		( `phone_number`, `password`, '', `security_question`, `security_answer`, '该用户未填写联系方式' );
 
 	SET tmp = last_insert_id( );
 	UPDATE `user`

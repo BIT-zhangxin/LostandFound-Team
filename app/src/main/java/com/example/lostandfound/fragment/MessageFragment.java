@@ -55,7 +55,7 @@ public class MessageFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
-                    Toast.makeText(mContext,"刷新成功",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext,"刷新成功",Toast.LENGTH_SHORT).show();
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
                     Toast.makeText(mContext,"未知错误",Toast.LENGTH_LONG).show();

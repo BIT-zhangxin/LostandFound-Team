@@ -1,6 +1,7 @@
 package com.example.lostandfound.activity;
 
 import android.app.ActivityManager;
+import android.app.ActivityManager.AppTask;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,17 +9,17 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
-
+import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAlertDialog;
+import com.example.lostandfound.component.MyAppCompatActivity;
 import com.example.lostandfound.fragment.InformationFragment;
 import com.example.lostandfound.fragment.MessageFragment;
 import com.example.lostandfound.fragment.PublishFragment;
-import com.example.lostandfound.R;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends MyAppCompatActivity {
 
     private Fragment messageFragment;
     private Fragment publishFragment;
@@ -54,8 +55,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void exit(){
-        ActivityManager am = (ActivityManager)getSystemService (Context.ACTIVITY_SERVICE);
-        am.killBackgroundProcesses(getPackageName());
+
+        // 1\. 通过Context获取ActivityManager
+            ActivityManager activityManager = (ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
+
+        // 2\. 通过ActivityManager获取任务栈
+        List<AppTask> appTaskList = activityManager.getAppTasks();
+
+        // 3\. 逐个关闭Activity
+        for (ActivityManager.AppTask appTask : appTaskList) {
+            appTask.finishAndRemoveTask();
+        }
+        // 4\. 结束进程
+        android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
 
@@ -68,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             }
             public void onCertainButtonClick() {
 
-                //exit();
+                exit();
             }
             public void onDismissListener() {
 

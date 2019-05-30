@@ -20,9 +20,9 @@ CREATE DEFINER = `root` @`localhost` PROCEDURE `proc_register_phone` (
 			SET MESSAGE_TEXT = "手机已被注册";
 
 	END IF;
-	INSERT INTO `user` ( `phone_number`, `password`, username, `security_question`, `security_answer` )
+	INSERT INTO `user` ( `phone_number`, `password`, username, `security_question`, `security_answer`, `contact_infotmation` )
 	VALUES
-		( `phone_number`, `password`, '', `security_question`, `security_answer` );
+		( `phone_number`, `password`, '', `security_question`, `security_answer`, '该用户未填写联系方式' );
 
 	SET tmp = last_insert_id( );
 	UPDATE `user`

@@ -51,7 +51,7 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
                     LoadProfilePhoto(absolutePath);
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
-                    Toast.makeText(ObjectActivity.this,"申请失败,重复申请",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ObjectActivity.this,"未知错误",Toast.LENGTH_LONG).show();
                     break;
                 case MyDefine.REPLY_NO_RESPONSE:
                     Toast.makeText(ObjectActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
@@ -72,10 +72,10 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
                     finish();
                     break;
                 case MyDefine.REPLY_FAILED:
-                    Toast.makeText(ObjectActivity.this,"不能申请自己发布的事件",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ObjectActivity.this,"不能重复申请",Toast.LENGTH_LONG).show();
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
-                    Toast.makeText(ObjectActivity.this,"申请失败,重复申请",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ObjectActivity.this,"未知错误",Toast.LENGTH_LONG).show();
                     break;
                 case MyDefine.REPLY_NO_RESPONSE:
                     Toast.makeText(ObjectActivity.this,"服务器无响应",Toast.LENGTH_LONG).show();
@@ -100,15 +100,28 @@ public class ObjectActivity extends MyAppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_object_apply:
-                questionAndAnswer();
+                if(checkSelf()){
+                    questionAndAnswer();
+                }
                 break;
             default:
                 break;
         }
     }
 
+    //申请时检查是否申请自己所发布的事件
+    private boolean checkSelf(){
+        int origin_user_id=((MyApplication)getApplication()).getId();
+        int aim_user_id=bundle.getInt("user_id");
+        if(origin_user_id==aim_user_id){
+            Toast.makeText(this,"不能申请自己发布的事件",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     //显示弹出的验证问题框
-    public void questionAndAnswer()
+    private void questionAndAnswer()
     {
         String title;
         if(bundle.getInt("main_event_type")==1){

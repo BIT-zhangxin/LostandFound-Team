@@ -4,7 +4,7 @@ IF
 	EXISTS `proc_register_phone`;
 
 delimiter //
-CREATE DEFINER = `root` @`localhost` PROCEDURE `proc_register_phone` (
+CREATE PROCEDURE `proc_register_phone` (
 	IN `phone_number` CHAR ( 11 ),
 	IN `password` CHAR ( 32 ),
 	IN `security_question` VARCHAR ( 100 ),

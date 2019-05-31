@@ -17,8 +17,7 @@
     <string name="retrieve_password_next">下一步</string>
 
     <string name="register_title">注册界面</string>
-    <string name="register_account_hint">请输入账号(20位以内，不包含特殊字符)</string>
-    <string name="register_password_hint">请输入密码(20位以内，不包含特殊字符)</string>
+    <string name="register_password_hint">请输入密码(6到20位，不包含特殊字符)</string>
     <string name="register_password_repetition_hint">请重复密码</string>
     <string name="register_phone_number_hint">请输入手机号或邮箱</string>
 
@@ -82,7 +81,7 @@
     <string name="information_security_set_question_commit">提交</string>
 
     <string name="information_security_password_title">修改密码</string>
-    <string name="information_security_password_old_hint">请输入旧密码</string>
+    <string name="information_security_password_old_hint">请输入密码</string>
     <string name="information_security_password_commit">提交</string>
 
     <string name="information_security_question_title">修改密码</string>

@@ -21,26 +21,40 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.RegisterActivity"/>
-        <activity android:name=".activity.RetrievePasswordActivity"/>
-        <activity android:name=".activity.PasswordQuestionActivity"/>
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.ObjectActivity"/>
-        <activity android:name=".activity.InformationActivity"/>
-        <activity android:name=".activity.ModifyActivity"/>
-        <activity android:name=".activity.SecurityChooseActivity"/>
-        <activity android:name=".activity.PasswordPasswordActivity"/>
-        <activity android:name=".activity.PasswordMailActivity"/>
-        <activity android:name=".activity.PasswordPhoneActivity"/>
-        <activity android:name=".activity.ApplyRecordActivity"/>
-        <activity android:name=".activity.ApplyInfoActivity"/>
+        <activity android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RetrievePasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PasswordQuestionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ObjectActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.InformationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ModifyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SecurityChooseActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PasswordPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PasswordMailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.PasswordPhoneActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ApplyRecordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ApplyInfoActivity"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:authorities="com.example.lostandfound.fileprovider"

@@ -22,7 +22,7 @@ CREATE PROCEDURE `proc_publish` (
 		( `name`, `location`, `time`, `description`, `picture`, `picture_format` );
 
 	SET `object_id` = last_insert_id( );
-	INSERT INTO `LostandFound`.`main_event` ( `event_type`, `user_id`, `object_id`, `description`, `time` )
+	INSERT INTO `LostandFound`.`main_event` ( `event_type`, `user_id`, `object_id`, `question`, `time` )
 	VALUES
 		( `event_type`, `user_id`, `object_id`, `question`, NOW( ) );
 

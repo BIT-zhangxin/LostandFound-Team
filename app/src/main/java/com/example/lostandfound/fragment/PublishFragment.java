@@ -143,14 +143,12 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         if(resultCode!=RESULT_OK) return;
         //拍照
         if(requestCode==PHOTO_REQUEST_CODE){
-            //cropUri=goCrop(photoUri);
             Glide.with(this).load(photoUri).into(img_publish_image);
         }
         //选择相册图片
         else if(requestCode==PICTURE_SELECT_REQUEST_CODE){
             pictureUri=data.getData();
             uploadFile=new File(UriUtils.getRealPathFromUri(getActivity(),pictureUri));
-            //cropUri=goCrop(pictureUri);
             Glide.with(this).load(pictureUri).into(img_publish_image);
         }
     }
@@ -203,6 +201,11 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         et_publish_location.setText("");
         et_publish_time.setText("");
         et_publish_description.setText("");
+        et_publish_question.setText("");
+
+        photoUri=null;
+        pictureUri=null;
+        Glide.with(this).load(photoUri).into(img_publish_image);
     }
 
 

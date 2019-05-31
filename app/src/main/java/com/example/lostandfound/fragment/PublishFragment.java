@@ -128,6 +128,7 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
         if(requestCode==PERMISSION_REQUEST_CODE){
             if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 hasPermission=true;
+                photoUri=goCamera();
             }
             else{
                 hasPermission=false;
@@ -211,6 +212,10 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
 
     //调用相机
     private Uri goCamera(){
+        if(!checkPermissions()){
+            getPermissions();
+            return null;
+        }
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //创建拍照保存的图片文件
         uploadFile=createFile(JPG_FORMAT);
@@ -228,20 +233,29 @@ public class PublishFragment extends Fragment implements View.OnClickListener {
     }
 
     //动态检查权限
-    private void checkPermissions(){
-        if(hasPermission) return;
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+    private boolean checkPermissions(){
+        if(hasPermission) return true;
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
             //检查是否有存储和拍照权限
-            if(checkSelfPermission(Objects.requireNonNull(getActivity()),Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
-                &&checkSelfPermission(getActivity(),Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED){
-                hasPermission=true;
+            if (checkSelfPermission(Objects.requireNonNull(getActivity()),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+                hasPermission = true;
+                return true;
             }
             else{
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
-                    PERMISSION_REQUEST_CODE);
+                return false;
             }
         }
+        return true;
     }
+
+    private void getPermissions(){
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
+                PERMISSION_REQUEST_CODE);
+    }
+
 
     //获取文件uri(android7.0后必须使用FileProvider)
     private Uri getUriForFile(Context context,File file){

@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
 import com.example.lostandfound.component.MyApplication;
@@ -21,9 +21,8 @@ import com.example.lostandfound.component.MyBundle;
 import com.example.lostandfound.component.MyConnectionHelper;
 import com.example.lostandfound.component.MyDefine;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +42,6 @@ public class ApplyRecordActivity extends MyAppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
-                    Toast.makeText(ApplyRecordActivity.this,"刷新成功",Toast.LENGTH_SHORT).show();
                     break;
                 case MyDefine.REPLY_FAILED:
                     Toast.makeText(ApplyRecordActivity.this,"系统出现故障",Toast.LENGTH_LONG).show();
@@ -142,9 +140,17 @@ public class ApplyRecordActivity extends MyAppCompatActivity {
     }
 
     void initView(){
+        refreshView();
+
+        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
+
+        refreshLayout_user_apply_info.setRefreshHeader(new ClassicsHeader(this));
+        refreshLayout_user_apply_info.setEnableLoadMore(false);
+    }
+
+    void refreshView(){
         MyApplyInfoAdapter myApplyInfoAdapter=new MyApplyInfoAdapter(ApplyRecordActivity.this,R.layout.apply_info_item,myApplyInfoList);
         list_view_apply_info.setAdapter(myApplyInfoAdapter);
-        setStatusBarColor(this, ContextCompat.getColor(this,R.color.style));
     }
 
     void initEvent(){
@@ -160,20 +166,11 @@ public class ApplyRecordActivity extends MyAppCompatActivity {
 
         refreshLayout_user_apply_info.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 initData();
-                initView();
-                refreshlayout.finishRefresh(200/*,false*/);//传入false表示刷新失败
+                refreshView();
+                refreshlayout.finishRefresh(200);
             }
         });
-        refreshLayout_user_apply_info.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                initData();
-                initView();
-                refreshlayout.finishLoadMore(200/*,false*/);//传入false表示加载失败
-            }
-        });
-
     }
 }

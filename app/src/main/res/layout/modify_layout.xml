@@ -33,8 +33,7 @@
         android:layout_marginRight="@dimen/margin"
         android:layout_marginBottom="15dp"
         android:text="拍照"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_button" />
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btn_modify_photo_select"
@@ -45,8 +44,7 @@
         android:layout_marginRight="@dimen/margin"
         android:layout_marginBottom="15dp"
         android:text="选择本地图片"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_button" />
+        android:textSize="16sp" />
 
 
     <RelativeLayout

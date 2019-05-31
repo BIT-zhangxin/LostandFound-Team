@@ -95,7 +95,7 @@
             android:textColor="@color/black"
             android:textColorHint="@color/gray_deep"
             android:textSize="@dimen/text_size_normal"
-            tools:ignore="Autofill" />
+            tools:ignore="RtlHardcoded"/>
 
         <ImageView
             android:id="@+id/iv_login_show_password"

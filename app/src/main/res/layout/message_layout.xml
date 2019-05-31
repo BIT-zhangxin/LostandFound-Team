@@ -10,37 +10,48 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_width="146dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:entries="@array/search_type" />
 
             <EditText
                 android:id="@+id/editText3"
-                android:layout_width="292dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/spinner"
+                android:layout_toStartOf="@id/button2"
+                android:background="@null"
                 android:ems="10"
+                android:maxLines="1"
                 android:hint="请输入搜索内容"
-                android:inputType="textPersonName" />
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
                 android:background="@android:drawable/ic_menu_search"/>
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/tv_gray_normal"
+                android:layout_alignBottom="@id/spinner"
+                />
+
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/list_view_message"

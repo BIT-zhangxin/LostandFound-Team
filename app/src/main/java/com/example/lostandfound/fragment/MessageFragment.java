@@ -25,8 +25,9 @@ import com.example.lostandfound.component.MyConnectionHelper;
 import com.example.lostandfound.component.MyDefine;
 import com.example.lostandfound.component.MyMessage;
 import com.example.lostandfound.component.MyMessageAdapter;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,6 +35,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,7 +49,7 @@ public class MessageFragment extends Fragment {
     private List<MyMessage> myMessageList=new ArrayList<>();
     private ListView listView;
 
-    RefreshLayout refreshLayout;
+    SmartRefreshLayout refreshLayout;
 
     @SuppressLint("HandlerLeak")
     private Handler messageHandler=new Handler(){
@@ -55,7 +57,6 @@ public class MessageFragment extends Fragment {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case MyDefine.REPLY_SUCCESS:
-                    Toast.makeText(mContext,"刷新成功",Toast.LENGTH_SHORT).show();
                     break;
                 case MyDefine.REPLY_UNKNOWN_ERROR:
                     Toast.makeText(mContext,"未知错误",Toast.LENGTH_LONG).show();
@@ -73,7 +74,8 @@ public class MessageFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mContext=getActivity();
-        initData();
+
+
     }
 
 
@@ -127,7 +129,10 @@ public class MessageFragment extends Fragment {
         }
         else {
             for(int i=0;i<mymessage_num;i++) {
-                myMessageList2.add(myMessageList.get(i));
+                boolean result_compare = searchMatching(myMessageList.get(i).getName(),search_string);
+                if(result_compare) {
+                    myMessageList2.add(myMessageList.get(i));
+                }
             }
         }
 
@@ -140,6 +145,7 @@ public class MessageFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.message_layout,container,false);
         initComponent(view);
+        initData();
         initView();
         initEvent();
         return view;
@@ -205,6 +211,9 @@ public class MessageFragment extends Fragment {
     void initView(){
         MyMessageAdapter myMessageAdapter=new MyMessageAdapter(getActivity(),R.layout.message_item,myMessageList);
         listView.setAdapter(myMessageAdapter);
+
+        refreshLayout.setRefreshHeader(new ClassicsHeader(Objects.requireNonNull(getContext())));
+        refreshLayout.setEnableLoadMore(false);
     }
 
     void initEvent(){
@@ -225,19 +234,10 @@ public class MessageFragment extends Fragment {
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 initData();
-                refreshlayout.finishRefresh(200/*,false*/);//传入false表示刷新失败
+                refreshlayout.finishRefresh(200);
             }
         });
-
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                initData();
-                refreshlayout.finishLoadMore(200/*,false*/);//传入false表示加载失败
-            }
-        });
-
     }
 }

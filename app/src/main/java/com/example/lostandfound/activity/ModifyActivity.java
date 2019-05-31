@@ -2,18 +2,21 @@ package com.example.lostandfound.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.view.View;
@@ -21,7 +24,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.lostandfound.R;
 import com.example.lostandfound.component.MyAppCompatActivity;
@@ -158,6 +160,7 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
         if(requestCode==PERMISSION_REQUEST_CODE){
             if(grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 hasPermission=true;
+                photoUri=goCamera();
             }
             else{
                 hasPermission=false;
@@ -188,7 +191,12 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     //调用相机
+    @TargetApi(VERSION_CODES.M)
     private Uri goCamera(){
+        if(!checkPermissions()){
+            getPermissions();
+            return null;
+        }
         Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         //创建拍照保存的图片文件
         photoFile=createFile(JPG_FORMAT);
@@ -233,19 +241,27 @@ public class ModifyActivity extends MyAppCompatActivity implements View.OnClickL
     }
 
     //动态检查权限
-    private void checkPermissions(){
-        if(hasPermission) return;
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+    private boolean checkPermissions(){
+        if(hasPermission) return true;
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
             //检查是否有存储和拍照权限
-            if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED
-                &&checkSelfPermission(Manifest.permission.CAMERA)==PackageManager.PERMISSION_GRANTED){
-                hasPermission=true;
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+                hasPermission = true;
+                return true;
             }
             else{
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
-                    PERMISSION_REQUEST_CODE);
+                return false;
             }
         }
+        return true;
+    }
+
+    @RequiresApi(api = VERSION_CODES.M)
+    private void getPermissions(){
+        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.CAMERA},
+            PERMISSION_REQUEST_CODE);
     }
 
     private void SetProfilePhoto(String absolutePath){

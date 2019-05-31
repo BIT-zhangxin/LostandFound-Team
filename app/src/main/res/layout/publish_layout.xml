@@ -9,7 +9,7 @@
         android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -23,8 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_event_type"
             android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:textColor="@color/black"/>
 
         <Spinner
             android:id="@+id/spinner_event_type"
@@ -57,8 +56,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_object_name"
             android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/et_publish_object_name"
@@ -90,8 +88,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_location"
             android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/et_publish_location"
@@ -123,8 +120,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_time"
             android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/et_publish_time"
@@ -156,8 +152,7 @@
             android:layout_height="wrap_content"
             android:text="@string/publish_description"
             android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/et_publish_description"
@@ -189,8 +184,7 @@
             android:layout_height="wrap_content"
             android:text="设置问题："
             android:textSize="@dimen/text_size_title"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"/>
+            android:textColor="@color/black"/>
 
         <EditText
             android:id="@+id/et_publish_question"
@@ -213,43 +207,37 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="50dp"
+        >
 
         <TextView
             android:id="@+id/tv_publish_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/publish_image"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="2dp"/>
-
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/btn_publish_photo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginStart="50dp"
-            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/tv_publish_image"
             android:text="拍照"
             android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/btn_publish_select_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginStart="25dp"
-            android:layout_alignParentTop="true"
             android:layout_toEndOf="@id/btn_publish_photo"
+            android:layout_marginStart="30dp"
             android:text="选择图片"
             android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:textSize="16sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -263,6 +251,7 @@
     <ImageView
         android:id="@+id/img_publish_image"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:contentDescription="选择的图片"/>
@@ -270,7 +259,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
         android:gravity="bottom">
 
